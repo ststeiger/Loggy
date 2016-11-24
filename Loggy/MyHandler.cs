@@ -2,7 +2,7 @@
 using System;
 using System.Web;
 
-
+// http://www.codeguru.com/csharp/.net/net_asp/article.php/c19389/HTTP-Handlers-and-HTTP-Modules-in-ASPNET.htm
 namespace Loggy
 {
 
@@ -10,9 +10,9 @@ namespace Loggy
 	/// <summary>
 	/// Summary description for NewHandler.
 	/// </summary>
-	public class NewHandler : IHttpHandler
+	public class MyHandler : IHttpHandler
 	{
-		public NewHandler()
+        public MyHandler()
 		{
 			//
 			// TODO: Add constructor logic here
