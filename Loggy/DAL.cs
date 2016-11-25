@@ -117,11 +117,105 @@ namespace Loggy
 
 
 
-        // public abstract string GetConnectionString(string strDb);
+        public virtual string GetConnectionString(string initialCatalog)
+        {
+            string strReturnValue = null;
+            string strProviderName = null;
+
+
+            if (initialCatalog == null && !string.IsNullOrEmpty(this.m_ConnectionString))
+                return this.m_ConnectionString;
+
+
+            if (initialCatalog != null && !string.IsNullOrEmpty(this.m_ConnectionString))
+            {
+                System.Data.Common.DbConnectionStringBuilder sb = this.m_ProviderFactory.CreateConnectionStringBuilder();
+                sb.ConnectionString = this.m_ConnectionString;
+                sb["Database"] = initialCatalog;
+                strReturnValue = sb.ConnectionString;
+                sb = null;
+                return strReturnValue;
+            }
+
+
+            string strConnectionStringName = System.Environment.MachineName;
+
+            if (string.IsNullOrEmpty(strConnectionStringName))
+            {
+                strConnectionStringName = "LocalSqlServer";
+            }
+
+            System.Configuration.ConnectionStringSettingsCollection settings = System.Configuration.ConfigurationManager.ConnectionStrings;
+            if ((settings != null))
+            {
+                foreach (System.Configuration.ConnectionStringSettings cs in settings)
+                {
+                    if (System.StringComparer.OrdinalIgnoreCase.Equals(cs.Name, strConnectionStringName))
+                    {
+                        strReturnValue = cs.ConnectionString;
+                        strProviderName = cs.ProviderName;
+                        break; // TODO: might not be correct. Was : Exit For
+                    } // End if (System.StringComparer.OrdinalIgnoreCase.Equals(cs.Name, strConnectionStringName))
+
+                } // Next cs 
+
+            } // End if ((settings != null)) 
+
+            if (string.IsNullOrEmpty(strReturnValue))
+            {
+                strConnectionStringName = "server";
+
+                System.Configuration.ConnectionStringSettings conString = System.Configuration.ConfigurationManager.ConnectionStrings[strConnectionStringName];
+
+                if (conString != null)
+                {
+                    strReturnValue = conString.ConnectionString;
+                } // End if (conString != null) 
+
+            } // End if (string.IsNullOrEmpty(strReturnValue)) 
+
+            if (string.IsNullOrEmpty(strReturnValue))
+            {
+                throw new System.ArgumentNullException("No connectionString \"" + strConnectionStringName + "\" in file web.config.");
+            } // End if (string.IsNullOrEmpty(strReturnValue)) 
+
+            settings = null;
+            strConnectionStringName = null;
+
+            // Got value from web.config at this point 
+            { 
+                System.Data.Common.DbConnectionStringBuilder sb = this.m_ProviderFactory.CreateConnectionStringBuilder();
+                sb.ConnectionString = strReturnValue;
+
+
+                if (string.IsNullOrEmpty(this.m_ConnectionString))
+                {
+                    if (!System.Convert.ToBoolean(sb["Integrated Security"]))
+                    {
+                        sb["Password"] = Cryptography.DES.DeCrypt(System.Convert.ToString(sb["Password"]));
+                    }
+                    strReturnValue = sb.ConnectionString;
+                    this.m_ConnectionString = strReturnValue;
+                } // End if (string.IsNullOrEmpty(this.m_ConnectionString)) 
+
+                if (!string.IsNullOrEmpty(initialCatalog))
+                {
+                    sb["Database"] = initialCatalog;
+                    strReturnValue = sb.ConnectionString;
+                }
+
+                sb = null;
+            }
+
+            return strReturnValue;
+        } // End Function GetConnectionString
+
+
         public virtual string GetConnectionString()
         {
-            return "";
+            return GetConnectionString(null);
         }
+
 
         public virtual string ConnectionString
         {
@@ -305,7 +399,6 @@ namespace Loggy
         }
 
 
-
         public string GetParameters(System.Data.Common.DbCommand cmd)
         {
             string strReturnValue = "";
@@ -351,7 +444,7 @@ namespace Loggy
                         }
 
                         msg.AppendLine(string.Format("SET {0} = {1}", thisParameter.ParameterName, strParameterValue));
-                    }
+                    } // Next thisParameter 
 
                     msg.AppendLine("-- ***** End Parameter Listing *****");
                     msg.AppendLine(System.Environment.NewLine);
@@ -421,8 +514,8 @@ namespace Loggy
                         }
 
                         msg.AppendLine(string.Format("SET {0} = {1}", thisParameter.ParameterName, strParameterValue));
-                    }
-
+                    } // Next thisParameter 
+                    
                     msg.AppendLine("-- ***** End Parameter Listing *****");
                     msg.AppendLine(System.Environment.NewLine);
                 } // End if (cmd.Parameters != null && cmd.Parameters.Count > 0)
@@ -457,6 +550,7 @@ namespace Loggy
             if (connect.State != System.Data.ConnectionState.Open)
                 connect.Open();
         }
+
 
         public void CloseConnection(System.Data.Common.DbConnection connect)
         {
@@ -500,7 +594,6 @@ namespace Loggy
         }
 
 
-
         public int ExecuteNonQuery(string sql, string connectionString)
         {
             int retVal = 0;
@@ -532,7 +625,6 @@ namespace Loggy
             this.OpenConnection(connection);
             return cmd.ExecuteScalar();
         }
-
 
 
         public object ExecuteScalar(System.Data.Common.DbCommand cmd, string connectionString)
@@ -586,7 +678,6 @@ namespace Loggy
         {
             return this.ExecuteScalar(sql, this.ConnectionString);
         }
-
 
 
         public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour, System.Data.Common.DbConnection connection)

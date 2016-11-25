@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="caCert.cs" />
     <Compile Include="cMS_SQL.cs" />
+    <Compile Include="Crypt.cs" />
     <Compile Include="DAL.cs" />
     <Compile Include="DebugTextWriter.cs" />
     <Compile Include="Default.aspx.cs">
