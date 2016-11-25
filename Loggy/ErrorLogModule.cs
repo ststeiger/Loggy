@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
+﻿
 namespace Loggy
 {
 
-    // https://code.tutsplus.com/tutorials/preventing-xss-in-aspnet--cms-21801
 
+    // https://code.tutsplus.com/tutorials/preventing-xss-in-aspnet--cms-21801
     public class ErrorLogModule : System.Web.IHttpModule
     {
+
+
         public ErrorLogModule()
 		{
 			// TODO: Add constructor logic here
-
 		}
 
 
-        void IHttpModule.Dispose()
+        void System.Web.IHttpModule.Dispose()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
 
         // http://www.codeguru.com/csharp/.net/net_asp/article.php/c19389/HTTP-Handlers-and-HTTP-Modules-in-ASPNET.htm
-        void System.Web.IHttpModule.Init(HttpApplication context)
+        void System.Web.IHttpModule.Init(System.Web.HttpApplication context)
         {
-            if (context == null) throw new ArgumentNullException("context", "Could not find HttpApplication");
+            if (context == null) throw new System.ArgumentNullException("context", "Could not find HttpApplication");
             context.Error += OnError;
 
             context.BeginRequest += new System.EventHandler(OnBeginRequest);
@@ -35,8 +33,7 @@ namespace Loggy
             // Obviously you probably want to wrap this in some logic to check for things such as verb, requesting url, etc. 
             context.PostMapRequestHandler += new System.EventHandler(OnPostMapRequestHandler);
             
-
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
 
@@ -46,20 +43,43 @@ namespace Loggy
         }
 
 
-
-        private void OnPostMapRequestHandler(object sender, EventArgs e)
+        private void OnPostMapRequestHandler(object sender, System.EventArgs e)
         {
-            HttpContext context = ((HttpApplication)sender).Context;
-            // IHttpHandler myHandler = new MyHandler();
-            // context.Handler = myHandler;
-            context.Handler = new MyHandler();
+            System.Web.HttpApplication app = ((System.Web.HttpApplication)sender);
+
+            if (app == null)
+                return;
+
+
+            System.Web.HttpContext context = app.Context;
+            if (context == null)
+                return;
+
+
+            var appPath = string.Format("{0}://{1}{2}{3}",
+                                      context.Request.Url.Scheme,
+                                      context.Request.Url.Host,
+                                      context.Request.Url.Port == 80
+                                          ? string.Empty
+                                          : ":" + context.Request.Url.Port,
+                                      context.Request.ApplicationPath);
+            System.Console.WriteLine(appPath);
+
+
+            if (context.Request.Url.AbsolutePath == "/foo.ashx")
+            {
+                // IHttpHandler myHandler = new MyHandler();
+                // context.Handler = myHandler;
+                context.Handler = new MyHandler();
+            }
+
         }
 
 
         protected void onError(object sender, System.EventArgs e)
         {
-            HttpContext context = HttpContext.Current;
-            HttpException tempError = context.Server.GetLastError() as HttpException;
+            System.Web.HttpContext context = System.Web.HttpContext.Current;
+            System.Web.HttpException tempError = context.Server.GetLastError() as System.Web.HttpException;
 
             if (tempError != null && tempError.GetHttpCode() == 404)
             {
@@ -106,16 +126,16 @@ namespace Loggy
         }
 
 
-
-        public virtual void OnError(object sender, EventArgs args)
+        public virtual void OnError(object sender, System.EventArgs args)
         {
-            HttpApplication app = (HttpApplication) sender;
+            System.Web.HttpApplication app = (System.Web.HttpApplication)sender;
             System.Exception ex = app.Server.GetLastError();
 
-
-
             LogException(ex);
-        }   
+
+            // app.Server.ClearError();
+
+        } // End Sub OnError 
 
 
         public virtual void LogException(System.Exception ex)
@@ -123,11 +143,32 @@ namespace Loggy
             System.Guid errorUID = System.Guid.NewGuid();
             // System.Web.HttpContext.Current.Application.
 
-            // if (ex.Data == null) ex.Data = new Dictionary<string, string>();
-
             // OnBeforeLog
             // Log SQL-Command with parameters
+            IterativeExceptionLogger("ErrorLogModule.cs", 0, ex, null, null);
+            // Trace.WriteLine // echo the error for local debugging
+            // OnAfterLog
+        } // End Sub LogException 
 
+        
+        // Format:
+        // ExcetionType: ExceptionMessage; Verdana 13.5, color: rgb(128 0 0) bg: white 
+        // Generated: Sat, 17 May 2014 11:30:07 GMT bg: white;
+
+        // Trace Courier New, 10, bg: #FFFFCC [RGB(255, 255, 204)]
+        public static void IterativeExceptionLogger(string origin, int level, System.Exception exceptionToLog, System.Data.Common.DbCommand cmd, string logMessage)
+        {
+            System.Collections.Generic.Stack<System.Exception> stack = new System.Collections.Generic.Stack<System.Exception>();
+
+            exceptionToLog = new System.Exception("foo", exceptionToLog);
+
+            while (exceptionToLog != null)
+            {
+                stack.Push(exceptionToLog);
+                exceptionToLog = exceptionToLog.InnerException;
+            }
+
+            int sequence = 0;
 
 
             string headers;
@@ -141,71 +182,65 @@ namespace Loggy
             string userName;
             string sessionData;
             string userAgent;
-            // string statusCode;
 
+            System.DateTime date = System.DateTime.Now;
+
+            // http://stackoverflow.com/questions/1654797/get-iis-site-name-from-for-an-asp-net-website
+            string siteName = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName();
+
+            // System.Web.Hosting.HostingEnvironment.IsHosted
+            System.Console.WriteLine(System.Web.Hosting.HostingEnvironment.ApplicationID);
+            System.Console.WriteLine(System.AppDomain.CurrentDomain.FriendlyName); // /LM/W3SVC/178/ROOT-1-131245590641962041
+
+            // System.Console.WriteLine(System.Web.Hosting.HostingEnvironment.ApplicationHost);
+            System.Console.WriteLine(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath);
+            System.Console.WriteLine(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+
+
+
+            
+
+
+
+            // servervariables
+            // machineName
+
+
+            // string IISserverName = HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
+
+            // string statusCode;
             // QueryKeyValue
             // SessionKeyValue
             // PostKeyValue
             // UserAgentKeyValue
 
-            System.DateTime date = System.DateTime.Now;
-            // servervariables
-            // machineName
+            // if (ex.Data == null) ex.Data = new Dictionary<string, string>();
 
-            LogException(ex, errorUID);
-            // Trace.WriteLine // echo the error for local debugging
-            // OnAfterLog
-        }
-
-        
-        // Format:
-        // ExcetionType: ExceptionMessage; Verdana 13.5, color: rgb(128 0 0) bg: white 
-        // Generated: Sat, 17 May 2014 11:30:07 GMT bg: white;
-
-        // Trace Courier New, 10, bg: #FFFFCC [RGB(255, 255, 204)]
-
-        public virtual int LogException(System.Exception ex, System.Guid errorUID)
-        {
-            int sequence = 0;
-
-            if (ex.InnerException != null)
+            while (stack.Count > 0)
             {
-                sequence = LogException(ex.InnerException, errorUID);
+                sequence++;
+
+                System.Exception ex = stack.Pop();
+                System.Console.WriteLine(ex);
+
+
+
+                System.Guid entryUID = System.Guid.NewGuid();
+
+                string type = ex.GetType().Name;
+                string typeFullName = ex.GetType().FullName;
+                string message = ex.Message;
+                string stackTrace = ex.StackTrace;
+                string source = ex.Source;
+                System.Collections.IDictionary data = ex.Data;
+
             }
 
-            sequence++;
-
-            System.Guid entryUID = System.Guid.NewGuid();
-
-            string type = ex.GetType().Name;
-            string typeFullName = ex.GetType().FullName;
-            string message = ex.Message;
-            string stackTrace = ex.StackTrace;
-            string source = ex.Source;
-            System.Collections.IDictionary data = ex.Data;
-
-            return sequence;
-        }
-
-
-        public static void IterativeLogger(System.Exception ex)
-        {
-            System.Collections.Generic.Stack<Exception> stack = new Stack<Exception>();
-
-            while (ex != null)
-            { 
-                stack.Push(ex);
-                ex = ex.InnerException;
-            }
-
-
-            for (System.Exception ex2 = stack.Pop(); ex2 != null; ex2 = stack.Pop())
-            { 
-            
-            }
+            System.Console.WriteLine(exceptionToLog);
             
 
         }
+
 
         // http://www.codeproject.com/Articles/429167/Activity-Logging-and-Error-Logging-in-ASP-NET
         // http://nlog-project.org/
@@ -218,4 +253,6 @@ namespace Loggy
         //Error - error messages - most of the time these are Exceptions
         //Fatal - very serious errors!
     }
+
+
 }

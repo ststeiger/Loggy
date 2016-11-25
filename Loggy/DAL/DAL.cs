@@ -782,7 +782,35 @@ namespace Loggy
             }
 
             return dataReader;
-        }
+        } // End Function ExecuteReader_Buggy 
+
+
+        // WARNING: DISPOSE BEFORE USED 
+        internal System.Data.Common.DbDataReader ExecuteReader_Buggy(System.Data.Common.DbCommand cmd)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+
+            using (System.Data.Common.DbConnection connect = this.GetConnection())
+            {
+                dataReader = this.ExecuteReader(cmd, connect);
+                this.CloseConnection(connect);
+            } // End Using connect 
+
+            return dataReader;
+        } // End Function ExecuteReader_Buggy 
+
+
+        internal System.Data.Common.DbDataReader ExecuteReader_Buggy(string sql)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                dataReader = this.ExecuteReader_Buggy(cmd);
+            }
+
+            return dataReader;
+        } // End Sub ExecuteReader 
 
 
     } // End Class cDAL 
