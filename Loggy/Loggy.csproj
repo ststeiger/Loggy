@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="caCert.cs" />
+    <Compile Include="cMS_SQL.cs" />
     <Compile Include="DAL.cs" />
     <Compile Include="DebugTextWriter.cs" />
     <Compile Include="Default.aspx.cs">
@@ -65,7 +66,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="ErrorLogModule.cs" />
-    <Compile Include="Factories.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

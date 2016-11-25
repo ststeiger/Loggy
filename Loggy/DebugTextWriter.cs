@@ -2,13 +2,15 @@
 namespace Loggy
 {
 
-
+    // https://stackoverflow.com/questions/29375020/how-can-i-stop-iisexpress-from-dumping-every-detail-of-every-request-into-the-vi
+    // https://stackoverflow.com/questions/37103660/asp-net-core-iis-express-how-to-view-log-mesages
     class DebugTextWriter : System.IO.TextWriter
     {
         public override void Write(char[] buffer, int index, int count)
         {
             System.Diagnostics.Debug.Write(new string(buffer, index, count));
         }
+
 
         public override void Write(string value)
         {

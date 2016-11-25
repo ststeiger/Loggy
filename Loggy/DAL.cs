@@ -1,17 +1,39 @@
 ﻿
 namespace Loggy
 {
+    public delegate void DataReaderCallback_t(System.Data.Common.DbDataReader reader);
 
 
     public abstract class cDAL
     {
-
-        private System.Data.Common.DbProviderFactory m_ProviderFactory;
-        private string m_ConnectionString;
+        protected System.Data.Common.DbProviderFactory m_ProviderFactory;
+        protected string m_ConnectionString;
 
         protected const string DATEFORMAT = "yyyyMMdd";
         protected const string DATETIMEFORMAT = "yyyy-MM-ddTHH:mm:ss.fff";
 
+
+
+        public virtual bool IsMS_SQL
+        {
+            get
+            {
+                return false;
+            }
+        } // End Property IsMS_SQL 
+
+
+        public virtual bool IsPostGreSql
+        {
+            get
+            {
+                // System.Data.Common.DbProviderFactory providerFactory = null;
+                // providerFactory = this.GetFactory(typeof(Npgsql.NpgsqlFactory));
+
+
+                return false;
+            }
+        } // End Property IsPostGreSql 
 
 
         public static System.Data.Common.DbProviderFactory GetFactory(System.Type type)
@@ -90,21 +112,7 @@ namespace Loggy
 
         public static cDAL CreateInstance()
         {
-            System.Data.Common.DbProviderFactory factory = GetFactory(typeof(System.Data.SqlClient.SqlClientFactory));
-            return CreateInstance(factory);
-        }
-
-
-
-        public bool IsPostGreSql
-        {
-            get{ 
-                System.Data.Common.DbProviderFactory providerFactory = null;
-                // providerFactory = this.GetFactory(typeof(Npgsql.NpgsqlFactory));
-
-
-                return true;
-            }
+            return new cMS_SQL();
         }
 
 
@@ -117,14 +125,18 @@ namespace Loggy
 
         public virtual string ConnectionString
         {
-            get{ 
+            get
+            {
                 if (m_ConnectionString != null)
                     return m_ConnectionString;
 
                 m_ConnectionString = GetConnectionString();
                 return m_ConnectionString;
             }
-            // set{ m_ConnectionString = value; }
+            set
+            {
+                m_ConnectionString = value;
+            }
         }
 
 
@@ -203,99 +215,10 @@ namespace Loggy
         } // End Function GetDbType
 
 
-
         protected virtual string SqlTypeFromDbType(System.Data.DbType type)
         {
-            string strRetVal = null;
-
-            // http://msdn.microsoft.com/en-us/library/cc716729.aspx
-            switch (type)
-            {
-                case System.Data.DbType.Guid:
-                    strRetVal = "uniqueidentifier";
-                    break;
-                case System.Data.DbType.Date:
-                    strRetVal = "date";
-                    break;
-                case System.Data.DbType.Time:
-                    strRetVal = "time(7)";
-                    break;
-                case System.Data.DbType.DateTime:
-                    strRetVal = "datetime";
-                    break;
-                case System.Data.DbType.DateTime2:
-                    strRetVal = "datetime2";
-                    break;
-                case System.Data.DbType.DateTimeOffset:
-                    strRetVal = "datetimeoffset(7)";
-                    break;
-
-                case System.Data.DbType.StringFixedLength:
-                    strRetVal = "nchar(MAX)";
-                    break;
-                case System.Data.DbType.String:
-                    strRetVal = "nvarchar(MAX)";
-                    break;
-
-                case System.Data.DbType.AnsiStringFixedLength:
-                    strRetVal = "char(MAX)";
-                    break;
-                case System.Data.DbType.AnsiString:
-                    strRetVal = "varchar(MAX)";
-                    break;
-
-                case System.Data.DbType.Single:
-                    strRetVal = "real";
-                    break;
-                case System.Data.DbType.Double:
-                    strRetVal = "float";
-                    break;
-                case System.Data.DbType.Decimal:
-                    strRetVal = "decimal(19, 5)";
-                    break;
-                case System.Data.DbType.VarNumeric:
-                    strRetVal = "numeric(19, 5)";
-                    break;
-
-                case System.Data.DbType.Boolean:
-                    strRetVal = "bit";
-                    break;
-                case System.Data.DbType.SByte:
-                case System.Data.DbType.Byte:
-                    strRetVal = "tinyint";
-                    break;
-                case System.Data.DbType.Int16:
-                    strRetVal = "smallint";
-                    break;
-                case System.Data.DbType.Int32:
-                    strRetVal = "int";
-                    break;
-                case System.Data.DbType.Int64:
-                    strRetVal = "bigint";
-                    break;
-                case System.Data.DbType.Xml:
-                    strRetVal = "xml";
-                    break;
-                case System.Data.DbType.Binary:
-                    strRetVal = "varbinary(MAX)"; // or image
-                    break;
-                case System.Data.DbType.Currency:
-                    strRetVal = "money";
-                    break;
-                case System.Data.DbType.Object:
-                    strRetVal = "sql_variant";
-                    break;
-
-                case System.Data.DbType.UInt16:
-                case System.Data.DbType.UInt32:
-                case System.Data.DbType.UInt64:
-                    throw new System.NotImplementedException("Uints not mapped - MySQL only");
-            }
-
-            return strRetVal;
+            return type.ToString();
         } // End Function SqlTypeFromDbType
-
-
 
 
         public virtual System.Data.Common.DbParameter AddParameter(System.Data.Common.DbCommand command, string strParameterName
@@ -545,7 +468,22 @@ namespace Loggy
         public int ExecuteNonQuery(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
         {
             cmd.Connection = connection;
+            this.OpenConnection(connection);
             return cmd.ExecuteNonQuery();
+        }
+
+
+        public int ExecuteNonQuery(System.Data.Common.DbCommand cmd, string connectionString)
+        {
+            int retVal = 0;
+
+            using (System.Data.Common.DbConnection connection = this.GetConnection(connectionString))
+            {
+                retVal = this.ExecuteNonQuery(cmd, connection);
+                this.CloseConnection(connection);
+            }
+
+            return retVal;
         }
 
 
@@ -553,7 +491,7 @@ namespace Loggy
         {
             int retVal = 0;
 
-            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
             {
                 retVal = this.ExecuteNonQuery(cmd, connection);
             }
@@ -562,20 +500,14 @@ namespace Loggy
         }
 
 
+
         public int ExecuteNonQuery(string sql, string connectionString)
         {
             int retVal = 0;
 
-            using (System.Data.Common.DbConnection connection = this.GetConnection(connectionString))
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
             {
-                this.OpenConnection(connection);
-
-                using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
-                {
-                    retVal = this.ExecuteNonQuery(cmd, connection);
-                }
-
-                this.CloseConnection(connection);
+                retVal = this.ExecuteNonQuery(cmd, connectionString);
             }
 
             return retVal;
@@ -584,64 +516,31 @@ namespace Loggy
 
         public int ExecuteNonQuery(System.Data.Common.DbCommand cmd)
         {
-            int retVal = 0;
-
-            using(System.Data.Common.DbConnection connect = this.GetConnection())
-            {
-                this.OpenConnection(connect);
-
-                retVal = ExecuteNonQuery(connect);
-
-                this.CloseConnection(connect);
-            }
-
-            return retVal;
+            return this.ExecuteNonQuery(cmd, this.ConnectionString);
         }
 
 
         public int ExecuteNonQuery(string sql)
         {
-            int retVal = 0;
-
-            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
-            {
-                retVal = this.ExecuteNonQuery(cmd);
-            }
-
-            return retVal;
+            return ExecuteNonQuery(sql, this.ConnectionString);
         }
-
-
 
 
         public object ExecuteScalar(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
         {
             cmd.Connection = connection;
+            this.OpenConnection(connection);
             return cmd.ExecuteScalar();
         }
 
 
-        public System.Data.Common.DbDataReader ExecuteScalar(string sql, System.Data.Common.DbConnection connection)
+
+        public object ExecuteScalar(System.Data.Common.DbCommand cmd, string connectionString)
         {
             object objRetVal = 0;
 
-            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            using (System.Data.Common.DbConnection connect = GetConnection(connectionString))
             {
-                objRetVal = this.ExecuteScalar(cmd, connection);
-            }
-
-            return objRetVal;
-        }
-
-
-        public object ExecuteScalar(System.Data.Common.DbCommand cmd)
-        {
-            object objRetVal = 0;
-
-            using(System.Data.Common.DbConnection connect = this.GetConnection())
-            {
-                this.OpenConnection(connect);
-
                 objRetVal = this.ExecuteScalar(cmd, connect);
 
                 this.CloseConnection(connect);
@@ -651,16 +550,41 @@ namespace Loggy
         }
 
 
-        public System.Data.Common.DbDataReader ExecuteScalar(string sql)
+        public object ExecuteScalar(string sql, System.Data.Common.DbConnection connection)
         {
             object objRetVal = 0;
 
-            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
             {
-                objRetVal = this.ExecuteScalar(cmd);
+                objRetVal = this.ExecuteScalar(cmd, connection);
             }
 
             return objRetVal;
+        }
+
+
+        public object ExecuteScalar(string sql, string connectionString)
+        {
+            object objRetVal = 0;
+
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                objRetVal = this.ExecuteScalar(cmd, connectionString);
+            }
+
+            return objRetVal;
+        }
+
+
+        public object ExecuteScalar(System.Data.Common.DbCommand cmd)
+        {
+            return this.ExecuteScalar(cmd, this.ConnectionString);
+        }
+
+
+        public object ExecuteScalar(string sql)
+        {
+            return this.ExecuteScalar(sql, this.ConnectionString);
         }
 
 
@@ -668,6 +592,8 @@ namespace Loggy
         public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour, System.Data.Common.DbConnection connection)
         {
             cmd.Connection = connection;
+            this.OpenConnection(connection);
+
             return cmd.ExecuteReader(behaviour);
         }
 
@@ -686,7 +612,7 @@ namespace Loggy
 
         public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
         {
-            return this.ExecuteReader(cmd,System.Data.CommandBehavior.CloseConnection, connection);
+            return this.ExecuteReader(cmd,System.Data.CommandBehavior.SequentialAccess, connection);
         }
 
 
@@ -701,17 +627,66 @@ namespace Loggy
             return dataReader;
         }
 
+        // ConnectionLess
 
-        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour)
+        public void ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour, DataReaderCallback_t readCallback)
+        {
+            using (System.Data.Common.DbConnection connect = this.GetConnection())
+            {
+                using (System.Data.Common.DbDataReader dataReader = this.ExecuteReader(cmd, behaviour, connect))
+                {
+                    readCallback(dataReader);
+                }
+
+                this.CloseConnection(connect);
+            }
+
+        } // End Sub ExecuteReader 
+
+
+        public void ExecuteReader(string sql, System.Data.CommandBehavior behaviour, DataReaderCallback_t readCallback)
+        {
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                this.ExecuteReader(cmd, behaviour, readCallback);
+            }
+        }
+
+
+        public void ExecuteReader(System.Data.Common.DbCommand cmd, DataReaderCallback_t readCallback)
+        {
+            using (System.Data.Common.DbConnection dbConnection = this.GetConnection())
+            {
+                using (System.Data.Common.DbDataReader dataReader = this.ExecuteReader(cmd, dbConnection))
+                {
+                    readCallback(dataReader);
+                } // End Using dataReader 
+
+                this.CloseConnection(dbConnection);
+            } // End Using dbConnection 
+
+        }
+
+
+        public void ExecuteReader(string sql, DataReaderCallback_t readCallback)
+        {
+            using (System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                this.ExecuteReader(cmd, readCallback);
+            }
+
+        } // End Sub ExecuteReader 
+
+
+
+        // WARNING: DISPOSE BEFORE USED 
+        internal System.Data.Common.DbDataReader ExecuteReader_Buggy(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour)
         {
             System.Data.Common.DbDataReader dataReader = null;
 
-            using(System.Data.Common.DbConnection connect = this.GetConnection())
+            using (System.Data.Common.DbConnection connect = this.GetConnection())
             {
-                this.OpenConnection(connect);
-
-                dataReader = this.ExecuteReader(cmd, connect, behaviour);
-
+                dataReader = this.ExecuteReader(cmd, behaviour, connect);
                 this.CloseConnection(connect);
             }
 
@@ -719,29 +694,7 @@ namespace Loggy
         }
 
 
-        public System.Data.Common.DbDataReader ExecuteReader(string sql, System.Data.CommandBehavior behaviour)
-        {
-            System.Data.Common.DbDataReader dataReader = null;
-            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
-            {
-                dataReader = this.ExecuteReader(cmd, behaviour);
-            }
-
-            return dataReader;
-        }
+    } // End Class cDAL 
 
 
-        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd)
-        {
-            return this.ExecuteReader(cmd, System.Data.CommandBehavior.CloseConnection);
-        }
-
-
-        public System.Data.Common.DbDataReader ExecuteReader(string sql)
-        {
-            return this.ExecuteReader(sql, System.Data.CommandBehavior.CloseConnection);
-        }
-
-
-    }
-}
+} // End Namespace 
