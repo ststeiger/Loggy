@@ -56,7 +56,15 @@ namespace Loggy
         }
 
 
+        public static void Test()
+        {
+            cDAL DAL = cDAL.CreateInstance();
+            using (System.Data.Common.DbConnection connect = DAL.GetConnection())
+            {
+                DAL.
+            }
 
+        }
 
         protected void onError(object sender, System.EventArgs e)
         {

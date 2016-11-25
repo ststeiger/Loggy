@@ -1,11 +1,171 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-
+﻿
 namespace Loggy
 {
-    public class DAL
+
+
+    public abstract class cDAL
     {
+
+        private System.Data.Common.DbProviderFactory m_ProviderFactory;
+        private string m_ConnectionString;
+
+        protected const string DATEFORMAT = "yyyyMMdd";
+        protected const string DATETIMEFORMAT = "yyyy-MM-ddTHH:mm:ss.fff";
+
+
+
+        public static System.Data.Common.DbProviderFactory GetFactory(System.Type type)
+        {
+            if (type != null && type.IsSubclassOf(typeof(System.Data.Common.DbProviderFactory)))
+            {
+                // Provider factories are singletons with Instance field having
+                // the sole instance
+                System.Reflection.FieldInfo field = type.GetField(
+                    "Instance"
+                    ,System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static
+                );
+
+                if (field != null)
+                {
+                    return (System.Data.Common.DbProviderFactory)field.GetValue(null);
+                    //return field.GetValue(null) as DbProviderFactory;
+                } // End if (field != null)
+
+            } // End if (type != null && type.IsSubclassOf(typeof(System.Data.Common.DbProviderFactory)))
+
+            throw new System.InvalidOperationException("DataProvider is missing");
+        } // End Function GetFactory
+
+
+        public static cDAL CreateInstance(System.Data.Common.DbProviderFactory factory)
+        {
+            // this.m_ProviderFactory = factory;
+            return null;
+        }
+
+
+        public static cDAL CreateInstance(System.Type type)
+        {
+            System.Data.Common.DbProviderFactory factory = GetFactory(type);
+            return CreateInstance(factory);;
+        }
+
+
+        // https://github.com/dotnet/coreclr/issues/919
+        protected static System.Collections.Generic.List<System.Type> GetTypesInNamespace(
+            System.Reflection.Assembly assembly
+            , string nameSpace
+        )
+        {
+            System.Collections.Generic.List<System.Type> lsTypes = new System.Collections.Generic.List<System.Type>();
+
+            System.Type[] types = assembly.GetTypes();
+
+            for (int i = 0; i < types.Length; ++i)
+            {
+                if (types[i] != null && types[i].IsSubclassOf(typeof(System.Data.Common.DbProviderFactory)))
+                {
+                    if (string.Equals(types[i].Namespace, nameSpace, System.StringComparison.Ordinal))
+                        lsTypes.Add(types[i]);
+                }
+
+            }
+
+            return lsTypes;
+        }
+
+        public static cDAL CreateInstance(string factoryNamespace)
+        {
+            System.Data.Common.DbProviderFactory factory = null;
+            return CreateInstance(factory);
+        }
+
+
+        public static cDAL CreateInstance<T>()
+        {
+            System.Data.Common.DbProviderFactory factory = GetFactory(typeof(T));
+            return CreateInstance(factory);
+        }
+
+
+        public static cDAL CreateInstance()
+        {
+            System.Data.Common.DbProviderFactory factory = GetFactory(typeof(System.Data.SqlClient.SqlClientFactory));
+            return CreateInstance(factory);
+        }
+
+
+
+        public bool IsPostGreSql
+        {
+            get{ 
+                System.Data.Common.DbProviderFactory providerFactory = null;
+                // providerFactory = this.GetFactory(typeof(Npgsql.NpgsqlFactory));
+
+
+                return true;
+            }
+        }
+
+
+
+        // public abstract string GetConnectionString(string strDb);
+        public virtual string GetConnectionString()
+        {
+            return "";
+        }
+
+        public virtual string ConnectionString
+        {
+            get{ 
+                if (m_ConnectionString != null)
+                    return m_ConnectionString;
+
+                m_ConnectionString = GetConnectionString();
+                return m_ConnectionString;
+            }
+            // set{ m_ConnectionString = value; }
+        }
+
+
+        public virtual System.Data.Common.DbConnection GetConnection(string connectionString)
+        {
+            System.Data.Common.DbConnection connect = m_ProviderFactory.CreateConnection();
+
+            if (string.IsNullOrEmpty(connectionString))
+                connectionString = this.ConnectionString;
+
+            connect.ConnectionString = connectionString;
+
+            return connect;
+        }
+
+
+        public virtual System.Data.Common.DbConnection GetConnection()
+        {
+            return GetConnection(this.ConnectionString);
+        }
+
+
+        public System.Data.Common.DbCommand CreateCommand(string strSQL, int timeout)
+        {
+            System.Data.Common.DbCommand idbc = m_ProviderFactory.CreateCommand();
+            idbc.CommandText = strSQL;
+            idbc.CommandTimeout = timeout;
+            return idbc;
+        } // End Function CreateCommand
+
+
+        public System.Data.Common.DbCommand CreateCommand(string strSQL)
+        {
+            return CreateCommand(strSQL, 30);
+        }
+
+
+        public System.Data.Common.DbCommand CreateCommand()
+        {
+            return CreateCommand(null);
+        } // End Function CreateCommand
 
 
         // From Type to DBType
@@ -136,30 +296,12 @@ namespace Loggy
         } // End Function SqlTypeFromDbType
 
 
-        public virtual System.Data.IDbDataParameter AddParameter(System.Data.IDbCommand command, string strParameterName, object objValue)
+
+
+        public virtual System.Data.Common.DbParameter AddParameter(System.Data.Common.DbCommand command, string strParameterName
+            , object objValue, System.Data.ParameterDirection pad, System.Data.DbType dbType)
         {
-            return AddParameter(command, strParameterName, objValue, System.Data.ParameterDirection.Input);
-        } // End Function AddParameter
-
-
-        public virtual System.Data.IDbDataParameter AddParameter(System.Data.IDbCommand command, string strParameterName, object objValue, System.Data.ParameterDirection pad)
-        {
-            if (objValue == null)
-            {
-                //throw new ArgumentNullException("objValue");
-                objValue = System.DBNull.Value;
-            } // End if (objValue == null)
-
-            System.Type tDataType = objValue.GetType();
-            System.Data.DbType dbType = GetDbType(tDataType);
-
-            return AddParameter(command, strParameterName, objValue, pad, dbType);
-        } // End Function AddParameter
-
-
-        public virtual System.Data.IDbDataParameter AddParameter(System.Data.IDbCommand command, string strParameterName, object objValue, System.Data.ParameterDirection pad, System.Data.DbType dbType)
-        {
-            System.Data.IDbDataParameter parameter = command.CreateParameter();
+            System.Data.Common.DbParameter parameter = command.CreateParameter();
 
             if (!strParameterName.StartsWith("@"))
             {
@@ -183,297 +325,423 @@ namespace Loggy
         } // End Function AddParameter
 
 
-        public virtual T GetParameterValue<T>(System.Data.IDbCommand idbc, string strParameterName)
+        public virtual System.Data.Common.DbParameter AddParameter(System.Data.Common.DbCommand command, string strParameterName, object objValue, System.Data.ParameterDirection pad)
         {
-            if (!strParameterName.StartsWith("@"))
+            if (objValue == null)
             {
-                strParameterName = "@" + strParameterName;
+                //throw new ArgumentNullException("objValue");
+                objValue = System.DBNull.Value;
+            } // End if (objValue == null)
+
+            System.Type tDataType = objValue.GetType();
+            System.Data.DbType dbType = GetDbType(tDataType);
+
+            return AddParameter(command, strParameterName, objValue, pad, dbType);
+        } // End Function AddParameter
+
+
+        public virtual System.Data.Common.DbParameter AddParameter(System.Data.Common.DbCommand command, string strParameterName, object objValue)
+        {
+            return AddParameter(command, strParameterName, objValue, System.Data.ParameterDirection.Input);
+        } // End Function AddParameter
+
+
+        public virtual T GetParameterValue<T>(System.Data.IDbCommand idbc, string parameterName)
+        {
+            if (!parameterName.StartsWith("@"))
+            {
+                parameterName = "@" + parameterName;
             }
 
-            return InlineTypeAssignHelper<T>(((System.Data.IDbDataParameter)idbc.Parameters[strParameterName]).Value);
+            object obj = ((System.Data.Common.DbParameter)idbc.Parameters[parameterName]).Value;
+            return (T)obj;
         } // End Function GetParameterValue<T>
 
-        protected static T InlineTypeAssignHelper<T>(object UTO)
-        {
-            if (UTO == null)
-            {
-                T NullSubstitute = default(T);
-                return NullSubstitute;
-            }
-            return (T)UTO;
-        } // End Template InlineTypeAssignHelper
 
-
-
-        public static string GetParameters(System.Data.IDbCommand cmd)
-        {
-            string strReturnValue = "";
-            try
-            {
-                System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                System.DateTime dtLogTime = System.DateTime.UtcNow;
-
-                if (cmd == null || string.IsNullOrEmpty(cmd.CommandText))
-                {
-                    return strReturnValue;
-                }
-
-
-                if (cmd.Parameters != null && cmd.Parameters.Count > 0)
-                {
-                    msg.AppendLine("-- ***** Listing Parameters *****");
-
-                    foreach (System.Data.IDataParameter idpThisParameter in cmd.Parameters)
-                    {
-                        // http://msdn.microsoft.com/en-us/library/cc716729.aspx
-                        msg.AppendLine(string.Format("DECLARE {0} AS {1} -- DbType: {2}", idpThisParameter.ParameterName, SqlTypeFromDbType(idpThisParameter.DbType), idpThisParameter.DbType.ToString()));
-                    } // Next idpThisParameter
-
-                    msg.AppendLine(Environment.NewLine);
-                    msg.AppendLine(Environment.NewLine);
-
-                    foreach (System.Data.IDataParameter idpThisParameter in cmd.Parameters)
-                    {
-                        string strParameterValue = null;
-                        if (object.ReferenceEquals(idpThisParameter.Value, System.DBNull.Value))
-                        {
-                            strParameterValue = "NULL";
-                        }
-                        else
-                        {
-                            if (idpThisParameter.DbType == System.Data.DbType.Date)
-                                strParameterValue = String.Format(DATEFORMAT, idpThisParameter.Value);
-                            else if (idpThisParameter.DbType == System.Data.DbType.DateTime || idpThisParameter.DbType == System.Data.DbType.DateTime2)
-                                strParameterValue = String.Format(DATETIMEFORMAT, idpThisParameter.Value);
-                            else
-                                strParameterValue = idpThisParameter.Value.ToString();
-
-                            strParameterValue = "'" + strParameterValue.Replace("'", "''") + "'";
-                        }
-
-                        msg.AppendLine(string.Format("SET {0} = {1}", idpThisParameter.ParameterName, strParameterValue));
-                    }
-
-                    msg.AppendLine("-- ***** End Parameter Listing *****");
-                    msg.AppendLine(Environment.NewLine);
-                } // End if (cmd.Parameters != null && cmd.Parameters.Count > 0)
-
-                strReturnValue = msg.ToString();
-                msg = null;
-            }
-            catch (Exception ex)
-            {
-                strReturnValue = "Error in Function COR.SQL.GetParametrizedQueryText";
-                strReturnValue += Environment.NewLine;
-                strReturnValue += ex.Message;
-            }
-
-            return strReturnValue;
-        } // End Function GetParametrizedQueryText
-
-
-        public static string GetParametrizedQueryText(System.Data.IDbCommand cmd)
-        {
-            string strReturnValue = "";
-            try
-            {
-                System.Text.StringBuilder msg = new System.Text.StringBuilder();
-                System.DateTime dtLogTime = System.DateTime.UtcNow;
-
-                if (cmd == null || string.IsNullOrEmpty(cmd.CommandText))
-                {
-                    return strReturnValue;
-                }
-
-
-                if (cmd.Parameters != null && cmd.Parameters.Count > 0)
-                {
-                    msg.AppendLine("-- ***** Listing Parameters *****");
-
-                    foreach (System.Data.IDataParameter idpThisParameter in cmd.Parameters)
-                    {
-                        // http://msdn.microsoft.com/en-us/library/cc716729.aspx
-                        msg.AppendLine(string.Format("DECLARE {0} AS {1} -- DbType: {2}", idpThisParameter.ParameterName, SqlTypeFromDbType(idpThisParameter.DbType), idpThisParameter.DbType.ToString()));
-                    } // Next idpThisParameter
-
-                    msg.AppendLine(Environment.NewLine);
-                    msg.AppendLine(Environment.NewLine);
-
-                    foreach (System.Data.IDataParameter idpThisParameter in cmd.Parameters)
-                    {
-                        string strParameterValue = null;
-                        if (object.ReferenceEquals(idpThisParameter.Value, System.DBNull.Value))
-                        {
-                            strParameterValue = "NULL";
-                        }
-                        else
-                        {
-                            if (idpThisParameter.DbType == System.Data.DbType.Date)
-                                strParameterValue = String.Format(DATEFORMAT, idpThisParameter.Value);
-                            else if (idpThisParameter.DbType == System.Data.DbType.DateTime || idpThisParameter.DbType == System.Data.DbType.DateTime2)
-                                strParameterValue = String.Format(DATETIMEFORMAT, idpThisParameter.Value);
-                            else
-                                strParameterValue = idpThisParameter.Value.ToString();
-
-                            strParameterValue = "'" + strParameterValue.Replace("'", "''") + "'";
-                        }
-
-                        msg.AppendLine(string.Format("SET {0} = {1}", idpThisParameter.ParameterName, strParameterValue));
-                    }
-
-                    msg.AppendLine("-- ***** End Parameter Listing *****");
-                    msg.AppendLine(Environment.NewLine);
-                } // End if (cmd.Parameters != null && cmd.Parameters.Count > 0)
-
-
-                msg.AppendLine(string.Format("-- ***** Start Query from {0} *****", dtLogTime.ToString(DATEFORMAT)));
-                msg.AppendLine(cmd.CommandText);
-                msg.AppendLine(string.Format("-- ***** End Query from {0} *****", dtLogTime.ToString(DATEFORMAT)));
-                msg.AppendLine(Environment.NewLine);
-
-                strReturnValue = msg.ToString();
-                msg = null;
-            }
-            catch (Exception ex)
-            {
-                strReturnValue = "Error in Function COR.SQL.GetParametrizedQueryText";
-                strReturnValue += Environment.NewLine;
-                strReturnValue += ex.Message;
-            }
-
-            return strReturnValue;
-        } // End Function GetParametrizedQueryText
-
-
-        public static System.Data.Common.DbConnection GetConnection()
-        {
-            return GetConnection(null);
-        } // End Function GetConnection
-
-
-        public static System.Data.Common.DbConnection GetConnection(string strConnectionString)
-        {
-            if (string.IsNullOrEmpty(strConnectionString))
-            {
-                strConnectionString = GetConnectionString();
-            }
-
-            System.Data.Common.DbConnection idbcon = m_ProviderFactory.CreateConnection();
-            idbcon.ConnectionString = strConnectionString;
-
-            return idbcon;
-        } // End Function GetConnection
-
-        public static System.Data.IDbCommand CreateCommand(string strSQL)
-        {
-            return CreateCommand(strSQL, 30);
-        }
-
-
-
-        public static System.Data.IDbCommand CreateCommand(string strSQL, int timeout)
-        {
-            System.Data.IDbCommand idbc = m_ProviderFactory.CreateCommand();
-
-            if (IsPostGreSql)
-            {
-                strSQL = ConvertTopNStatement(strSQL);
-                strSQL = ReplaceOdbcFunctions(strSQL);
-            }
-
-            if (!string.IsNullOrEmpty(strSQL))
-            {
-                idbc.CommandText = strSQL;
-            }
-
-            idbc.CommandTimeout = Math.Max(timeout, 0);
-
-            return idbc;
-        } // End Function CreateCommand
-
-
-        public static System.Data.IDbCommand CreateCommand()
-        {
-            return CreateCommand(null);
-        } // End Function CreateCommand
-
-
-        // Warning: getMandant() liefert immer den entsprechenden Mandant...
-        //public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName)
-        //{
-        //    Int32 intBE_ID = -1;
-        //    // Mandant manMandant = Mandant.Global;
-        //    Mandant manMandant = getMandant();
-        //    return CreateCommandFromFile(strEmbeddedFileName, intBE_ID, manMandant);
-        // }
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Int32 intBE_ID)
-        {
-            return CreateCommandFromFile(strEmbeddedFileName, intBE_ID, 30);
-        }
-
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Int32 intBE_ID, int timeOut)
-        {
-            //Mandant enuMandant = Mandant.Global;
-            Mandant enuMandant = SQL.getMandant();
-
-            return CreateCommandFromFile(strEmbeddedFileName, intBE_ID, enuMandant, timeOut);
-        }
-
-
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Mandant enuMandant)
-        {
-            return CreateCommandFromFile(strEmbeddedFileName, enuMandant, 30);
-        }
-
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Mandant enuMandant, int timeOut)
-        {
-            Int32 intBE_ID = -1;
-
-            return CreateCommandFromFile(strEmbeddedFileName, intBE_ID, enuMandant, timeOut);
-        }
-
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Int32 intBE_ID, Mandant enuMandant)
-        {
-            return CreateCommandFromFile(strEmbeddedFileName, intBE_ID, enuMandant, 30);
-        }
-
-
-        public static System.Data.IDbCommand CreateCommandFromFile(string strEmbeddedFileName, Int32 intBE_ID, Mandant enuMandant, int Timeout)
+        public virtual System.Data.Common.DbCommand CreateCommandFromFile(System.Reflection.Assembly asm, string embeddedFileName, int Timeout)
         {
             //Start: Rico Test
-            if (!string.IsNullOrEmpty(strEmbeddedFileName) && !strEmbeddedFileName.StartsWith(".")) strEmbeddedFileName = "." + strEmbeddedFileName;
+            if (!string.IsNullOrEmpty(embeddedFileName) && !embeddedFileName.StartsWith(".")) 
+                embeddedFileName = "." + embeddedFileName;
             //End: Rico Test
 
             string strRessourceName = string.Empty;
-            string strSQL = GetEmbeddedSqlScript(strEmbeddedFileName, enuMandant, ref strRessourceName);
+            string strSQL = null; // GetEmbeddedSqlScript(strEmbeddedFileName, enuMandant, ref strRessourceName);
 
-            System.Data.IDbCommand tCommand = CreateCommand(strSQL);
+            System.Data.Common.DbCommand tCommand = this.CreateCommand(strSQL);
             tCommand.CommandTimeout = Timeout;
 
             strRessourceName = strRessourceName.Substring(strRessourceName.IndexOf('.') + 1);
             strRessourceName = strRessourceName.Substring(strRessourceName.IndexOf('.'));
 
-            AddParameter(tCommand, "@___ResourceName", strRessourceName);
-            AddParameter(tCommand, "@BE_ID", intBE_ID);
-            AddParameter(tCommand, "@MDT_ID", (int)enuMandant);
+            this.AddParameter(tCommand, "@___ResourceName", strRessourceName);
+            // this.AddParameter(tCommand, "@BE_ID", intBE_ID);
+            // this.AddParameter(tCommand, "@MDT_ID", (int)enuMandant);
 
             return tCommand;
         }
 
 
 
-        public void ErrorLog(string sPathName, string sErrMsg)
+        public string GetParameters(System.Data.Common.DbCommand cmd)
         {
-            string sErrorTime = System.DateTime.Now.ToString("yyyyMMdd'T'HHmmss", System.Globalization.CultureInfo.InvariantCulture);
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(sPathName + sErrorTime, true);
-            // sw.WriteLine(sLogFormat + sErrMsg);
-            sw.Flush();
-            sw.Close();
+            string strReturnValue = "";
+
+            if (cmd == null)
+                return strReturnValue;
+
+            try
+            {
+                System.Text.StringBuilder msg = new System.Text.StringBuilder();
+                System.DateTime dtLogTime = System.DateTime.UtcNow;
+
+                if (cmd.Parameters != null && cmd.Parameters.Count > 0)
+                {
+                    msg.AppendLine("-- ***** Listing Parameters *****");
+
+                    foreach (System.Data.Common.DbParameter thisParameter in cmd.Parameters)
+                    {
+                        // http://msdn.microsoft.com/en-us/library/cc716729.aspx
+                        msg.AppendLine(string.Format("DECLARE {0} AS {1} -- DbType: {2}", thisParameter.ParameterName, SqlTypeFromDbType(thisParameter.DbType), thisParameter.DbType.ToString()));
+                    } // Next idpThisParameter
+
+                    msg.AppendLine(System.Environment.NewLine);
+                    msg.AppendLine(System.Environment.NewLine);
+
+                    foreach (System.Data.IDataParameter thisParameter in cmd.Parameters)
+                    {
+                        string strParameterValue = null;
+                        if (object.ReferenceEquals(thisParameter.Value, System.DBNull.Value))
+                        {
+                            strParameterValue = "NULL";
+                        }
+                        else
+                        {
+                            if (thisParameter.DbType == System.Data.DbType.Date)
+                                strParameterValue = string.Format(DATEFORMAT, thisParameter.Value);
+                            else if (thisParameter.DbType == System.Data.DbType.DateTime || thisParameter.DbType == System.Data.DbType.DateTime2)
+                                strParameterValue = string.Format(DATETIMEFORMAT, thisParameter.Value);
+                            else
+                                strParameterValue = thisParameter.Value.ToString();
+
+                            strParameterValue = "'" + strParameterValue.Replace("'", "''") + "'";
+                        }
+
+                        msg.AppendLine(string.Format("SET {0} = {1}", thisParameter.ParameterName, strParameterValue));
+                    }
+
+                    msg.AppendLine("-- ***** End Parameter Listing *****");
+                    msg.AppendLine(System.Environment.NewLine);
+                } // End if (cmd.Parameters != null && cmd.Parameters.Count > 0)
+
+                strReturnValue = msg.ToString();
+                msg.Length = 0;
+                msg = null;
+            }
+            catch (System.Exception ex)
+            {
+                strReturnValue = "Error in Function GetParameters";
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.GetType().FullName;
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.Message;
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.StackTrace;
+            }
+
+            return strReturnValue;
+        } // End Function GetParameters
+
+
+        public string GetParametrizedQueryText(System.Data.Common.DbCommand cmd)
+        {
+            string strReturnValue = "";
+
+            if (cmd == null)
+                return strReturnValue;
+
+            try
+            {
+                System.Text.StringBuilder msg = new System.Text.StringBuilder();
+                System.DateTime dtLogTime = System.DateTime.UtcNow;
+
+                if (cmd.Parameters != null && cmd.Parameters.Count > 0)
+                {
+                    msg.AppendLine("-- ***** Listing Parameters *****");
+
+                    foreach (System.Data.IDataParameter thisParameter in cmd.Parameters)
+                    {
+                        // http://msdn.microsoft.com/en-us/library/cc716729.aspx
+                        msg.AppendLine(string.Format("DECLARE {0} AS {1} -- DbType: {2}", thisParameter.ParameterName, SqlTypeFromDbType(thisParameter.DbType), thisParameter.DbType.ToString()));
+                    } // Next idpThisParameter
+
+                    msg.AppendLine(System.Environment.NewLine);
+                    msg.AppendLine(System.Environment.NewLine);
+
+                    foreach (System.Data.IDataParameter thisParameter in cmd.Parameters)
+                    {
+                        string strParameterValue = null;
+                        if (object.ReferenceEquals(thisParameter.Value, System.DBNull.Value))
+                        {
+                            strParameterValue = "NULL";
+                        }
+                        else
+                        {
+                            if (thisParameter.DbType == System.Data.DbType.Date)
+                                strParameterValue = string.Format(DATEFORMAT, thisParameter.Value);
+                            else if (thisParameter.DbType == System.Data.DbType.DateTime || thisParameter.DbType == System.Data.DbType.DateTime2)
+                                strParameterValue = string.Format(DATETIMEFORMAT, thisParameter.Value);
+                            else
+                                strParameterValue = thisParameter.Value.ToString();
+
+                            strParameterValue = "'" + strParameterValue.Replace("'", "''") + "'";
+                        }
+
+                        msg.AppendLine(string.Format("SET {0} = {1}", thisParameter.ParameterName, strParameterValue));
+                    }
+
+                    msg.AppendLine("-- ***** End Parameter Listing *****");
+                    msg.AppendLine(System.Environment.NewLine);
+                } // End if (cmd.Parameters != null && cmd.Parameters.Count > 0)
+
+
+                msg.AppendLine(string.Format("-- ***** Start Query from {0} *****", dtLogTime.ToString(DATEFORMAT)));
+                if(cmd.CommandText != null)
+                    msg.AppendLine(cmd.CommandText);
+                msg.AppendLine(string.Format("-- ***** End Query from {0} *****", dtLogTime.ToString(DATEFORMAT)));
+                msg.AppendLine(System.Environment.NewLine);
+
+                strReturnValue = msg.ToString();
+                msg = null;
+            }
+            catch (System.Exception ex)
+            {
+                strReturnValue = "Error in Function GetParametrizedQueryText";
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.GetType().FullName;
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.Message;
+                strReturnValue += System.Environment.NewLine;
+                strReturnValue += ex.StackTrace;
+            }
+
+            return strReturnValue;
+        } // End Function GetParametrizedQueryText
+
+
+        public void OpenConnection(System.Data.Common.DbConnection connect)
+        {
+            if (connect.State != System.Data.ConnectionState.Open)
+                connect.Open();
         }
+
+        public void CloseConnection(System.Data.Common.DbConnection connect)
+        {
+            if (connect.State != System.Data.ConnectionState.Closed)
+                connect.Close();
+        }
+
+
+        public int ExecuteNonQuery(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
+        {
+            cmd.Connection = connection;
+            return cmd.ExecuteNonQuery();
+        }
+
+
+        public int ExecuteNonQuery(string sql, System.Data.Common.DbConnection connection)
+        {
+            int retVal = 0;
+
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                retVal = this.ExecuteNonQuery(cmd, connection);
+            }
+
+            return retVal;
+        }
+
+
+        public int ExecuteNonQuery(string sql, string connectionString)
+        {
+            int retVal = 0;
+
+            using (System.Data.Common.DbConnection connection = this.GetConnection(connectionString))
+            {
+                this.OpenConnection(connection);
+
+                using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+                {
+                    retVal = this.ExecuteNonQuery(cmd, connection);
+                }
+
+                this.CloseConnection(connection);
+            }
+
+            return retVal;
+        }
+
+
+        public int ExecuteNonQuery(System.Data.Common.DbCommand cmd)
+        {
+            int retVal = 0;
+
+            using(System.Data.Common.DbConnection connect = this.GetConnection())
+            {
+                this.OpenConnection(connect);
+
+                retVal = ExecuteNonQuery(connect);
+
+                this.CloseConnection(connect);
+            }
+
+            return retVal;
+        }
+
+
+        public int ExecuteNonQuery(string sql)
+        {
+            int retVal = 0;
+
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                retVal = this.ExecuteNonQuery(cmd);
+            }
+
+            return retVal;
+        }
+
+
+
+
+        public object ExecuteScalar(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
+        {
+            cmd.Connection = connection;
+            return cmd.ExecuteScalar();
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteScalar(string sql, System.Data.Common.DbConnection connection)
+        {
+            object objRetVal = 0;
+
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                objRetVal = this.ExecuteScalar(cmd, connection);
+            }
+
+            return objRetVal;
+        }
+
+
+        public object ExecuteScalar(System.Data.Common.DbCommand cmd)
+        {
+            object objRetVal = 0;
+
+            using(System.Data.Common.DbConnection connect = this.GetConnection())
+            {
+                this.OpenConnection(connect);
+
+                objRetVal = this.ExecuteScalar(cmd, connect);
+
+                this.CloseConnection(connect);
+            }
+
+            return objRetVal;
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteScalar(string sql)
+        {
+            object objRetVal = 0;
+
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                objRetVal = this.ExecuteScalar(cmd);
+            }
+
+            return objRetVal;
+        }
+
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour, System.Data.Common.DbConnection connection)
+        {
+            cmd.Connection = connection;
+            return cmd.ExecuteReader(behaviour);
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(string sql, System.Data.CommandBehavior behaviour, System.Data.Common.DbConnection connection)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                dataReader = this.ExecuteReader(cmd, behaviour, connection);
+            }
+
+            return dataReader;
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.Common.DbConnection connection)
+        {
+            return this.ExecuteReader(cmd,System.Data.CommandBehavior.CloseConnection, connection);
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(string sql, System.Data.Common.DbConnection connection)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                dataReader = this.ExecuteReader(cmd, connection);
+            }
+
+            return dataReader;
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+
+            using(System.Data.Common.DbConnection connect = this.GetConnection())
+            {
+                this.OpenConnection(connect);
+
+                dataReader = this.ExecuteReader(cmd, connect, behaviour);
+
+                this.CloseConnection(connect);
+            }
+
+            return dataReader;
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(string sql, System.Data.CommandBehavior behaviour)
+        {
+            System.Data.Common.DbDataReader dataReader = null;
+            using(System.Data.Common.DbCommand cmd = this.CreateCommand(sql))
+            {
+                dataReader = this.ExecuteReader(cmd, behaviour);
+            }
+
+            return dataReader;
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd)
+        {
+            return this.ExecuteReader(cmd, System.Data.CommandBehavior.CloseConnection);
+        }
+
+
+        public System.Data.Common.DbDataReader ExecuteReader(string sql)
+        {
+            return this.ExecuteReader(sql, System.Data.CommandBehavior.CloseConnection);
+        }
+
+
     }
 }

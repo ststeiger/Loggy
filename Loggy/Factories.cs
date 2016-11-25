@@ -1,6 +1,4 @@
-﻿
-
-//
+﻿//
 // System.Data.Common.DbProviderFactories.cs
 //
 // Author:
