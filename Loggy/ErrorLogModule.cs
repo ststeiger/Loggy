@@ -186,7 +186,10 @@ namespace Loggy
             System.DateTime date = System.DateTime.Now;
 
             // http://stackoverflow.com/questions/1654797/get-iis-site-name-from-for-an-asp-net-website
-            string siteName = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName();
+            // string siteName = System.Web.Hosting.HostingEnvironment.ApplicationHost.GetSiteName();
+
+
+
 
             // System.Web.Hosting.HostingEnvironment.IsHosted
             System.Console.WriteLine(System.Web.Hosting.HostingEnvironment.ApplicationID);

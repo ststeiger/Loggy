@@ -22,7 +22,8 @@ namespace Loggy
 
 		public void ProcessRequest(System.Web.HttpContext context)
 		{
-			HttpResponse response = context.Response ;
+			HttpResponse response = context.Response;
+			
             response.Write("<html><body><h1>Hello 15Seconds   Reader ");
             response.Write("</body></html>");
 		}
