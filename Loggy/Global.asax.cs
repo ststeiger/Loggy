@@ -60,15 +60,15 @@ namespace Loggy
             System.Data.SqlClient.SqlConnectionStringBuilder csb = new System.Data.SqlClient.SqlConnectionStringBuilder();
 
             csb.DataSource = System.Environment.MachineName;
+
             csb.IntegratedSecurity = true;
             if (!csb.IntegratedSecurity)
             {
-                csb.UserID = "ApertureWebServicesDE";
-                csb.Password = "";
+                csb.UserID = "DAL_Test";
+                csb.Password = "Test123";
             }
 
             csb.InitialCatalog = "COR_Basic_Swisscom";
-
 
 
             cDAL DAL = cDAL.CreateInstance();
