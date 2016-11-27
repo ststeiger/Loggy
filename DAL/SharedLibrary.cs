@@ -2,7 +2,7 @@
 namespace Loggy
 {
 
-
+   
     public class SharedLibrary
     {
 
@@ -48,15 +48,15 @@ namespace Loggy
             try
             {
 
-                if (System.Environment.OSVersion.Platform == System.PlatformID.Unix)
+                if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    hSO = LoadLibrary(strFileName);
+                } // End if(System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                else
                 {
                     hSO = dlopen(strFileName, RTLD_NOW);
                 }
-                else
-                {
-                    hSO = LoadLibrary(strFileName);
-                } // End if (Environment.OSVersion.Platform == PlatformID.Unix)
-
+                
             } // End Try
             catch (System.Exception ex)
             {
@@ -87,7 +87,18 @@ namespace Loggy
             try
             {
 
-                if (System.Environment.OSVersion.Platform == System.PlatformID.Unix)
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                {
+                    // FreeLibrary: If the function succeeds, the return value is nonzero.
+                    // If the function fails, the return value is zero. 
+                    // To get extended error information, call the GetLastError function.
+                    bError = !FreeLibrary(hSO);
+
+                    if (bError)
+                        throw new System.ComponentModel.Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+
+                }
+                else
                 {
                     // If the referenced object was successfully closed, dlclose() shall return 0. 
                     // If the object could not be closed, or if handle does not refer to an open object, 
@@ -95,24 +106,13 @@ namespace Loggy
                     // More detailed diagnostic information shall be available through dlerror().
 
                     // http://stackoverflow.com/questions/956640/linux-c-error-undefined-reference-to-dlopen
-                    if(dlclose(hSO) == 0)
+                    if (dlclose(hSO) == 0)
                         bError = false;
 
                     if (bError)
                         throw new System.InvalidOperationException("Error unloading handle " + hSO.ToInt64().ToString()
                             + System.Environment.NewLine + "System error message: " + dlerror());
                 }
-                else
-                {
-                    // FreeLibrary: If the function succeeds, the return value is nonzero.
-                    // If the function fails, the return value is zero. 
-                    // To get extended error information, call the GetLastError function.
-                    bError = !FreeLibrary(hSO);
-
-                    if(bError)
-                        throw new System.ComponentModel.Win32Exception(System.Runtime.InteropServices.Marshal.GetLastWin32Error()); 
-
-                } // End if (Environment.OSVersion.Platform == PlatformID.Unix)
 
             } // End Try
             catch (System.Exception ex)
@@ -149,6 +149,6 @@ namespace Loggy
 
 
     } // End Class SharedLibrary
-
+   
 
 } // End Namespace Platform

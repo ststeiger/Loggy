@@ -1,8 +1,8 @@
-﻿using System;
-using System.Data;
-
+﻿
 namespace DbTest
 {
+
+
     class MainClass
     {
 
@@ -12,13 +12,29 @@ namespace DbTest
             System.Data.SqlClient.SqlConnectionStringBuilder csb = new System.Data.SqlClient.SqlConnectionStringBuilder();
 
             csb.DataSource = System.Environment.MachineName;
-            csb.DataSource = @"192.168.1.8"; // DESKTOP-8HDOB22
+            csb.DataSource = @"10.1.1.8"; // Must be IP, NETBIOS doesn't resolve on Linux
+
+            // SQL Server Configuration Manager
+            // SQL Server 2016 C:\Windows\SysWOW64\SQLServerManager13.msc
+            // SQL Server 2014 C:\Windows\SysWOW64\SQLServerManager12.msc
+            // SQL Server 2012 C:\Windows\SysWOW64\SQLServerManager11.msc
+            // SQL Server 2008 C:\Windows\SysWOW64\SQLServerManager10.msc
+            // in Network-Configuration: Activate TCP/IP & Restart Service 
+
+            // Open firewall port for SQL-Server
+            // - Windows 10: 
+            //      netsh advfirewall firewall add rule name="SQL Server" dir=in action=allow protocol=TCP localport=1433
+            // - Windows < 10: 
+            //      netsh firewall set portopening TCP 1433 "SQLServer"
+
+            // https://support.microsoft.com/en-us/kb/968872
+            // https://blog.brankovucinec.com/2015/12/04/scripts-to-open-windows-firewall-ports-for-sql-server/
 
 
-            csb.IntegratedSecurity = true;
+            csb.IntegratedSecurity = false;
             if (!csb.IntegratedSecurity)
             {
-                csb.UserID = "DAL_WebService";
+                csb.UserID = "LoggyWebServices";
                 csb.Password = "Test123";
             }
 
@@ -96,14 +112,17 @@ namespace DbTest
             } // End Using dbConnection
 
         } // End Sub Test 
-
-
+        
 
 
         public static void Main(string[] args)
         {
             Test();
-            Console.WriteLine("Hello World!");
+            System.Console.WriteLine("Hello World!");
         }
+
+
     }
+
+
 }
