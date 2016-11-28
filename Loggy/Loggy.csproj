@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageTemplate.txt" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
@@ -70,6 +71,13 @@
     </Compile>
     <Compile Include="ErrorLogModule.cs" />
     <Compile Include="DAL\GenericExtensions.cs" />
+    <Compile Include="ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -81,6 +89,8 @@
     <Compile Include="DAL\ScriptSplitter.cs" />
     <Compile Include="DAL\SharedLibrary.cs" />
     <Compile Include="DAL\TopologicalSorter.cs" />
+    <Compile Include="SomeDbOperations.cs" />
+    <Compile Include="SqlInjectionScreeningModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
