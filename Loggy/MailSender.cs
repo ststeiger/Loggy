@@ -6,22 +6,6 @@ namespace Loggy
 {
 
 
-
-
-
-
-
-
-    using Microsoft.VisualBasic;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Diagnostics;
-
-    using System.Net.Mail;
-
-
     public sealed class ErrorHandler
     {
 
@@ -41,23 +25,23 @@ namespace Loggy
 
 
 
-            string strMachineInfo = "Machine: " + Environment.MachineName;
-            strMachineInfo += Environment.NewLine;
-            strMachineInfo += "Domain: " + Environment.UserDomainName;
-            strMachineInfo += Environment.NewLine;
-            strMachineInfo += "User: " + Environment.UserName;
-            strMachineInfo += Environment.NewLine;
+            string strMachineInfo = "Machine: " + System.Environment.MachineName;
+            strMachineInfo += System.Environment.NewLine;
+            strMachineInfo += "Domain: " + System.Environment.UserDomainName;
+            strMachineInfo += System.Environment.NewLine;
+            strMachineInfo += "User: " + System.Environment.UserName;
+            strMachineInfo += System.Environment.NewLine;
             strMachineInfo += "Time: " + System.DateTime.Now.ToString("dddd, dd.MM.yyyy HH:mm:ss");
-            strMachineInfo += Environment.NewLine;
+            strMachineInfo += System.Environment.NewLine;
             strMachineInfo += "Bitness: " + (System.IntPtr.Size * 8).ToString();
-            strMachineInfo += Environment.NewLine;
-            strMachineInfo += "OS: " + Environment.OSVersion.ToString();
-            strMachineInfo += Environment.NewLine;
-            strMachineInfo += "CLR Version: " + Environment.Version.ToString();
-            strMachineInfo += Environment.NewLine;
+            strMachineInfo += System.Environment.NewLine;
+            strMachineInfo += "OS: " + System.Environment.OSVersion.ToString();
+            strMachineInfo += System.Environment.NewLine;
+            strMachineInfo += "CLR Version: " + System.Environment.Version.ToString();
+            strMachineInfo += System.Environment.NewLine;
 
-            strMachineInfo += Environment.NewLine;
-            strMachineInfo += Environment.NewLine;
+            strMachineInfo += System.Environment.NewLine;
+            strMachineInfo += System.Environment.NewLine;
 
 
             strErrorMessage = strMachineInfo + strErrorMessage;
@@ -166,7 +150,7 @@ namespace Loggy
                     
                     //System.Net.ServicePointManager.CertificatePolicy = New AcceptAllCertificatePolicy()
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                 }
 
