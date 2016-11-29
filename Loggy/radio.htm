@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <style type="text/css" media="all">
+        /* Variables
+ ------------------------------------------------------------- */
+        /* Animation from Animate.css
+ ------------------------------------------------------------- */
+        /* keyframes + card sind nur für CARD */
+        @-webkit-keyframes cardEnter
+        {
+            0%, 20%, 40%, 60%, 80%, 100%
+            {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+                transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            }
+
+            0%
+            {
+                opacity: 0;
+                -webkit-transform: scale3d(0.3, 0.3, 0.3);
+            }
+
+            20%
+            {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40%
+            {
+                -webkit-transform: scale3d(0.9, 0.9, 0.9);
+            }
+
+            60%
+            {
+                opacity: 1;
+                -webkit-transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80%
+            {
+                -webkit-transform: scale3d(0.97, 0.97, 0.97);
+            }
+
+            100%
+            {
+                opacity: 1;
+                -webkit-transform: scale3d(1, 1, 1);
+            }
+        }
+        
+        @keyframes cardEnter
+        {
+            0%, 20%, 40%, 60%, 80%, 100%
+            {
+                -webkit-transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+                transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            }
+
+            0%
+            {
+                opacity: 0;
+                -webkit-transform: scale3d(0.3, 0.3, 0.3);
+                transform: scale3d(0.3, 0.3, 0.3);
+            }
+
+            20%
+            {
+                -webkit-transform: scale3d(1.1, 1.1, 1.1);
+                transform: scale3d(1.1, 1.1, 1.1);
+            }
+
+            40%
+            {
+                -webkit-transform: scale3d(0.9, 0.9, 0.9);
+                transform: scale3d(0.9, 0.9, 0.9);
+            }
+
+            60%
+            {
+                opacity: 1;
+                -webkit-transform: scale3d(1.03, 1.03, 1.03);
+                transform: scale3d(1.03, 1.03, 1.03);
+            }
+
+            80%
+            {
+                -webkit-transform: scale3d(0.97, 0.97, 0.97);
+                transform: scale3d(0.97, 0.97, 0.97);
+            }
+
+            100%
+            {
+                opacity: 1;
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        /* Foundation
+ ------------------------------------------------------------- */
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container
+ ------------------------------------------------------------- */
+        .card
+        {
+            -webkit-animation: cardEnter 0.75s ease-in-out 0.5s;
+            animation: cardEnter 0.75s ease-in-out 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            max-width: 250px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            margin: 20px auto;
+            opacity: 0;
+        }
+
+        /* Individual Controls
+ ------------------------------------------------------------- */
+        .radio
+        {
+            display: inline-block;
+            padding-right: 20px;
+            font-size: 18px;
+            line-height: 49px;
+            cursor: pointer;
+        }
+
+            .radio:hover .inner
+            {
+                -webkit-transform: scale(0.5);
+                transform: scale(0.5);
+                opacity: .5;
+            }
+
+            .radio input
+            {
+                height: 1px;
+                width: 1px;
+                opacity: 0;
+            }
+
+                .radio input:checked + .outer .inner
+                {
+                    -webkit-transform: scale(1);
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                .radio input:checked + .outer
+                {
+                    border: 3px solid #f08b3b;
+                }
+
+                .radio input:focus + .outer .inner
+                {
+                    -webkit-transform: scale(1);
+                    transform: scale(1);
+                    opacity: 1;
+                    background-color: #e67012;
+                }
+
+            .radio .outer
+            {
+                height: 20px;
+                width: 20px;
+                display: block;
+                float: left;
+                margin: 10px 9px 10px 10px;
+                border: 3px solid #0c70b4;
+                border-radius: 50%;
+                background-color: #fff;
+            }
+
+            .radio .inner
+            {
+                -webkit-transition: all 0.25s ease-in-out;
+                transition: all 0.25s ease-in-out;
+                height: 16px;
+                width: 16px;
+                -webkit-transform: scale(0);
+                transform: scale(0);
+                display: block;
+                margin: 2px;
+                border-radius: 50%;
+                background-color: #f08b3b;
+                opacity: 0;
+            }
+    </style>
+
+
+</head>
+<body>
+
+
+    <!-- No spacing due to whitespace bug in Chrome. -->
+    <div class="card">
+        <label class="radio"><input id="radio1" type="radio" name="radios" checked><span class="outer"><span class="inner"></span></span>Robert Baratheon</label>
+        <label class="radio"><input id="radio2" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Rhaegar Targaryen</label>
+        <label class="radio"><input id="radio3" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Lyanna Stark</label>
+        <label class="radio"><input id="radio4" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Tywin Lannister</label>
+        <label class="radio"><input id="radio5" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Jon Arryn</label>
+    </div>
+
+    <div class="card" style="opacity: 1;">
+        <label class="radio"><input id="radio1" type="radio" name="radios" checked><span class="outer"><span class="inner"></span></span>Robert Baratheon</label>
+        <label class="radio"><input id="radio2" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Rhaegar Targaryen</label>
+        <label class="radio"><input id="radio3" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Lyanna Stark</label>
+        <label class="radio"><input id="radio4" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Tywin Lannister</label>
+        <label class="radio"><input id="radio5" type="radio" name="radios"><span class="outer"><span class="inner"></span></span>Jon Arryn</label>
+    </div>
+
+
+    <script type="text/javascript">
+
+    </script>
+
+</body>
+</html>

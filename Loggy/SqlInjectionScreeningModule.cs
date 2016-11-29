@@ -12,38 +12,42 @@ namespace Loggy
 
         public static string[] blackList = {
 	"'",
-    "--",
-	";--",
-	";",
-	"/*",
-	"*/",
-	"@@",
-	"@",
-	"char",
-	"nchar",
-	"varchar",
-	"nvarchar",
-	"alter",
-	"begin",
-	"cast",
-	"create",
-	"cursor",
-	"declare",
-	"delete",
-	"drop",
-	"end",
-	"exec",
-	"execute",
-	"fetch",
-	"insert",
-	"kill",
-	"open",
-	"select",
-	"sys",
-	"sysobjects",
-	"syscolumns",
-	"table",
-	"update"
+    "<script>",
+    "</script>",
+    "<script",
+    "</script",
+    //"--",
+    //";--",
+    //";",
+    //"/*",
+    //"*/",
+    //"@@",
+    //"@",
+    //"char",
+    //"nchar",
+    //"varchar",
+    //"nvarchar",
+    //"alter",
+    //"begin",
+    //"cast",
+    //"create",
+    //"cursor",
+    //"declare",
+    //"delete",
+    //"drop",
+    //"end",
+    //"exec",
+    //"execute",
+    //"fetch",
+    //"insert",
+    //"kill",
+    //"open",
+    //"select",
+    //"sys",
+    //"sysobjects",
+    //"syscolumns",
+    //"table",
+    //"update"
 };
 
 
@@ -64,15 +68,19 @@ namespace Loggy
             context.PostMapRequestHandler += new System.EventHandler(OnPostMapRequestHandler);
 
 
-            context.EndRequest += new System.EventHandler(OnEndRequest);
+            // context.EndRequest += new System.EventHandler(OnEndRequest);
 
         }
 
 
-
         private void OnBeginRequest(object sender, System.EventArgs e)
         {
-            System.Web.HttpRequest request = System.Web.HttpContext.Current.Request;
+        }
+
+
+        // System.Web.HttpRequest request
+        private void CheckInjection(System.Web.HttpRequest request)
+        {
             string ip = request.UserHostAddress;
 
 
@@ -94,7 +102,6 @@ namespace Loggy
         }
 
 
-
         private void CheckInput(string parameter)
         {
             for (int i = 0; i <= blackList.Length - 1; i++)
@@ -108,9 +115,9 @@ namespace Loggy
                     //generic error page on your site 
                     // System.Web.HttpContext.Current.Response.Redirect("~/Error.aspx");
 
-                    System.Web.HttpContext.Current.Response.Clear();
-                    System.Web.HttpContext.Current.Response.ClearHeaders();
-                    System.Web.HttpContext.Current.Response.ClearContent();
+                    // System.Web.HttpContext.Current.Response.Clear();
+                    // System.Web.HttpContext.Current.Response.ClearHeaders();
+                    // System.Web.HttpContext.Current.Response.ClearContent();
 
                     System.Web.HttpContext.Current.Handler = new MyHandler();
                     // System.Web.HttpContext.Current.ApplicationInstance.CompleteRequest();
@@ -149,6 +156,9 @@ namespace Loggy
             System.Console.WriteLine(appPath);
 
 
+            CheckInjection(context.Request);
+
+
             if (context.Request.Url.AbsolutePath == "/foo.ashx")
             {
                 // IHttpHandler myHandler = new MyHandler();
@@ -159,6 +169,7 @@ namespace Loggy
         }
 
 
-
     }
+
+
 }
