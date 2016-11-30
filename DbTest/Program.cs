@@ -7,6 +7,14 @@ namespace DbTest
     {
 
 
+        public static void testlong()
+        {
+            ulong val1 = 1234567891011121314UL;
+            System.Console.WriteLine(val1);
+        }
+
+
+
         public static void Test()
         {
             System.Data.SqlClient.SqlConnectionStringBuilder csb = new System.Data.SqlClient.SqlConnectionStringBuilder();
