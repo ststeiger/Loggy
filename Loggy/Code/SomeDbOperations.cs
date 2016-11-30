@@ -1,12 +1,20 @@
-﻿using System;
+﻿
+#define WITH_CONNECTION 
+// #undef WITH_CONNECTION
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Web;
 
+
 namespace Loggy
 {
+
+
     public class SomeDbOperations
     {
-
 
 
         public static void Test()
@@ -22,7 +30,7 @@ namespace Loggy
                 csb.Password = "Test123";
             }
 
-            csb.InitialCatalog = "COR_Basic_Swisscom";
+            csb.InitialCatalog = "COR_Basic_Demo_V4";
 
 
             cDAL DAL = cDAL.CreateInstance();
@@ -35,9 +43,6 @@ namespace Loggy
 
                 DAL.ExecuteNonQuery("UPDATE T_Benutzer SET BE_Hash = BE_Hash;", dbConnection);
                 DAL.ExecuteNonQuery("UPDATE T_Benutzer SET BE_Hash = BE_Hash;", dbConnection);
-
-
-
 
 
 #if WITH_CONNECTION 
@@ -97,5 +102,7 @@ namespace Loggy
         } // End Sub Test 
 
 
-    }
-}
+    } // End Class SomeDbOperations
+
+
+} // End Namespace Loggy

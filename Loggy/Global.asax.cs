@@ -1,14 +1,4 @@
 ﻿
-#define WITH_CONNECTION 
-// #undef WITH_CONNECTION
-
-using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Security;
-using System.Web.SessionState;
-
-
 namespace Loggy
 {
 
@@ -33,7 +23,7 @@ namespace Loggy
         // IIS uses something called application pools. And each pool can have an arbitrary number of HttpApplication instances. Yes multiple. 
         // Application starting creates all these instances. 
         // Every one of them initializes their own list of modules but only the first one executes the Application_OnStart event handler.
-        protected void Application_Start(object sender, EventArgs e)
+        protected void Application_Start(object sender, System.EventArgs e)
         {
             moduleError.Init(this);
             System.Console.WriteLine("Redirect");
@@ -43,11 +33,15 @@ namespace Loggy
 
             // SomeDbOperations.Test();
         }
+
+
         // public static IHttpModule CookieAuth = new ErrorLogModule();
         // public static IHttpModule modul404 = new ErrorLogModule();
-        public static IHttpModule moduleError = new ErrorLogModule();
+        public static System.Web.IHttpModule moduleError = new ErrorLogModule();
 
-        public static IHttpModule moduleSqlScreening = new SqlInjectionScreeningModule();
+        public static System.Web.IHttpModule moduleSqlScreening = new SqlInjectionScreeningModule();
+
+
 
         // The Application_Start and Application_End methods are special methods that do not represent HttpApplication events. 
         // ASP.NET calls them once for the lifetime of the application domain, not for each HttpApplication instance.
@@ -59,38 +53,43 @@ namespace Loggy
         }
 
 
-        protected void Session_Start(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_AuthenticateRequest(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_Error(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Session_End(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void Application_End(object sender, EventArgs e)
+        protected void Session_Start(object sender, System.EventArgs e)
         {
 
         }
 
 
-    }
+        protected void Application_BeginRequest(object sender, System.EventArgs e)
+        {
+
+        }
 
 
-}
+        protected void Application_AuthenticateRequest(object sender, System.EventArgs e)
+        {
+
+        }
+
+
+        protected void Application_Error(object sender, System.EventArgs e)
+        {
+
+        }
+
+
+        protected void Session_End(object sender, System.EventArgs e)
+        {
+
+        }
+
+
+        protected void Application_End(object sender, System.EventArgs e)
+        {
+
+        }
+
+
+    } // End Class Global 
+
+
+} // End Namespace Loggy 
