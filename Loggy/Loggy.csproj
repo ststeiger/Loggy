@@ -47,13 +47,29 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="beautifulCheckbox.htm" />
+    <Content Include="beautifulRadio.htm" />
+    <Content Include="customflipswitch.htm" />
     <Content Include="Default.aspx" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageTemplate.txt" />
+    <Content Include="filledCheckbox.htm" />
+    <Content Include="filledCheckboxSimple.htm" />
+    <Content Include="flipswitch.htm" />
+    <Content Include="fontAwesomeCheckboxes.htm" />
+    <Content Include="formData.htm" />
     <Content Include="Global.asax" />
+    <Content Include="IEcompatibleCheckbox.htm" />
+    <Content Include="IEcompatibleCheckboxMDN.htm" />
+    <Content Include="info.txt" />
+    <Content Include="info2.txt" />
+    <Content Include="materialcheckbox.htm" />
+    <Content Include="radio.htm" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
+    <Content Include="simpleCheckbox.htm" />
+    <Content Include="simpleRadiobox.htm" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -96,6 +112,7 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="prettyCheckboxes_uncompressed.1.1.zip" />
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
