@@ -40,6 +40,35 @@ namespace Loggy
         private void OnBeginRequest(object sender, System.EventArgs e)
         {
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+
+
+            System.Web.HttpApplication app = ((System.Web.HttpApplication)sender);
+
+            if (app == null)
+                return;
+
+
+            System.Web.HttpContext context = app.Context;
+            if (context == null)
+                return;
+
+            if (context.Request == null)
+                return;
+
+            var nvc = context.Request.QueryString;
+            if (nvc == null)
+                return;
+
+            string culture = nvc["culture"];
+            if (string.IsNullOrEmpty(culture))
+                culture = "en-US";
+
+
+            // context.Request.UserLanguages = new string[] { "a", "b" };
+
+            System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CreateSpecificCulture(culture);
+            System.Threading.Thread.CurrentThread.CurrentCulture = cult;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = cult;
         }
 
 
@@ -64,6 +93,8 @@ namespace Loggy
                                           : ":" + context.Request.Url.Port,
                                       context.Request.ApplicationPath);
             System.Console.WriteLine(appPath);
+
+
 
 
             if (context.Request.Url.AbsolutePath == "/foo.ashx")

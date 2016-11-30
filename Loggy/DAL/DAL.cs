@@ -4,7 +4,7 @@ namespace Loggy
     public delegate void DataReaderCallback_t(System.Data.Common.DbDataReader reader);
 
 
-    public abstract class cDAL
+    public abstract partial class cDAL
     {
         protected System.Data.Common.DbProviderFactory m_ProviderFactory;
         protected string m_ConnectionString;
@@ -770,7 +770,7 @@ namespace Loggy
 
 
 
-        // WARNING: DISPOSE BEFORE USED 
+        // WARNING: BUGGY - CONNECTION IS DISPOSED BEFORE IT IS USED 
         internal System.Data.Common.DbDataReader ExecuteReader_Buggy(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour)
         {
             System.Data.Common.DbDataReader dataReader = null;
@@ -785,7 +785,7 @@ namespace Loggy
         } // End Function ExecuteReader_Buggy 
 
 
-        // WARNING: DISPOSE BEFORE USED 
+        // WARNING: BUGGY - CONNECTION IS DISPOSED BEFORE IT IS USED 
         internal System.Data.Common.DbDataReader ExecuteReader_Buggy(System.Data.Common.DbCommand cmd)
         {
             System.Data.Common.DbDataReader dataReader = null;
@@ -800,6 +800,7 @@ namespace Loggy
         } // End Function ExecuteReader_Buggy 
 
 
+        // WARNING: BUGGY - CONNECTION IS DISPOSED BEFORE IT IS USED 
         internal System.Data.Common.DbDataReader ExecuteReader_Buggy(string sql)
         {
             System.Data.Common.DbDataReader dataReader = null;

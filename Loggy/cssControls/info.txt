@@ -6,7 +6,7 @@ https://codepen.io/sevilayha/full/IdGKH/
 
 http://bashooka.com/coding/25-stylish-custom-css-checkboxes-and-radio-buttons/
 
-http://www.cssportal.com/css3-flip-switch/
+thtp://www.cssportal.com/css3-flip-switch/
 http://www.cssportal.com/css3-preloaders/
 http://www.cssportal.com/css-menu-generator/
 http://www.cssportal.com/css-gradient-generator/

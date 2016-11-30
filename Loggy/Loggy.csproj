@@ -47,6 +47,32 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="closure\BreadCrumb_PostGre.sql" />
+    <Content Include="closure\ClearClosure.sql" />
+    <Content Include="closure\ClosureInsert.sql" />
+    <Content Include="closure\ClosureTableAndData.sql" />
+    <Content Include="closure\CREATE_TreePaths.sql" />
+    <Content Include="closure\DeleteNode.sql" />
+    <Content Include="closure\directquery.sql" />
+    <Content Include="closure\DisplayClosureTable.sql" />
+    <Content Include="closure\DynSelfInsert.sql" />
+    <Content Include="closure\Export_Select.sql" />
+    <Content Include="closure\GetBreadCrums.sql" />
+    <Content Include="closure\index_html_m65ca2cf.gif" />
+    <Content Include="closure\InsertNodeOnRelocate.sql" />
+    <Content Include="closure\Insert_comment.sql" />
+    <Content Include="closure\insert_dynsql.sql" />
+    <Content Include="closure\mysql_BreadCrumbs.sql" />
+    <Content Include="closure\mysql_childcoulnt.sql" />
+    <Content Include="closure\mysql_commentinsert.sql" />
+    <Content Include="closure\PopulateTreePath.sql" />
+    <Content Include="closure\RelocateNode.sql" />
+    <Content Include="closure\Relocate_DynSQLl.sql" />
+    <Content Include="closure\RemoveParentNodes.sql" />
+    <Content Include="closure\SelfClosure.sql" />
+    <Content Include="closure\SelfClosureRangeInsert.sql" />
+    <Content Include="closure\tpdata.sql" />
+    <Content Include="closure\xxxx_CrossJoinDelete.sql" />
     <Content Include="cssControls\beautifulCheckbox.htm" />
     <Content Include="cssControls\beautifulRadio.htm" />
     <Content Include="cssControls\customflipswitch.htm" />
@@ -58,6 +84,7 @@
     <Content Include="cssControls\flipswitch.htm" />
     <Content Include="cssControls\fontAwesomeCheckboxes.htm" />
     <Content Include="cssControls\formData.htm" />
+    <EmbeddedResource Include="ErrorTemplate.htm" />
     <Content Include="Global.asax" />
     <Content Include="cssControls\IEcompatibleCheckbox.htm" />
     <Content Include="cssControls\IEcompatibleCheckboxMDN.htm" />
@@ -73,6 +100,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\BlackList.cs" />
     <Compile Include="Code\caCert.cs" />
     <Compile Include="DAL\cMS_SQL.cs" />
     <Compile Include="DAL\Crypt.cs" />
