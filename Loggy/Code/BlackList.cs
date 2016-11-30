@@ -183,7 +183,7 @@ namespace Loggy.Code
 
 
         // https://cyberintruder.wordpress.com/2013/06/11/stop-the-script-kiddies-using-user-agent-blacklist/
-        public string[] hacktools2 = new string[] { 
+        public string[] hacktools2a = new string[] { 
             "libwww-perl",
             "w3af.sourceforge.net",
             "dirbuster",
