@@ -1,0 +1,105 @@
+﻿
+https://commitfest.postgresql.org/3/26/
+https://proto.io/freebies/onoff/
+https://codepen.io/sevilayha/full/IdGKH/
+
+
+http://bashooka.com/coding/25-stylish-custom-css-checkboxes-and-radio-buttons/
+
+thtp://www.cssportal.com/css3-flip-switch/
+http://www.cssportal.com/css3-preloaders/
+http://www.cssportal.com/css-menu-generator/
+http://www.cssportal.com/css-gradient-generator/
+http://www.cssportal.com/css3-rgba-generator/
+
+
+http://beautifytools.com/scss-compiler.php
+https://codepen.io/fxm90/pen/JdmaeL
+https://codepen.io/mallendeo/pen/eLIiG
+https://codepen.io/jchristianhall/pen/cvFrm
+https://codepen.io/CreativeJuiz/pen/BiHzp
+https://codepen.io/AngelaVelasquez/pen/Eypnq
+https://codepen.io/asstor_/pen/QyEpJz
+https://codepen.io/BrianSassaman/pen/iLrpC
+https://codepen.io/dylanraga/pen/Qwqbab
+
+
+https://codepen.io/valerypatorius/pen/oXGMGL
+https://codepen.io/tpalmer75/pen/qEybdR
+https://codepen.io/Sambego/pen/yiruz
+https://codepen.io/Hornebom/pen/KlLtF
+https://codepen.io/msisto/pen/lCofE
+https://codepen.io/simurai/pen/rJwpz
+https://codepen.io/soulrider911/pen/qhEzf
+
+
+https://codepen.io/ggaulard/pen/zjvaB
+https://codepen.io/bbodine1/pen/novBm
+
+
+
+https://blogs.adobe.com/creativecloud/css-vs-svg-graphical-text/
+https://blogs.adobe.com/creativecloud/css-vs-svg-styling-checkboxes-and-radio-buttons/
+https://blogs.adobe.com/creativecloud/create-a-text-filling-with-water-effect/
+http://lea.verou.me/2015/06/conical-gradients-today/
+
+
+https://github.com/flatlogic/awesome-bootstrap-checkbox
+https://codepen.io/cbp/pen/FLdjI
+http://cssdeck.com/labs/css-checkbox-styles
+
+
+
+https://www.thecssninja.com/css/custom-inputs-using-css
+http://www.onextrapixel.com/2012/10/26/custom-style-all-your-form-elements-with-pure-css-and-no-javascript/
+
+http://sci.tuomastonteri.fi/programming/sse
+https://msdn.microsoft.com/en-us/library/a8s4s5dz(v=vs.100).aspx
+http://blog.scottlogic.com/2016/02/29/Cross-site-scripting.html
+
+
+------------------------------------
+2^64 = uint64 = 18 446 744 073 709 500 000	(-1)																									
+																										
+1	8	'	4	4	6	'	7	4	4	'	0	7	3	'	7	0	9	'	5	0	0	'	0	0	0	
+2	0	'	1	6	1	'	2	3	1	'	23	5	9	'	5	8	9	'	9	9	1	'	1	1	1	
+1	4	'	8	0	4	'	3	4	9	'	1	2	0	'	1	0		'				'				
+																	9	'	9	9	9	'	9	9	9	
+–9,223,372,036,854,775,808 and maximum 9,223,372,036,854,775,807 
+–9223372036854775808 to 9223372036854775807  
+
+
+2^64/2 = 9 223 372 036 854 775 808
+
+
+< 10 million requests per millisecond 
+return System.DateTime.UtcNow.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds.ToString() + rnd.Next(0, 10000000).ToString();
+
+
+Visual Studio is for coding! Expression is for design! 
+Expression Web is used for the UI design.
+
+Microsoft Abandons Expression Web and Front End Web Development
+
+Microsoft abandons Expression Web and front end web development in favour of a Visual Studio / Blend hybrid
+
+
+https://mor10.com/microsoft-abandons-expression-web-and-front-end-web-development/
+
+
+
+https://blogs.msdn.microsoft.com/tom/2008/05/23/asp-net-tips-expression-web-vs-visual-studio/
+
+http://www.htmlkit.com/download/
+
+=Code.GetPageEnumeration(Parameters!def_pageformat.Label, Globals!PageNumber, Globals!TotalPages)
+
+="Seite " & Globals!PageNumber & "von " & Globals!TotalPages
+
+
+Seite {PAGE} von {NUMPAGES}
+
+
+JS timestamp 
+1480434912010
+

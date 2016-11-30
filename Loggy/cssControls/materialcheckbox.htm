@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <style type="text/css" media="all">
+
+        *
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+            *:before, *:after
+            {
+                box-sizing: inherit;
+                -webkit-font-smoothing: antialiased;
+            }
+
+        body
+        {
+            padding: 24px 32px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        h1
+        {
+            margin-bottom: 20px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #ddd;
+            font-size: 32px;
+            font-weight: 100;
+            color: #626262;
+        }
+
+        p
+        {
+            margin-bottom: 8px;
+        }
+
+        a
+        {
+            color: #2196f3;
+        }
+
+        input:focus
+        {
+            box-shadow: none;
+            outline: 0;
+        }
+
+        input[type="text"]
+        {
+            width: 400px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        ul
+        {
+            margin: 16px -16px;
+        }
+
+            ul li
+            {
+                display: inline-block;
+                margin: 2px 20px;
+            }
+
+        /**
+ * Code for checkboxes
+ */
+        .checkbox
+        {
+            position: relative;
+            width: 1rem;
+            height: 1rem;
+            margin-right: .75rem;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            outline: 0;
+            /**
+   * Iterate over map and autogenerate helper classes.
+  * See "http://codepen.io/fxm90/pen/zGjjrJ" for an example
+  */
+        }
+
+            .checkbox:before
+            {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                border: 2px solid #f2f2f2;
+                -webkit-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .checkbox:checked:before
+            {
+                height: 50%;
+                -webkit-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                border-top-style: none;
+                border-right-style: none;
+            }
+
+        .checkbox--red:checked:before
+        {
+            border-color: #f44336;
+        }
+
+        .checkbox--pink:checked:before
+        {
+            border-color: #e91e63;
+        }
+
+        .checkbox--purple:checked:before
+        {
+            border-color: #9c27b0;
+        }
+
+        .checkbox--deep-purple:checked:before
+        {
+            border-color: #673ab7;
+        }
+
+        .checkbox--indigo:checked:before
+        {
+            border-color: #3f51b5;
+        }
+
+        .checkbox--blue:checked:before
+        {
+            border-color: #2196f3;
+        }
+
+        .checkbox--light-blue:checked:before
+        {
+            border-color: #03a9f4;
+        }
+
+        .checkbox--cyan:checked:before
+        {
+            border-color: #00bcd4;
+        }
+
+        .checkbox--teal:checked:before
+        {
+            border-color: #009688;
+        }
+
+        .checkbox--green:checked:before
+        {
+            border-color: #4caf50;
+        }
+
+        .checkbox--light-green:checked:before
+        {
+            border-color: #8bc34a;
+        }
+
+        .checkbox--lime:checked:before
+        {
+            border-color: #cddc39;
+        }
+
+        .checkbox--yellow:checked:before
+        {
+            border-color: #ffeb3b;
+        }
+
+        .checkbox--amber:checked:before
+        {
+            border-color: #ffc107;
+        }
+
+        .checkbox--orange:checked:before
+        {
+            border-color: #ff9800;
+        }
+
+        .checkbox--deep-orange:checked:before
+        {
+            border-color: #ff5722;
+        }
+
+        .checkbox--blue-grey:checked:before
+        {
+            border-color: #607d8b;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <h1>Google Material Design Checkboxes with Transition Effect (pure CSS)</h1>
+    <ul>
+        <li><input type="checkbox" class="checkbox checkbox--red" />Red</li>
+        <li><input type="checkbox" class="checkbox checkbox--pink" />Pink</li>
+        <li><input type="checkbox" class="checkbox checkbox--purple" />Purple</li>
+        <li><input type="checkbox" class="checkbox checkbox--deep-purple" />Deep-Purple</li>
+        <li><input type="checkbox" class="checkbox checkbox--indigo" />Indigo</li>
+        <li><input type="checkbox" class="checkbox checkbox--blue" />Blue</li>
+        <li><input type="checkbox" class="checkbox checkbox--light-blue" />Light-Blue</li>
+        <li><input type="checkbox" class="checkbox checkbox--cyan" />Cyan</li>
+        <li><input type="checkbox" class="checkbox checkbox--teal" />Teal</li>
+        <li><input type="checkbox" class="checkbox checkbox--green" />Green</li>
+        <li><input type="checkbox" class="checkbox checkbox--light-green" />Light-Green</li>
+        <li><input type="checkbox" class="checkbox checkbox--lime" />Lime</li>
+        <li><input type="checkbox" class="checkbox checkbox--yellow" />Yellow</li>
+        <li><input type="checkbox" class="checkbox checkbox--amber" />Amber</li>
+        <li><input type="checkbox" class="checkbox checkbox--orange" />Orange</li>
+        <li><input type="checkbox" class="checkbox checkbox--deep-orange" />Deep Orange</li>
+        <li><input type="checkbox" class="checkbox checkbox--blue-grey" />Blue-Grey</li>
+    </ul>
+
+
+    <script type="text/javascript">
+        // Startup animation.
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]'),
+            setChecked = null;
+
+        (setChecked = function (i)
+        {
+            checkboxes[i].checked = true;
+
+            if (i < checkboxes.length - 1)
+            {
+                setTimeout(setChecked, 180, i + 2);
+            }
+        })(0);
+
+    </script>
+
+</body>
+</html>

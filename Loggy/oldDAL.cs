@@ -1,16 +1,11 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Web;
-
-
 namespace Loggy
 {
 
 
     public class oldDAL
     {
-        
+
 
         public enum Mandant
         {
@@ -40,4 +35,6 @@ namespace Loggy
 
 
     }
+
+
 }

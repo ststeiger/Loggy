@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <style type="text/css" media="all">
+
+        body
+        {
+            background: #fff;
+            padding: 0;
+            margin: 0;
+        }
+
+        #holder
+        {
+            width: 100%;
+        }
+
+            #holder > div
+            {
+                clear: both;
+                padding: 2%;
+                margin-bottom: 20px;
+                border-bottom: 1px solid #eee;
+                float: left;
+                width: 96%;
+            }
+
+        label
+        {
+            display: inline;
+        }
+
+        .regular-checkbox
+        {
+            display: none;
+        }
+
+            .regular-checkbox + label
+            {
+                background-color: #fafafa;
+                border: 1px solid #cacece;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+                padding: 9px;
+                border-radius: 3px;
+                display: inline-block;
+                position: relative;
+            }
+
+                .regular-checkbox + label:active, .regular-checkbox:checked + label:active
+                {
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+                }
+
+            .regular-checkbox:checked + label
+            {
+                background-color: #e9ecee;
+                border: 1px solid #adb8c0;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+                color: #99a1a7;
+            }
+
+                .regular-checkbox:checked + label:after
+                {
+                    content: '\2714';
+                    font-size: 14px;
+                    position: absolute;
+                    top: 0px;
+                    left: 3px;
+                    color: #99a1a7;
+                }
+
+
+        .big-checkbox + label
+        {
+            padding: 18px;
+        }
+
+        .big-checkbox:checked + label:after
+        {
+            font-size: 28px;
+            left: 6px;
+        }
+
+        .tag
+        {
+            font-family: Arial, sans-serif;
+            width: 200px;
+            position: relative;
+            top: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: block;
+            float: left;
+        }
+
+        .radio-1
+        {
+            width: 193px;
+        }
+
+        .button-holder
+        {
+            float: left;
+        }
+
+        /* RADIO */
+
+        .regular-radio
+        {
+            display: none;
+        }
+
+            .regular-radio + label
+            {
+                -webkit-appearance: none;
+                background-color: #fafafa;
+                border: 1px solid #cacece;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+                padding: 9px;
+                border-radius: 50px;
+                display: inline-block;
+                position: relative;
+            }
+
+            .regular-radio:checked + label:after
+            {
+                content: ' ';
+                width: 12px;
+                height: 12px;
+                border-radius: 50px;
+                position: absolute;
+                top: 3px;
+                background: #99a1a7;
+                box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+                text-shadow: 0px;
+                left: 3px;
+                font-size: 32px;
+            }
+
+            .regular-radio:checked + label
+            {
+                background-color: #e9ecee;
+                color: #99a1a7;
+                border: 1px solid #adb8c0;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);
+            }
+
+                .regular-radio + label:active, .regular-radio:checked + label:active
+                {
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+                }
+
+        .big-radio + label
+        {
+            padding: 16px;
+        }
+
+        .big-radio:checked + label:after
+        {
+            width: 24px;
+            height: 24px;
+            left: 4px;
+            top: 4px;
+        }
+
+        /* ------- IGNORE */
+
+        #header
+        {
+            width: 100%;
+            margin: 0px auto;
+        }
+
+            #header #center
+            {
+                text-align: center;
+            }
+
+            #header h1 span
+            {
+                color: #000;
+                display: block;
+                font-size: 50px;
+            }
+
+            #header p
+            {
+                font-family: 'Georgia', serif;
+            }
+
+            #header h1
+            {
+                color: #892dbf;
+                font: bold 40px 'Bree Serif', serif;
+            }
+
+        #travel
+        {
+            padding: 10px;
+            background: rgba(0,0,0,0.6);
+            border-bottom: 2px solid rgba(0,0,0,0.2);
+            font-variant: normal;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+            #travel a
+            {
+                font-family: 'Georgia', serif;
+                text-decoration: none;
+                border-bottom: 1px solid #f9f9f9;
+                color: #f9f9f9;
+            }
+    </style>
+
+
+</head>
+<body>
+    <div id="travel">
+        <a class="sub-head" href="http://www.inserthtml.com/2012/06/custom-form-radio-checkbox/">&laquo; BACK TO ARTICLE</a>
+    </div>
+
+    <div id="holder">
+        <div>
+            <div class="tag">Checkbox Small</div>
+            <input type="checkbox" id="checkbox-1-1" class="regular-checkbox" /><label for="checkbox-1-1"></label>
+            <input type="checkbox" id="checkbox-1-2" class="regular-checkbox" /><label for="checkbox-1-2"></label>
+            <input type="checkbox" id="checkbox-1-3" class="regular-checkbox" /><label for="checkbox-1-3"></label>
+            <input type="checkbox" id="checkbox-1-4" class="regular-checkbox" /><label for="checkbox-1-4"></label>
+        </div>
+        <div>
+            <div class="tag">Checkbox Big</div>
+            <input type="checkbox" id="checkbox-2-1" class="regular-checkbox big-checkbox" /><label for="checkbox-2-1"></label>
+            <input type="checkbox" id="checkbox-2-2" class="regular-checkbox big-checkbox" /><label for="checkbox-2-2"></label>
+            <input type="checkbox" id="checkbox-2-3" class="regular-checkbox big-checkbox" /><label for="checkbox-2-3"></label>
+            <input type="checkbox" id="checkbox-2-4" class="regular-checkbox big-checkbox" /><label for="checkbox-2-4"></label>
+        </div>
+        <div>
+            <div class="tag">Radio Small</div>
+            <div class="button-holder">
+                <input type="radio" id="radio-1-1" name="radio-1-set" class="regular-radio" checked /><label for="radio-1-1"></label><br />
+                <input type="radio" id="radio-1-2" name="radio-1-set" class="regular-radio" /><label for="radio-1-2"></label><br />
+                <input type="radio" id="radio-1-3" name="radio-1-set" class="regular-radio" /><label for="radio-1-3"></label><br />
+                <input type="radio" id="radio-1-4" name="radio-1-set" class="regular-radio" /><label for="radio-1-4"></label><br />
+            </div>
+        </div>
+        <div>
+            <div class="tag">Radio Big</div>
+            <div class="button-holder">
+                <input type="radio" id="radio-2-1" name="radio-2-set" class="regular-radio big-radio" /><label for="radio-2-1"></label><br />
+                <input type="radio" id="radio-2-2" name="radio-2-set" class="regular-radio big-radio" /><label for="radio-2-2"></label><br />
+                <input type="radio" id="radio-2-3" name="radio-2-set" class="regular-radio big-radio" checked /><label for="radio-2-3"></label><br />
+                <input type="radio" id="radio-2-4" name="radio-2-set" class="regular-radio big-radio" /><label for="radio-2-4"></label><br />
+                <input type="radio" id="radio-2-5" name="radio-2-set" class="regular-radio big-radio" /><label for="radio-2-5"></label><br />
+            </div>
+        </div>
+    </div>
+      
+    <script type="text/javascript">
+        // 
+    </script>
+
+    <!--
+        http://www.inserthtml.com/2012/06/custom-form-radio-checkbox/
+
+    -->
+
+</body>
+</html>
