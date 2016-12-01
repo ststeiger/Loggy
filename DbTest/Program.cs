@@ -7,6 +7,97 @@ namespace DbTest
     {
 
 
+        // Define other methods and classes here
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+        public struct IntUnion
+        {
+            [System.Runtime.InteropServices.FieldOffset(0)]
+            public uint UInt;
+
+            [System.Runtime.InteropServices.FieldOffset(0)]
+            public int Int;
+        }
+
+
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+        public struct LongUnion
+        {
+            [System.Runtime.InteropServices.FieldOffset(0)]
+            public ulong ULong;
+
+            [System.Runtime.InteropServices.FieldOffset(0)]
+            public long Long;
+        }
+
+
+        public static void UnionTest()
+        {
+            IntUnion foo = new IntUnion { Int = -1 };
+            System.Console.WriteLine(foo.UInt);
+
+            LongUnion bar = new LongUnion { Long = -1 };
+            System.Console.WriteLine(bar.ULong);
+        }
+
+
+        public static long MapUlongToLong(ulong ulongValue)
+        {
+            return unchecked((long)ulongValue + long.MinValue);
+        }
+
+
+        public static ulong MapLongToUlong(long longValue)
+        {
+            return unchecked((ulong)(longValue - long.MinValue));
+        }
+
+
+        public static int MapUintToInt(uint ulongValue)
+        {
+            return unchecked((int)ulongValue + int.MinValue);
+        }
+
+
+        public static uint MapIntToUint(int longValue)
+        {
+            return unchecked((uint)(longValue - int.MinValue));
+        }
+
+
+
+        public static void FastTest()
+        {
+            long minValue_long = MapUlongToLong(ulong.MinValue);
+            long maxValue_long = MapUlongToLong(ulong.MaxValue);
+
+            ulong orig_min_long = MapLongToUlong(minValue_long);
+            ulong orig_max_long = MapLongToUlong(maxValue_long);
+
+
+            int minValue_int = MapUintToInt(uint.MinValue);
+            int maxValue_int = MapUintToInt(uint.MaxValue);
+
+            uint orig_min_int = MapIntToUint(minValue_int);
+            uint orig_max_int = MapIntToUint(maxValue_int);
+
+
+            System.Console.WriteLine(minValue_int);
+            System.Console.WriteLine(maxValue_int);
+
+            System.Console.WriteLine(orig_min_long);
+            System.Console.WriteLine(orig_max_long);
+
+            System.Console.WriteLine(minValue_long);
+            System.Console.WriteLine(maxValue_long);
+
+            System.Console.WriteLine(orig_min_int);
+            System.Console.WriteLine(orig_max_int);
+        }
+
+
+
+
+
         public static ulong SignedLongToUnsignedLong(long signedLongValue)
         {
             ulong backConverted = 0;
@@ -219,6 +310,8 @@ namespace DbTest
 
         public static void Main(string[] args)
         {
+            UnionTest();
+            FastTest();
             TestInt();
             TestLong();
             
