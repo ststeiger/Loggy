@@ -77,6 +77,7 @@
     <Content Include="cssControls\beautifulRadio.htm" />
     <Content Include="cssControls\customflipswitch.htm" />
     <Content Include="Default.aspx" />
+    <Content Include="circles.svg" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageTemplate.txt" />
     <Content Include="cssControls\filledCheckbox.htm" />
@@ -92,6 +93,7 @@
     <Content Include="cssControls\info2.txt" />
     <Content Include="cssControls\materialcheckbox.htm" />
     <Content Include="cssControls\radio.htm" />
+    <Content Include="ERD.htm" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />

@@ -11,48 +11,49 @@ namespace Loggy
     {
 
         public static string[] blackList = {
-	"'",
-    "<script>",
-    "</script>",
-    "<script",
-    "</script",
-    //"--",
-    //";--",
-    //";",
-    //"/*",
-    //"*/",
-    //"@@",
-    //"@",
-    //"char",
-    //"nchar",
-    //"varchar",
-    //"nvarchar",
-    //"alter",
-    //"begin",
-    //"cast",
-    //"create",
-    //"cursor",
-    //"declare",
-    //"delete",
-    //"drop",
-    //"end",
-    //"exec",
-    //"execute",
-    //"fetch",
-    //"insert",
-    //"kill",
-    //"open",
-    //"select",
-    //"sys",
-    //"sysobjects",
-    //"syscolumns",
-    //"table",
-    //"update"
-};
+	        "'",
+            "<script>",
+            "</script>",
+            "<script",
+            "</script",
+            //"--",
+            //";--",
+            //";",
+            //"/*",
+            //"*/",
+            //"@@",
+            //"@",
+            //"char",
+            //"nchar",
+            //"varchar",
+            //"nvarchar",
+            //"alter",
+            //"begin",
+            //"cast",
+            //"create",
+            //"cursor",
+            //"declare",
+            //"delete",
+            //"drop",
+            //"end",
+            //"exec",
+            //"execute",
+            //"fetch",
+            //"insert",
+            //"kill",
+            //"open",
+            //"select",
+            //"sys",
+            //"sysobjects",
+            //"syscolumns",
+            //"table",
+            //"update"
+        };
 
 
         void System.Web.IHttpModule.Dispose()
-        { }
+        { 
+        } // End Sub Dispose 
 
 
         void System.Web.IHttpModule.Init(System.Web.HttpApplication context)
@@ -67,15 +68,13 @@ namespace Loggy
             // Obviously you probably want to wrap this in some logic to check for things such as verb, requesting url, etc. 
             context.PostMapRequestHandler += new System.EventHandler(OnPostMapRequestHandler);
 
-
             // context.EndRequest += new System.EventHandler(OnEndRequest);
-
-        }
+        } // End Sub Init 
 
 
         private void OnBeginRequest(object sender, System.EventArgs e)
         {
-        }
+        } // End Sub OnBeginRequest 
 
 
         // System.Web.HttpRequest request
@@ -99,7 +98,7 @@ namespace Loggy
                 CheckInput(request.Cookies[key].Value);
             }
 
-        }
+        } // End Sub CheckInjection 
 
 
         private void CheckInput(string parameter)
@@ -121,16 +120,17 @@ namespace Loggy
 
                     System.Web.HttpContext.Current.Handler = new MyHandler();
                     // System.Web.HttpContext.Current.ApplicationInstance.CompleteRequest();
+                } // End if (System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(parameter, blackList[i], 0, System.Globalization.CompareOptions.OrdinalIgnoreCase) != -1) 
 
-                }
-            }
-        }
+            } // Next i 
+
+        } // End Sub CheckInput 
 
 
         private void OnEndRequest(object sender, System.EventArgs e)
         {
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-        }
+        } // End Sub OnEndRequest 
 
 
         private void OnPostMapRequestHandler(object sender, System.EventArgs e)
@@ -166,10 +166,10 @@ namespace Loggy
                 context.Handler = new MyHandler();
             }
 
-        }
+        } // End Sub OnPostMapRequestHandler 
 
 
-    }
+    } // End Class SqlInjectionScreeningModule : System.Web.IHttpModule 
 
 
-}
+} // End Namespace Loggy 

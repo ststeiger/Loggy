@@ -1,0 +1,280 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+    <!--
+    <meta name="author" content="name" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    -->
+
+    <title>Title</title>
+
+    <style type="text/css" media="all">
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+
+        function isFunction(obj)
+        {
+            // just watch out for a few things like typeof Object, typeof Date, and typeof String, 
+            // which all return 'function' too
+            // return (typeof obj === "function"); // This won't work for native functions in IE8. typeof document.getElementById returns object.
+            // return (obj instanceof Function); // fails in case of a function passed to a different frame context
+            return !!(obj && obj.constructor && obj.call && obj.apply);
+        }
+
+
+        // https://stackoverflow.com/questions/6268679/best-way-to-get-the-key-of-a-key-value-javascript-object
+        function setAttributes(ele, o)
+        {
+            if (o !== Object(o))
+                throw new TypeError('Object.keys called on non-object');
+
+            for (var k in o)
+            {
+                if (Object.prototype.hasOwnProperty.call(o, k))
+                {
+                    var value = isFunction(o[k]) ? o[k]() : o[k];
+
+                    if (ele)
+                        ele.setAttributeNS(null, k, value);
+
+                }
+
+            } // Next k
+
+        }
+        //iterateKeys(null, {
+        //    x: 10, y: 20, rx: 100, ry: 200,
+        //    f: function ()
+        //    {
+        //        return "abc";
+        //    }
+        //});
+
+
+
+
+        var svgns = "http://www.w3.org/2000/svg";
+        var xlinkns = "http://www.w3.org/1999/xlink";
+
+        function randomColor()
+        {
+            return '#' + Math.round(0xffffff * Math.random()).toString(16);
+        }
+
+
+        
+        
+        function createSVG(id, width, height)
+        {
+            var svgElement = document.createElementNS(svgns, 'svg');
+            svgElement.setAttribute('id', id);
+            svgElement.setAttribute('width', width);
+            svgElement.setAttribute('height', height);
+            svgElement.setAttribute('version', '1.1');
+
+            return svgElement;
+        }
+
+
+        function createLine(attributes)
+        {
+            var lineElement = document.createElementNS(svgns, 'line');
+            setAttributes(lineElement, attributes);
+
+            return lineElement;
+        }
+
+
+        function createRect(attributes)
+        {
+            var rectElement = document.createElementNS(svgns, 'rect');
+            setAttributes(rectElement, attributes);
+
+            return rectElement;
+        }
+
+
+        function createRoundedRect(attributes)
+        {
+            var rectElement = document.createElementNS(svgns, 'rect');
+            setAttributes(rectElement, attributes);
+
+            return rectElement;
+        }
+
+
+        function createCircle(attributes)
+        {
+            var circleElement = document.createElementNS(svgns, "circle");
+            setAttributes(circleElement, attributes);
+
+            return circleElement;
+        }
+
+
+        // http://www.kevlindev.com/tutorials/basics/shapes/js_dom/
+        function createEllipse(attributes)
+        {
+            var ellipseElement = document.createElementNS(svgns, "ellipse");
+            setAttributes(ellipseElement, attributes);
+
+            return ellipseElement;
+        }
+
+        function createPolygon(attributes)
+        {
+            var polygonElement = document.createElementNS(svgns, "polygon");
+            setAttributes(polygonElement, attributes);
+
+            return polygonElement;
+        }
+
+
+        function createPolyline(attributes)
+        {
+            var polylineElement = document.createElementNS(svgns, "polyline");
+            setAttributes(polylineElement, attributes);
+
+            return polylineElement;
+        }
+
+
+        function createPath(attributes)
+        {
+            var pathElement = document.createElementNS(svgns, "path");
+            setAttributes(pathElement, attributes);
+
+            return pathElement;
+        }
+        
+
+        // createText(x,y, "font-size");
+        function createText(text, attributes)
+        {
+            var textElement = document.createElementNS(svgns, "text");
+            setAttributes(textElement, attributes);
+
+            var textNode = document.createTextNode(text);
+            textElement.appendChild(textNode);
+            return textElement;
+        }
+
+
+        //function createTspan(x, y, text, fontSize)
+        function createTspan(text, attributes)
+        {
+            var tspanElement = document.createElementNS(svgns, "tspan");
+            // tspanElement.setAttributeNS(null, "x", x);
+            // tspanElement.setAttributeNS(null, "y", y);
+            // tspanElement.setAttributeNS(null, "font-size", fontSize);
+            setAttributes(tspanElement, attributes);
+
+            var textNode = document.createTextNode(text);
+            tspanElement.appendChild(textNode);
+            return tspanElement;
+        }
+
+
+
+
+        // https://www.w3.org/TR/SVG/eltindex.html
+        // https://codereview.stackexchange.com/questions/40145/making-lines-with-svg-and-javascript
+        // https://stackoverflow.com/questions/3290392/creating-svg-markers-programatically-with-javascript
+        // https://css-tricks.com/scale-svg/
+        // https://www.particleincell.com/2012/bezier-splines/
+        // https://www.particleincell.com/wp-content/uploads/2012/06/circles.svg
+        // https://www.sitepoint.com/html5-svg-cubic-curves/
+        // http://blogs.sitepointstatic.com/examples/tech/svg-curves/cubic-curve.html
+        // http://vanseodesign.com/web-design/svg-paths-curve-commands/
+        // http://www.kevlindev.com/tutorials/basics/shapes/js_dom/
+
+
+        // createCircle(150, 150, 20, "green");
+        // createRect(10, 10, 100, 100, "red")
+    </script>
+
+</head>>
+<body>
+    
+    <svg id="svgOne" viewBox="0, 0, 500, 500"></svg>
+
+    <img src="circles.svg" width="1500" height="1500" />
+
+    <script type="text/javascript">
+        // https://codereview.stackexchange.com/questions/40145/making-lines-with-svg-and-javascript
+
+        // https://www.justinmccandless.com/post/making-sense-of-svg-viewboxs-madness/
+        // <svg id="svgOne" viewBox=" <min-x>, <min-y>, <width>, <height>"></svg>
+        function autorun()
+        {
+            var svgOne = document.getElementById("svgOne");
+            svgOne.appendChild(
+                createRect({ x: 10, y: 10, width: 100, height: 300, fill: randomColor() })
+            );
+
+
+            svgOne.appendChild(
+                createRoundedRect({ x: 200, y: 200, rx: 5, ry: 5, width: 120, height: 300, fill: randomColor() })
+            );
+
+            // circleElement.setAttributeNS(null, 'style', 'fill: none; stroke: blue; stroke-width: 1px;');
+            svgOne.appendChild(
+                createCircle({ cx: 150, cy: 150, r: 20, fill: randomColor() })
+            );
+            
+            svgOne.appendChild(
+                createLine({ x1: 10, y1: 10, x2: 200, y2: 300, stroke: "green", "stroke-width": 5 })
+            );
+
+            svgOne.appendChild(
+                createPath({ d: "M 0 0 L 10 5 L 0 10 z", fill: randomColor() })
+            );
+
+            // createPolygon({ "points": build(pointList) });
+            createEllipse({ cx: 123, cy: 123, rx: 123, ry: 123, fill: randomColor() });
+            createPolyline({ points: "5,5 45,45 5,45 45,5", fill: "none", stroke: "green" });
+            createTspan("Hello", { x: 50, y: 50, "font-size": 20 });
+
+            
+
+            svgOne.appendChild(
+                createText("Hello World", { x: 50, y: 50, "font-size": 20, fill: randomColor() })   
+            );
+
+        }
+
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+    </script>
+    
+</body>
+</html>
