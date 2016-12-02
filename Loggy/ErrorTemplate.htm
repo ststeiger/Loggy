@@ -28,8 +28,76 @@
     <title>Error: @error.Message</title>
     <style type="text/css">
 
+        html, body
+        {
+            margin: 0px; padding: 0px;
+            width: 100%; height: 100%;
+        }
+
+
+        body
+        {
+            box-sizing: border-box;
+            padding-left: 0.25cm;
+            padding-top: 0.25cm;
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: .7em;
+            color: black;
+        }
+
+        h1
+        {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 18pt;
+            color: red;
+            margin: 0px;
+            margin-top: 0.25cm;
+            margin-bottom: 0.25cm;
+        }
+
+        h2
+        {
+            font-family: "Verdana";
+            font-weight: normal;
+            font-size: 14pt;
+            color: maroon;
+        }
+
+
+        b
+        {
+            font-family: "Verdana";
+            font-weight: bold;
+            color: black;
+            margin-top: -5px;
+        }
+
+        pre
+        {
+            font-family: "Lucida Console";
+            font-size: 1.3em;
+            #font-size: 14.4px;
+        }
+
+        .erroneousCode 
+        {
+            background-color: #ffffcc;
+            padding-top: 1mm;
+            padding-bottom: 1mm;
+            padding-left: 0.25cm;
+        }
+
+        .stripline
+        {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid silver;
+        }
+
     </style>
-</head>>
+</head>
 <body>
 
     <!--
@@ -40,9 +108,60 @@
     -->
 
 
-    <p id="errorMessage">@error.Type: @error.Message</p>
-    <span>@error.StackTrace</span>
+        <p id="errorMessage">@error.Type: @error.Message</p>
+        <span>@error.StackTrace</span>
+
     
+        <h1>Server Error in '/' Application.</h1>
+        <hr class="stripline" />
+        <h2> <i>Invalid attempt to call FieldCount when reader is closed.</i> </h2>
+    
+
+    
+    <font face="Arial, Helvetica, Geneva, SunSans-Regular, sans-serif ">
+        <b> Description: </b>An unhandled exception occurred during the execution of the current web request. Please review the stack trace for more information about the error and where it originated in the code.
+        <br />
+        <br />
+        <b> Exception Details: </b>System.InvalidOperationException: Invalid attempt to call FieldCount when reader is closed.
+        <br />
+        <br />
+        <b>Source Error:</b>
+        <br />
+        <br />
+
+        <div class="erroneousCode">
+            <pre>Line 58:                     do
+Line 59:                     {
+<font color="red">Line 60:                         for (int i = 0; i &lt; reader.FieldCount; ++i)</font>
+Line 61:                         {
+Line 62:                             string fieldName = reader.GetName(i);</pre>
+        </div>
+
+        <br />
+        <b> Source File: </b> d:\Stefan.Steiger\Documents\Visual Studio 2013\Projects\Loggy\Loggy\Code\SomeDbOperations.cs<b> &nbsp;&nbsp; Line: </b> 60
+        <br /><br />
+
+        <b>Stack Trace:</b>
+        <br />
+        <br />
+        <div class="erroneousCode">
+            <pre>[InvalidOperationException: Invalid attempt to call FieldCount when reader is closed.]
+   System.Data.SqlClient.SqlDataReader.get_FieldCount() +4920828
+   Loggy.SomeDbOperations.Test() in d:\Stefan.Steiger\Documents\Visual Studio 2013\Projects\Loggy\Loggy\Code\SomeDbOperations.cs:60
+   Loggy._Default.Page_Load(Object sender, EventArgs e) in d:\Stefan.Steiger\Documents\Visual Studio 2013\Projects\Loggy\Loggy\Default.aspx.cs:29
+   System.Web.Util.CalliHelper.EventArgFunctionCaller(IntPtr fp, Object o, Object t, EventArgs e) +14
+   System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e) +35
+   System.Web.UI.Control.OnLoad(EventArgs e) +99
+   System.Web.UI.Control.LoadRecursive() +50
+   System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +627</pre>
+        </div>
+
+        <br />
+        <hr class="stripline" />
+
+        <b>Version Information:</b>&nbsp;Microsoft .NET Framework Version:2.0.50727.8009; ASP.NET Version:2.0.50727.8015
+    </font>
+
     <!--
         Stacktrace
     -->

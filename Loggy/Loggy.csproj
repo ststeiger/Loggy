@@ -47,6 +47,7 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Chain.png" />
     <Content Include="closure\BreadCrumb_PostGre.sql" />
     <Content Include="closure\ClearClosure.sql" />
     <Content Include="closure\ClosureInsert.sql" />
@@ -86,6 +87,7 @@
     <Content Include="cssControls\fontAwesomeCheckboxes.htm" />
     <Content Include="cssControls\formData.htm" />
     <EmbeddedResource Include="ErrorTemplate.htm" />
+    <EmbeddedResource Include="PublicErrorTemplate.htm" />
     <Content Include="Global.asax" />
     <Content Include="cssControls\IEcompatibleCheckbox.htm" />
     <Content Include="cssControls\IEcompatibleCheckboxMDN.htm" />
@@ -94,6 +96,9 @@
     <Content Include="cssControls\materialcheckbox.htm" />
     <Content Include="cssControls\radio.htm" />
     <Content Include="ERD.htm" />
+    <EmbeddedResource Include="PublicErrorTemplate_DE.htm" />
+    <EmbeddedResource Include="PublicErrorTemplate2_old.htm" />
+    <EmbeddedResource Include="PublicErrorTemplate_EN.htm" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -144,6 +149,7 @@
   <ItemGroup>
     <Content Include="cssControls\prettyCheckboxes_uncompressed.1.1.zip" />
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
+    <Content Include="Scripts\keni.rar" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

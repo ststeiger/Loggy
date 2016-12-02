@@ -1,0 +1,413 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Simple HttpErrorPages | MIT X11 License | https://github.com/AndiDittrich/HttpErrorPages -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>We've got some trouble | 500 - Webservice currently unavailable</title>
+
+    <style type="text/css">
+        /*! normalize.css v3.0.2 | MIT License | git.io/normalize */ html
+        {
+            font-family: sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body
+        {
+            margin: 0;
+        }
+
+        article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary
+        {
+            display: block;
+        }
+
+        audio, canvas, progress, video
+        {
+            display: inline-block;
+            vertical-align: baseline;
+        }
+
+            audio:not([controls])
+            {
+                display: none;
+                height: 0;
+            }
+
+        [hidden], template
+        {
+            display: none;
+        }
+
+        a
+        {
+            background-color: transparent;
+        }
+
+            a:active, a:hover
+            {
+                outline: 0;
+            }
+
+        abbr[title]
+        {
+            border-bottom: 1px dotted;
+        }
+
+        b, strong
+        {
+            font-weight: 700;
+        }
+
+        dfn
+        {
+            font-style: italic;
+        }
+
+        h1
+        {
+            font-size: 2em;
+            margin: .67em 0;
+        }
+
+        mark
+        {
+            background: #ff0;
+            color: #000;
+        }
+
+        small
+        {
+            font-size: 80%;
+        }
+
+        sub, sup
+        {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+        sup
+        {
+            top: -.5em;
+        }
+
+        sub
+        {
+            bottom: -.25em;
+        }
+
+        img
+        {
+            border: 0;
+        }
+
+        svg:not(:root)
+        {
+            overflow: hidden;
+        }
+
+        figure
+        {
+            margin: 1em 40px;
+        }
+
+        hr
+        {
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            height: 0;
+        }
+
+        pre
+        {
+            overflow: auto;
+        }
+
+        code, kbd, pre, samp
+        {
+            font-family: monospace,monospace;
+            font-size: 1em;
+        }
+
+        button, input, optgroup, select, textarea
+        {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+
+        button
+        {
+            overflow: visible;
+        }
+
+        button, select
+        {
+            text-transform: none;
+        }
+
+        button, html input[type=button], input[type=reset], input[type=submit]
+        {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+
+            button[disabled], html input[disabled]
+            {
+                cursor: default;
+            }
+
+            button::-moz-focus-inner, input::-moz-focus-inner
+            {
+                border: 0;
+                padding: 0;
+            }
+
+        input
+        {
+            line-height: normal;
+        }
+
+            input[type=checkbox], input[type=radio]
+            {
+                box-sizing: border-box;
+                padding: 0;
+            }
+
+            input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button
+            {
+                height: auto;
+            }
+
+            input[type=search]
+            {
+                -webkit-appearance: textfield;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
+                box-sizing: content-box;
+            }
+
+                input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-search-decoration
+                {
+                    -webkit-appearance: none;
+                }
+
+        fieldset
+        {
+            border: 1px solid silver;
+            margin: 0 2px;
+            padding: .35em .625em .75em;
+        }
+
+        legend
+        {
+            border: 0;
+            padding: 0;
+        }
+
+        textarea
+        {
+            overflow: auto;
+        }
+
+        optgroup
+        {
+            font-weight: 700;
+        }
+
+        table
+        {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        td, th
+        {
+            padding: 0;
+        }
+        /*! Simple HttpErrorPages | MIT X11 License | https://github.com/AndiDittrich/HttpErrorPages */
+
+        body, html
+        {
+            width: 100%;
+            height: 100%;
+            background-color: #21232a;
+        }
+
+        body
+        {
+            color: #fff;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,.5);
+            padding: 0;
+            min-height: 100%;
+            -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.8);
+            box-shadow: inset 0 0 100px rgba(0,0,0,.8);
+            display: table;
+            font-family: "Open Sans",Arial,sans-serif;
+        }
+
+        h1
+        {
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.1;
+            color: inherit;
+            font-size: 36px;
+        }
+
+        h1 small
+        {
+            font-size: 68%;
+            font-weight: 400;
+            line-height: 1;
+            color: #777;
+        }
+
+        a
+        {
+            text-decoration: none;
+            color: #fff;
+            font-size: inherit;
+            border-bottom: dotted 1px #707070;
+        }
+
+        .lead
+        {
+            color: silver;
+            font-size: 21px;
+            line-height: 1.4;
+        }
+
+        .cover
+        {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 20px;
+        }
+
+        footer
+        {
+            position: fixed;
+            width: 100%;
+            height: 40px;
+            left: 0;
+            bottom: 0;
+            color: #a0a0a0;
+            font-size: 14px;
+        }
+
+
+    </style>
+
+    <!--
+        var foo:string = `
+Grüezi mitenand,
+
+Leider müssen wir COR folgende Störung melden:
+
+Wenn ich <WO WAS GEMACHT> erhalte ich <RESULTAT>. 
+Erwartet hätte ich <WAS HÄTTE SEIN SOLLEN>
+
+Zur Reproduktion notwendige Angaben: 
+Fehler-Modul:	Kachel „Tasks“ 
+Aktion:		Neuer Tasks
+
+Filter (falls vorhanden):
+Standort	< USER_ANGABE, z.B. SO 8001 >
+Gebäude	< USER_ANGABE, z.B. GB01 >
+Geschoss	< USER_ANGABE, z.B. OG01 >
+Raum/Objekt	< USER_ANGABE, z.B. RM 032 >
+
+
+
+Und/oder siehe Screenshot 
+
+
+Technische Details: 
+Details geloggt unter # ABC123456
+(obige Zeile bitte nicht löschen oder ändern)
+
+`
+
+        http://cdn-ak.f.st-hatena.com/images/fotolife/n/noromanba/20121223/20121223083642.png
+        Something went wrong.
+        We've been notifierd and will do our best to fix it. 
+        In the meantime please try refreshing.
+        We apologize, an error occured on our side while handling your request.
+    -->
+
+
+    <script type="text/javascript">
+        var message = "\nGr\u00FCezi mitenand,\n\nLeider m\u00FCssen wir COR folgende St\u00F6rung melden:\n\nWenn ich <WO WAS GEMACHT> erhalte ich <RESULTAT>. \nErwartet h\u00E4tte ich <WAS H\u00C4TTE SEIN SOLLEN>\n\nZur Reproduktion notwendige Angaben: \nFehler-Modul:\tKachel \u201ETasks\u201C \nAktion:\t\tNeuer Tasks\n\nFilter (falls vorhanden):\nStandort\t< USER_ANGABE, z.B. SO 8001 >\nGeb\u00E4ude\t< USER_ANGABE, z.B. GB01 >\nGeschoss\t< USER_ANGABE, z.B. OG01 >\nRaum/Objekt\t< USER_ANGABE, z.B. RM 032 >\n\n\n\nUnd/oder siehe Screenshot \n\n\nTechnische Details: \nDetails geloggt unter # ABC123456\n(obige Zeile bitte nicht l\u00F6schen oder \u00E4ndern)\n\n";
+        message = encodeURIComponent(message);
+    </script>
+    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+    
+</head>
+
+<body>
+
+    <div class="cover"><!-- Applikationsdefekt Software-Shortcoming -->
+        <h1><span style="text-shadow: 2px 2px grey;">Software-Mangel</span> <small>HTTP 500</small></h1>
+        <p class="lead">
+            Bei der Verarbeitung ihrer Transaktion ist leider ein Problem aufgetreten.<br />
+            Das Problem wurde protokolliert<br />
+            Wir wurden benachrichtigt, und werden versuchen, das Problem schnellstmöglich zu beheben.<br />
+            In der Zwischenzeit können Sie F5 dr&uuml;cken &amp; einen zweiten Versuch wagen. <br />
+            Falls das Problem bestehen bleibt: <br />
+            <a href="mailto:servicedesk@cor-management.ch?cc=thomas.hartmann@cor-management.ch, patrick.sprenger@cor-management.ch&bcc=techsupport@yourcompany.com&subject=Error%20123&body=%0AGr%C3%BCezi%20mitenand%2C%0A%0ALeider%20m%C3%BCssen%20wir%20COR%20folgende%20St%C3%B6rung%20melden%3A%0A%0AWenn%20ich%20%3CWO%20WAS%20GEMACHT%3E%20erhalte%20ich%20%3CRESULTAT%3E.%20%0AErwartet%20h%C3%A4tte%20ich%20%3CWAS%20H%C3%84TTE%20SEIN%20SOLLEN%3E%0A%0AZur%20Reproduktion%20notwendige%20Angaben%3A%20%0AFehler-Modul%3A%09Kachel%20%E2%80%9ETasks%E2%80%9C%20%0AAktion%3A%09%09Neuer%20Tasks%0A%0AFilter%20(falls%20vorhanden)%3A%0AStandort%09%3C%20USER_ANGABE%2C%20z.B.%20SO%208001%20%3E%0AGeb%C3%A4ude%09%3C%20USER_ANGABE%2C%20z.B.%20GB01%20%3E%0AGeschoss%09%3C%20USER_ANGABE%2C%20z.B.%20OG01%20%3E%0ARaum%2FObjekt%09%3C%20USER_ANGABE%2C%20z.B.%20RM%20032%20%3E%0A%0A%0A%0AUnd%2Foder%20siehe%20Screenshot%20%0A%0A%0ATechnische%20Details%3A%20%0ADetails%20geloggt%20unter%20%23%20ABC123456%0A(obige%20Zeile%20bitte%20nicht%20l%C3%B6schen%20oder%20%C3%A4ndern)%0A%0A">
+                <span style="text-shadow: 2px 2px grey;">Supportanfrage</span> 
+            </a><br />
+            <span style="font-size: 12px;">
+                In dringenden Fällen: 
+                <!--
+                    http://www.mobilexweb.com/blog/click-to-call-links-mobile-browsers
+                    https://stackoverflow.com/questions/3855650/using-html-to-do-a-skype-call
+                    https://www.viber.com/en/viber-share-button
+                -->
+                <a href="tel:+41716492649">+41 (0)71 649 26 49</a>
+            </span>
+            <div id="SkypeButton"></div>
+            
+        </p>
+
+        
+        
+    </div>
+
+    <footer>
+        <p>
+            Technischer Kontakt: 
+            <a href="http://www.cor-management.ch" target="_blank">
+                COR Managementsysteme GmbH
+            </a>
+        </p>
+
+    </footer>
+
+        <script type="text/javascript">
+            // You'll need to update your Skype settings to allow incoming calls or messages 
+            // from people who are not on your contact list. 
+            // Learn More. Need help? Check out the FAQ.
+            Skype.ui({
+                "name": "call",
+                "element": "SkypeButton",
+                "participants": ["cor.management"],
+                "imageColor": "blue",
+                "imageSize": 32
+            });
+        </script>
+    
+
+</body>
+</html>

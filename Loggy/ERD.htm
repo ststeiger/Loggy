@@ -53,6 +53,9 @@
         // https://stackoverflow.com/questions/6268679/best-way-to-get-the-key-of-a-key-value-javascript-object
         function setAttributes(ele, o)
         {
+            if (o == null)
+                return;
+
             if (o !== Object(o))
                 throw new TypeError('Object.keys called on non-object');
 
@@ -188,6 +191,8 @@
         }
 
 
+        // http://vanseodesign.com/web-design/svg-text-tspan-element/
+        // http://tutorials.jenkov.com/svg/tspan-element.html
         //function createTspan(x, y, text, fontSize)
         function createTspan(text, attributes)
         {
@@ -261,14 +266,21 @@
             // createPolygon({ "points": build(pointList) });
             createEllipse({ cx: 123, cy: 123, rx: 123, ry: 123, fill: randomColor() });
             createPolyline({ points: "5,5 45,45 5,45 45,5", fill: "none", stroke: "green" });
-            createTspan("Hello", { x: 50, y: 50, "font-size": 20 });
-
             
 
-            svgOne.appendChild(
-                createText("Hello World", { x: 50, y: 50, "font-size": 20, fill: randomColor() })   
+            
+            var text = createText("Test", { x: 50, y: 50, "font-size": 20, fill: randomColor() });
+            text.appendChild(
+                createTspan("123", null)
             );
 
+            text.appendChild(
+                createTspan("ABC", { x: 50, dy: 20 })
+            );
+
+            
+            svgOne.appendChild(text);
+            
         }
 
         if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
