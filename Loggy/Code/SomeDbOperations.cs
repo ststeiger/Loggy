@@ -51,8 +51,6 @@ namespace Loggy
 #else
                 DAL.ExecuteReader("SELECT * FROM T_Benutzer; SELECT * FROM T_Benutzergruppen;", delegate(System.Data.Common.DbDataReader reader)
 #endif
-
-
                 {
 
                     do

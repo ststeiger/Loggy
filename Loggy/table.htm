@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+    <!--
+    <meta name="author" content="name" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    -->
+
+    <title>Title</title>
+
+    <style type="text/css" media="all">
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .Table 
+        {
+            display: -webkit-box;
+            display: -moz-box;
+            display: box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-flow: column nowrap;
+            -moz-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+            -webkit-box-pack: justify;
+            -moz-box-pack: justify;
+            box-pack: justify;
+            -webkit-justify-content: space-between;
+            -moz-justify-content: space-between;
+            -ms-justify-content: space-between;
+            -o-justify-content: space-between;
+            justify-content: space-between;
+            -ms-flex-pack: justify;
+            border: 1px solid #f2f2f2;
+            font-size: 1rem;
+            margin: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .Table-header 
+        {
+          display: none;
+        }
+
+
+        @media (min-width: 500px) 
+        {
+
+          .Table-header 
+          {
+            font-weight: 700;
+            background-color: #f2f2f2;
+          }
+
+        }
+
+
+        .Table-row 
+        {
+          width: 100%;
+        }
+
+        .Table-row:nth-of-type(even) 
+        {
+          background-color: #f2f2f2;
+        }
+
+        .Table-row:nth-of-type(odd) 
+        {
+          background-color: #ffffff;
+        }
+
+
+        @media (min-width: 500px) 
+        {
+
+            .Table-row 
+            {
+                display: -webkit-box;
+                display: -moz-box;
+                display: box;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-flex-flow: row nowrap;
+                -moz-flex-flow: row nowrap;
+                flex-flow: row nowrap;
+            }
+
+            .Table-row:nth-of-type(even) 
+            {
+                background-color: #ffffff;
+            }
+
+            .Table-row:nth-of-type(odd) 
+            {
+                background-color: #f2f2f2;
+            }
+        }
+
+
+        .Table-row-item 
+        {
+            display: -webkit-box;
+            display: -moz-box;
+            display: box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-flow: row nowrap;
+            -moz-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+            -webkit-flex-grow: 1;
+            -moz-flex-grow: 1;
+            flex-grow: 1;
+            -ms-flex-positive: 1;
+            -webkit-flex-basis: 0;
+            -moz-flex-basis: 0;
+            flex-basis: 0;
+            -ms-flex-preferred-size: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
+            padding: 0.5em;
+            word-break: break-word;
+        }
+
+        .Table-row-item:before 
+        {
+            content: attr(data-header);
+            width: 30%;
+            font-weight: 700;
+        }
+
+
+        @media (min-width: 500px) 
+        {
+
+          .Table-row-item 
+          {
+            border: 1px solid #ffffff;
+            padding: 0.5em;
+          }
+
+          .Table-row-item:before 
+          {
+            content: none;
+          }
+
+        }
+
+    </style>
+
+
+    <script type="text/javascript">
+
+    </script>
+
+</head>
+<body>
+    
+
+    <div class="Table">
+        <div class="Table-row Table-header">
+            <div class="Table-row-item u-Flex-grow2">Long Header1</div>
+            <div class="Table-row-item">Header2</div>
+            <div class="Table-row-item">Header3</div>
+            <div class="Table-row-item">Header4</div>
+            <div class="Table-row-item u-Flex-grow3">Longer Header5</div>
+            <div class="Table-row-item">Header6</div>
+            <div class="Table-row-item">Header7</div>
+        </div>
+        <div class="Table-row">
+            <div class="Table-row-item u-Flex-grow2" data-header="Header1">row1 col1</div>
+            <div class="Table-row-item" data-header="Header2">row1 col2</div>
+            <div class="Table-row-item" data-header="Header3">row1 col3</div>
+            <div class="Table-row-item" data-header="Header4">row1 col4</div>
+            <div class="Table-row-item u-Flex-grow3" data-header="Header5">row1 col5</div>
+            <div class="Table-row-item" data-header="Header6">row1 col6</div>
+            <div class="Table-row-item" data-header="Header7">row1 col7</div>
+        </div>
+        <div class="Table-row">
+            <div class="Table-row-item u-Flex-grow2" data-header="Header1">row2 col1</div>
+            <div class="Table-row-item" data-header="Header2">row2 col2</div>
+            <div class="Table-row-item" data-header="Header3">row2 col3</div>
+            <div class="Table-row-item" data-header="Header4">row2 col4</div>
+            <div class="Table-row-item u-Flex-grow3" data-header="Header5">row2 col5</div>
+            <div class="Table-row-item" data-header="Header6">row2 col6</div>
+            <div class="Table-row-item" data-header="Header7">row2 col7</div>
+        </div>
+        <div class="Table-row">
+            <div class="Table-row-item u-Flex-grow2" data-header="Header1">row3 col1</div>
+            <div class="Table-row-item" data-header="Header2">row3 col2</div>
+            <div class="Table-row-item" data-header="Header3">row3 col3</div>
+            <div class="Table-row-item" data-header="Header4">row3 col4</div>
+            <div class="Table-row-item u-Flex-grow3" data-header="Header5">row3 col5</div>
+            <div class="Table-row-item" data-header="Header6">row3 col6</div>
+            <div class="Table-row-item" data-header="Header7">row3 col7</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        function autorun()
+        {
+        }
+
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+    </script>
+    
+</body>
+</html>

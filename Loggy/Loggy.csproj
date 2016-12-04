@@ -79,6 +79,7 @@
     <Content Include="cssControls\customflipswitch.htm" />
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
+    <Content Include="table.htm" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageTemplate.txt" />
     <Content Include="cssControls\filledCheckbox.htm" />
@@ -96,14 +97,16 @@
     <Content Include="cssControls\materialcheckbox.htm" />
     <Content Include="cssControls\radio.htm" />
     <Content Include="ERD.htm" />
-    <EmbeddedResource Include="PublicErrorTemplate_DE.htm" />
-    <EmbeddedResource Include="PublicErrorTemplate2_old.htm" />
-    <EmbeddedResource Include="PublicErrorTemplate_EN.htm" />
+    <EmbeddedResource Include="BlackErrorTemplate_DE.htm" />
+    <EmbeddedResource Include="BlackErrorTemplate_orig.htm" />
+    <EmbeddedResource Include="BlackErrorTemplate_EN.htm" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="cssControls\simpleCheckbox.htm" />
     <Content Include="cssControls\simpleRadiobox.htm" />
+    <Content Include="Scripts\soll.png" />
+    <Content Include="Scripts\Website is offline   522  Connection timed out.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -145,11 +148,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\cloudlare_savedyIE\" />
+    <Folder Include="Scripts\Website is offline   522  Connection timed out_files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="cssControls\prettyCheckboxes_uncompressed.1.1.zip" />
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
-    <Content Include="Scripts\keni.rar" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
