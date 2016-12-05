@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+    <!--
+    <meta name="author" content="name" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    -->
+
+    <title>Title</title>
+
+    <style type="text/css" media="all">
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+
+
+
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        body
+        {
+            overflow: hidden;
+        }
+
+        .listItem
+        {
+            border: 1px solid gray;
+            padding: 0 5px;
+            width: margin : 1px 0px;
+        }
+
+        #listHolder
+        {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-color: #CCC;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        /*chrome only
+        #listHolder::-webkit-scrollbar{
+            display:none;
+        }*/
+
+        #view
+        {
+            position: absolute;
+            width: 100%;
+        }
+
+    </style>
+
+
+    <script type="text/javascript">
+
+
+        // Returns a random integer between min (included) and max (excluded)
+        // Using Math.round() will give you a non-uniform distribution!
+        function rand(min, max)
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+    </script>
+
+</head>
+<body>
+
+
+    <div id="listHolder">
+        <div id="heightForcer"></div>
+    </div>
+
+
+
+        <script type="text/javascript">
+
+            function virtualRendering()
+            {
+                //CHANGE THESE IF YOU WANT
+                //var hidescrollbar = false;
+                var hidescrollbar = true;
+                var numberofitems = 700000;
+                //
+
+                var holder = document.getElementById('listHolder');
+                var view = null;
+
+                //get the height of a single item
+                var itemHeight = (function ()
+                {
+                    //generate a fake item
+                    var div = document.createElement('div');
+                    div.className = 'listItem';
+                    div.innerHTML = 'testing height';
+                    holder.appendChild(div);
+
+                    //get its height and remove it
+                    var output = div.offsetHeight;
+                    holder.removeChild(div);
+                    return output;
+                })();
+
+                //faster to instantiate empty-celled array
+                //var items = Array(numberofitems);
+                var items = [];
+                //fill it in with data
+                
+                //for (var index = 0; index < items.length; ++index)
+                for (var index = 0; index < numberofitems; ++index)
+                {
+                    items[index] = 'item-' + index;
+                }
+                    
+                    
+
+                //displays a suitable number of items
+                function refreshWindow()
+                {
+                    //remove old view
+                    if (view != null)
+                        holder.removeChild(view);
+                    //create new view
+                    view = holder.appendChild(document.createElement('div'));
+
+                    var firstItem = Math.floor(holder.scrollTop / itemHeight);
+                    var lastItem = firstItem + Math.ceil(holder.offsetHeight / itemHeight) + 1;
+
+                    console.log("firstItem", firstItem);
+                    console.log("lastItem 1", lastItem);
+
+
+                    //if (lastItem + 1 >= items.length) lastItem = items.length - 1;
+                    if (lastItem + 1 >= numberofitems) lastItem = numberofitems - 1;
+
+                    console.log("lastItem 2", lastItem);
+
+                    //position view in users face
+                    view.id = 'view';
+                    view.style.top = (firstItem * itemHeight) + 'px';
+                    console.log("view.style.top", view.style.top);
+
+
+                    var div;
+                    //add the items
+                    for (var index = firstItem; index <= lastItem; ++index)
+                    {
+                        div = document.createElement('div');
+                        div.innerHTML = items[index];
+                        div.className = "listItem";
+                        view.appendChild(div);
+                    }
+                    console.log('viewing items ' + firstItem + ' to ' + lastItem);
+                }
+
+                refreshWindow();
+
+                
+                //document.getElementById('heightForcer').style.height = (items.length * itemHeight) + 'px';
+                document.getElementById('heightForcer').style.height = (numberofitems * itemHeight) + 'px';
+                if (hidescrollbar)
+                {
+                    //work around for non-chrome browsers, hides the scrollbar
+                    holder.style.width = (holder.offsetWidth * 2 - view.offsetWidth) + 'px';
+                    console.log("holder.style.width", holder.style.width);
+                }
+
+                function delayingHandler()
+                {
+                    //wait for the scroll to finish
+                    setTimeout(refreshWindow, 10);
+                }
+                if (holder.addEventListener)
+                    holder.addEventListener("scroll", delayingHandler, false);
+                else
+                    holder.attachEvent("onscroll", delayingHandler);
+            }
+
+
+
+            function autorun()
+            {
+                virtualRendering();
+            }
+
+            if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+            else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+            else window.onload = autorun;
+        </script>
+
+</body>
+</html>

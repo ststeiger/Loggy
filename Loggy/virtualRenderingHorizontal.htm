@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+    <!--
+    <meta name="author" content="name" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    -->
+
+    <title>Title</title>
+
+    <style type="text/css" media="all">
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+
+        html, body
+        {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        body
+        {
+            overflow: hidden;
+        }
+
+        .listItem
+        {
+            border: 1px solid gray;
+            margin: 1px 0px;
+            display: inline-block;
+        }
+
+        #listHolder
+        {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-color: #CCC;
+            box-sizing: border-box;
+            overflow: auto;
+        }
+
+        #view
+        {
+            position: absolute;
+        }
+
+        #view, #view *
+        {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        #view > div
+        {
+            width: 100%;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+
+
+        // Returns a random integer between min (included) and max (excluded)
+        // Using Math.round() will give you a non-uniform distribution!
+        function rand(min, max)
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+    </script>
+
+</head>
+<body>
+    <div id="listHolder"></div>
+
+
+        <script type="text/javascript">
+
+            function matrix(data, holder, config)
+            {
+                'use strict';
+
+                //copy the config, substituting defaults
+                config = {
+                    cellWidth: (config && config.cellWidth) || 150,
+                    rowHeight: (config && config.rowHeight) || 22,
+                };
+
+                if (!data)
+                {
+                    //create 50000x26 array for data
+                    data = (function (length, depth)
+                    {
+                        var output = new Array(length);
+                        var startAt;
+
+                        for (var index = 0; index < length; ++index)
+                        {
+                            //var startAt = Math.random().toString(36).substring(5);
+                            var startAt = index + ':';
+                            output[index] = new Array(depth);
+
+                            for (var index2 = 0; index2 < depth; ++index2)
+                                output[index][index2] = startAt + index2;
+                        }
+
+                        return output;
+                    })(50000, 26);
+                }
+
+                //guard against 0 length arrays
+                if (data.length < 1 || data[0].length < 1)
+                    return;
+
+                var areaForcer = holder.appendChild(holder.ownerDocument.createElement('div'));
+
+                var view = null;
+                function refreshWindow()
+                {
+                    //remove old view
+                    if (view != null)
+                        view.innerHTML = "";
+                        //create new view
+                    else
+                        view = holder.appendChild(holder.ownerDocument.createElement('div'));
+
+                    var firstRow = Math.floor(holder.scrollTop / config.rowHeight);
+                    var lastRow = firstRow + Math.ceil(holder.offsetHeight / config.rowHeight) + 1;
+                    if (lastRow + 2 > data.length)
+                        lastRow = data.length - 1;
+
+                    var firstColumn = Math.floor(holder.scrollLeft / config.cellWidth);
+                    var lastColumn = firstColumn + Math.ceil(holder.offsetWidth / config.cellWidth) + 1;
+                    if (lastColumn + 2 > data[0].length)
+                        lastColumn = data[0].length - 1;
+
+                    //position view in users face
+                    view.id = 'view';
+                    view.style.top = (firstRow * config.rowHeight) + 'px';
+                    view.style.left = (firstColumn * config.cellWidth) + 'px';
+
+                    var row;
+                    var cell;
+                    //add the rows
+                    for (var index = firstRow; index <= lastRow; ++index)
+                    {
+                        row = view.ownerDocument.createElement('div');
+                        row.style.height = config.rowHeight - 2 + 'px';
+                        view.appendChild(row);
+
+                        //add the cells
+                        for (var index2 = firstColumn; index2 <= lastColumn; ++index2)
+                        {
+                            cell = row.ownerDocument.createElement('div');
+                            cell.className = 'listItem';
+                            cell.innerHTML = data[index][index2];
+                            cell.style.width = config.cellWidth - 2 + 'px';
+                            row.appendChild(cell);
+                        }
+                    }
+
+                    console.log('viewing items [' + firstRow + ':' + lastRow + '][' + firstColumn + ':' + lastColumn + ']');
+                }
+
+                areaForcer.style.height = (data.length * config.rowHeight) + 'px';
+                areaForcer.style.width = (data[0].length * config.cellWidth) + 'px';
+
+                refreshWindow();
+
+                function delayingHandler()
+                {
+                    //wait for the scroll to finish
+                    setTimeout(refreshWindow, 10);
+                }
+
+                if (holder.addEventListener)
+                    holder.addEventListener('scroll', delayingHandler, false);
+                else
+                    holder.attachEvent('onscroll', delayingHandler);
+            }
+
+            
+
+            function autorun()
+            {
+                matrix(null, document.getElementById('listHolder'), false);
+            }
+
+            if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+            else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+            else window.onload = autorun;
+        </script>
+
+</body>
+</html>
