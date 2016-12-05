@@ -10,7 +10,7 @@ namespace Loggy
         public enum Mandant
         {
 
-        }
+        } /// End Enum Mandant 
 
 
         protected static T InlineTypeAssignHelper<T>(object UTO)
@@ -31,10 +31,10 @@ namespace Loggy
             // sw.WriteLine(sLogFormat + sErrMsg);
             sw.Flush();
             sw.Close();
-        }
+        } /// End Sub ErrorLog 
 
 
-    }
+    } // End Class oldDAL 
 
 
-}
+} // End Namespace Loggy 

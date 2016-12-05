@@ -47,6 +47,7 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="BlackErrorTemplate_Injection_DE.htm" />
     <Content Include="Chain.png" />
     <Content Include="closure\BreadCrumb_PostGre.sql" />
     <Content Include="closure\ClearClosure.sql" />
@@ -111,11 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\BlackList.cs" />
-    <Compile Include="Code\caCert.cs" />
+    <Compile Include="Code\Helpers\caCert.cs" />
+    <Compile Include="Code\Handler\InjectionBlockHandler.cs" />
+    <Compile Include="Code\Helpers\Tools.cs" />
     <Compile Include="DAL\cMS_SQL.cs" />
     <Compile Include="DAL\Crypt.cs" />
     <Compile Include="DAL\DAL.cs" />
-    <Compile Include="Code\DebugTextWriter.cs" />
+    <Compile Include="Code\Helpers\DebugTextWriter.cs" />
     <Compile Include="Default.aspx.cs">
       <SubType>ASPXCodeBehind</SubType>
       <DependentUpon>Default.aspx</DependentUpon>
@@ -123,7 +126,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Code\ErrorLogModule.cs" />
+    <Compile Include="Code\Module\ErrorLogModule.cs" />
     <Compile Include="DAL\GenericExtensions.cs" />
     <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
@@ -136,15 +139,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="DAL\IEnumerableExtensions.cs" />
-    <Compile Include="Code\MailSender.cs" />
-    <Compile Include="Code\MyHandler.cs" />
+    <Compile Include="Code\Mail\MailSender.cs" />
+    <Compile Include="Code\Handler\ErrorTemplateHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="oldDAL.cs" />
     <Compile Include="DAL\ScriptSplitter.cs" />
     <Compile Include="DAL\SharedLibrary.cs" />
     <Compile Include="DAL\TopologicalSorter.cs" />
-    <Compile Include="Code\SomeDbOperations.cs" />
-    <Compile Include="Code\SqlInjectionScreeningModule.cs" />
+    <Compile Include="Code\Helpers\SomeDbOperations.cs" />
+    <Compile Include="Code\Module\SqlInjectionScreeningModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

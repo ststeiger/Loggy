@@ -2,6 +2,7 @@
 namespace Loggy
 {
 
+
     // https://developer.teradata.com/blog/netfx/2012/12/speed-up-large-object-lob-retrieval-with-commandbehavior-sequentialaccess
     public class cMS_SQL : cDAL
     {

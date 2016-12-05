@@ -69,6 +69,8 @@ namespace Loggy
             System.Globalization.CultureInfo cult = System.Globalization.CultureInfo.CreateSpecificCulture(culture);
             System.Threading.Thread.CurrentThread.CurrentCulture = cult;
             System.Threading.Thread.CurrentThread.CurrentUICulture = cult;
+
+
         }
 
 
@@ -95,13 +97,11 @@ namespace Loggy
             System.Console.WriteLine(appPath);
 
 
-
-
             if (context.Request.Url.AbsolutePath == "/foo.ashx")
             {
                 // IHttpHandler myHandler = new MyHandler();
                 // context.Handler = myHandler;
-                context.Handler = new MyHandler();
+                context.Handler = new ErrorTemplateHandler();
             }
 
         }

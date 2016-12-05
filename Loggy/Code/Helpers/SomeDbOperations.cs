@@ -3,12 +3,6 @@
 // #undef WITH_CONNECTION
 
 
-
-using System;
-using System.Collections.Generic;
-using System.Web;
-
-
 namespace Loggy
 {
 
@@ -96,6 +90,7 @@ namespace Loggy
                 object objUser4 = DAL.ExecuteScalar("SELECT TOP 1 BE_User FROM T_Benutzer ORDER BY BE_Passwort;", dbConnection);
 
             } // End Using dbConnection
+
 
         } // End Sub Test 
 

@@ -12,6 +12,8 @@ namespace Loggy
 
         public static string[] blackList = {
 	        "'",
+            "<",
+            ">",
             "<script>",
             "</script>",
             "<script",
@@ -21,39 +23,38 @@ namespace Loggy
             //";",
             //"/*",
             //"*/",
-            //"@@",
-            //"@",
-            //"char",
-            //"nchar",
-            //"varchar",
-            //"nvarchar",
-            //"alter",
-            //"begin",
-            //"cast",
-            //"create",
-            //"cursor",
-            //"declare",
-            //"delete",
-            //"drop",
+            "@@",
+            "@",
+            "char",
+            "nchar",
+            "varchar",
+            "nvarchar",
+            "alter",
+            "begin",
+            "cast",
+            "create",
+            "cursor",
+            "declare",
+            "delete",
+            "drop",
             //"end",
-            //"exec",
-            //"execute",
-            //"fetch",
-            //"insert",
-            //"kill",
-            //"open",
-            //"select",
-            //"sys",
-            //"sysobjects",
-            //"syscolumns",
-            //"table",
-            //"update"
+            "exec",
+            "execute",
+            "fetch",
+            "insert",
+            "kill",
+            "open",
+            "select",
+            "sys",
+            "sysobjects",
+            "syscolumns",
+            "table",
+            "update"
         };
 
 
         void System.Web.IHttpModule.Dispose()
-        { 
-        } // End Sub Dispose 
+        {  } // End Sub Dispose 
 
 
         void System.Web.IHttpModule.Init(System.Web.HttpApplication context)
@@ -63,78 +64,13 @@ namespace Loggy
 
             context.BeginRequest += new System.EventHandler(OnBeginRequest);
 
-            // https://stackoverflow.com/questions/1888016/any-way-to-add-httphandler-programatically-in-net
-            // is there any way to programatically add an HttpHandler to an ASP.NET website without adding to the web.config?
-            // Obviously you probably want to wrap this in some logic to check for things such as verb, requesting url, etc. 
-            context.PostMapRequestHandler += new System.EventHandler(OnPostMapRequestHandler);
-
             // context.EndRequest += new System.EventHandler(OnEndRequest);
         } // End Sub Init 
 
 
         private void OnBeginRequest(object sender, System.EventArgs e)
         {
-        } // End Sub OnBeginRequest 
 
-
-        // System.Web.HttpRequest request
-        private void CheckInjection(System.Web.HttpRequest request)
-        {
-            string ip = request.UserHostAddress;
-
-
-            foreach (string key in request.QueryString)
-            {
-                CheckInput(request.QueryString[key]);
-            }
-
-            foreach (string key in request.Form)
-            {
-                CheckInput(request.Form[key]);
-            }
-
-            foreach (string key in request.Cookies)
-            {
-                CheckInput(request.Cookies[key].Value);
-            }
-
-        } // End Sub CheckInjection 
-
-
-        private void CheckInput(string parameter)
-        {
-            for (int i = 0; i <= blackList.Length - 1; i++)
-            {
-
-                // if ((parameter.IndexOf(blackList[i], StringComparison.OrdinalIgnoreCase) >= 0))
-                if (System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(parameter, blackList[i], 0, System.Globalization.CompareOptions.OrdinalIgnoreCase) != -1)
-                {
-                    //Handle the discovery of suspicious Sql characters here 
-
-                    //generic error page on your site 
-                    // System.Web.HttpContext.Current.Response.Redirect("~/Error.aspx");
-
-                    // System.Web.HttpContext.Current.Response.Clear();
-                    // System.Web.HttpContext.Current.Response.ClearHeaders();
-                    // System.Web.HttpContext.Current.Response.ClearContent();
-
-                    System.Web.HttpContext.Current.Handler = new MyHandler();
-                    // System.Web.HttpContext.Current.ApplicationInstance.CompleteRequest();
-                } // End if (System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(parameter, blackList[i], 0, System.Globalization.CompareOptions.OrdinalIgnoreCase) != -1) 
-
-            } // Next i 
-
-        } // End Sub CheckInput 
-
-
-        private void OnEndRequest(object sender, System.EventArgs e)
-        {
-            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-        } // End Sub OnEndRequest 
-
-
-        private void OnPostMapRequestHandler(object sender, System.EventArgs e)
-        {
             System.Web.HttpApplication app = ((System.Web.HttpApplication)sender);
 
             if (app == null)
@@ -146,7 +82,7 @@ namespace Loggy
                 return;
 
 
-            var appPath = string.Format("{0}://{1}{2}{3}",
+            string appPath = string.Format("{0}://{1}{2}{3}",
                                       context.Request.Url.Scheme,
                                       context.Request.Url.Host,
                                       context.Request.Url.Port == 80
@@ -156,17 +92,75 @@ namespace Loggy
             System.Console.WriteLine(appPath);
 
 
-            CheckInjection(context.Request);
-
-
-            if (context.Request.Url.AbsolutePath == "/foo.ashx")
+            if (CheckInjection(context.Request))
             {
-                // IHttpHandler myHandler = new MyHandler();
-                // context.Handler = myHandler;
-                context.Handler = new MyHandler();
+                System.Web.IHttpHandler mh = new InjectionBlockHandler();
+                mh.ProcessRequest(context);
+                context.ApplicationInstance.CompleteRequest();
+            } // End if (CheckInjection(context.Request)) 
+
+        } // End Sub OnBeginRequest 
+
+
+        // System.Web.HttpRequest request
+        private bool CheckInjection(System.Web.HttpRequest request)
+        {
+            string ip = request.UserHostAddress;
+
+            foreach (string key in request.QueryString)
+            {
+                if (CheckInput(request.QueryString[key]))
+                    return true;
             }
 
-        } // End Sub OnPostMapRequestHandler 
+            foreach (string key in request.Form)
+            {
+                if (CheckInput(request.Form[key]))
+                    return true;
+            }
+
+            foreach (string key in request.Cookies)
+            {
+                if (CheckInput(request.Cookies[key].Value))
+                    return true;
+            }
+
+            return false;
+        } // End Sub CheckInjection 
+
+
+        private bool CheckInput(string parameter)
+        {
+            for (int i = 0; i <= blackList.Length - 1; i++)
+            {
+
+                // if ((parameter.IndexOf(blackList[i], StringComparison.OrdinalIgnoreCase) >= 0))
+                if (System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(parameter, blackList[i], 0, System.Globalization.CompareOptions.OrdinalIgnoreCase) != -1)
+                {
+                    return true;
+                    //Handle the discovery of suspicious Sql characters here 
+
+                    //generic error page on your site 
+                    // System.Web.HttpContext.Current.Response.Redirect("~/Error.aspx");
+
+                    // System.Web.HttpContext.Current.Response.Clear();
+                    // System.Web.HttpContext.Current.Response.ClearHeaders();
+                    // System.Web.HttpContext.Current.Response.ClearContent();
+
+                    
+                    // System.Web.HttpContext.Current.ApplicationInstance.CompleteRequest();
+                } // End if (System.Globalization.CultureInfo.InvariantCulture.CompareInfo.IndexOf(parameter, blackList[i], 0, System.Globalization.CompareOptions.OrdinalIgnoreCase) != -1) 
+
+            } // Next i 
+
+            return false;
+        } // End Sub CheckInput 
+
+
+        private void OnEndRequest(object sender, System.EventArgs e)
+        {
+            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+        } // End Sub OnEndRequest 
 
 
     } // End Class SqlInjectionScreeningModule : System.Web.IHttpModule 
