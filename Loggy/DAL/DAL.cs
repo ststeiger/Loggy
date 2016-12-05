@@ -138,84 +138,85 @@ namespace Loggy
 
             lock (cmd)
             {
-                using (System.Data.IDataReader idr = ExecuteReader(cmd))
-                {
 
-                    lock (idr)
+                this.ExecuteReader(cmd, 
+                    delegate (System.Data.Common.DbDataReader idr)
                     {
-                        
-                        if (IsSimpleType(tThisType))
+
+                        lock (idr)
                         {
-                            while (idr.Read())
+                            if (IsSimpleType(tThisType))
                             {
-                                object objVal = idr.GetValue(0);
-                                tThisValue = (T)MyChangeType(objVal, typeof(T));
-                                //tThisValue = System.Convert.ChangeType(objVal, T),
+                                while (idr.Read())
+                                {
+                                    object objVal = idr.GetValue(0);
+                                    tThisValue = (T)MyChangeType(objVal, typeof(T));
+                                    //tThisValue = System.Convert.ChangeType(objVal, T),
 
-                                lsReturnValue.Add(tThisValue);
-                            } // End while (idr.Read())
-
-                        }
-                        else
-                        {
-                            int myi = idr.FieldCount;
-
-                            System.Reflection.FieldInfo[] fis = new System.Reflection.FieldInfo[idr.FieldCount];
-                            //Action<T, object>[] setters = new Action<T, object>[idr.FieldCount];
-
-                            for (int i = 0; i < idr.FieldCount; ++i)
+                                    lsReturnValue.Add(tThisValue);
+                                } // End while (idr.Read())
+                            }
+                            else
                             {
-                                string strName = idr.GetName(i);
-                                System.Reflection.FieldInfo fi = tThisType.GetField(strName, m_CaseSensitivity);
-                                fis[i] = fi;
+                                int myi = idr.FieldCount;
 
-                                //if (fi != null)
-                                //    setters[i] = GetSetter<T>(fi);
-                            } // Next i
+                                System.Reflection.FieldInfo[] fis = new System.Reflection.FieldInfo[idr.FieldCount];
+                                //Action<T, object>[] setters = new Action<T, object>[idr.FieldCount];
 
-
-                            while (idr.Read())
-                            {
-                                //idr.GetOrdinal("")
-                                tThisValue = System.Activator.CreateInstance<T>();
-
-                                // Console.WriteLine(idr.FieldCount);
                                 for (int i = 0; i < idr.FieldCount; ++i)
                                 {
                                     string strName = idr.GetName(i);
-                                    object objVal = idr.GetValue(i);
+                                    System.Reflection.FieldInfo fi = tThisType.GetField(strName, m_CaseSensitivity);
+                                    fis[i] = fi;
 
-                                    //System.Reflection.FieldInfo fi = t.GetField(strName, m_CaseSensitivity);
-                                    if (fis[i] != null)
-                                        //if (fi != null)
-                                    {
-                                        //fi.SetValue(tThisValue, System.Convert.ChangeType(objVal, fi.FieldType));
-                                        fis[i].SetValue(tThisValue, MyChangeType(objVal, fis[i].FieldType));
-                                    } // End if (fi != null) 
-                                    else
-                                    {
-                                        System.Reflection.PropertyInfo pi = tThisType.GetProperty(strName, m_CaseSensitivity);
-                                        if (pi != null)
-                                        {
-                                            //pi.SetValue(tThisValue, System.Convert.ChangeType(objVal, pi.PropertyType), null);
-                                            pi.SetValue(tThisValue, MyChangeType(objVal, pi.PropertyType), null);
-                                        } // End if (pi != null)
-
-                                        // Else silently ignore value
-                                    } // End else of if (fi != null)
-
-                                    //Console.WriteLine(strName);
+                                    //if (fi != null)
+                                    //    setters[i] = GetSetter<T>(fi);
                                 } // Next i
 
-                                lsReturnValue.Add(tThisValue);
-                            } // Whend
 
-                        } // End if IsSimpleType(tThisType)
+                                while (idr.Read())
+                                {
+                                    //idr.GetOrdinal("")
+                                    tThisValue = System.Activator.CreateInstance<T>();
 
-                        idr.Close();
-                    } // End Lock idr
+                                    // Console.WriteLine(idr.FieldCount);
+                                    for (int i = 0; i < idr.FieldCount; ++i)
+                                    {
+                                        string strName = idr.GetName(i);
+                                        object objVal = idr.GetValue(i);
 
-                } // End Using idr
+                                        //System.Reflection.FieldInfo fi = t.GetField(strName, m_CaseSensitivity);
+                                        if (fis[i] != null)
+                                        //if (fi != null)
+                                        {
+                                            //fi.SetValue(tThisValue, System.Convert.ChangeType(objVal, fi.FieldType));
+                                            fis[i].SetValue(tThisValue, MyChangeType(objVal, fis[i].FieldType));
+                                        } // End if (fi != null) 
+                                        else
+                                        {
+                                            System.Reflection.PropertyInfo pi = tThisType.GetProperty(strName, m_CaseSensitivity);
+                                            if (pi != null)
+                                            {
+                                                //pi.SetValue(tThisValue, System.Convert.ChangeType(objVal, pi.PropertyType), null);
+                                                pi.SetValue(tThisValue, MyChangeType(objVal, pi.PropertyType), null);
+                                            } // End if (pi != null)
+
+                                            // Else silently ignore value
+                                        } // End else of if (fi != null)
+
+                                        //Console.WriteLine(strName);
+                                    } // Next i
+
+                                    lsReturnValue.Add(tThisValue);
+                                } // Whend
+
+                            } // End if IsSimpleType(tThisType)
+
+                            idr.Close();
+                        } // End Lock idr
+
+                    }// End Delegate ExecuteReader
+                );
 
             } // End lock cmd
 

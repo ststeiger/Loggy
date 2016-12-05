@@ -120,8 +120,8 @@ namespace Loggy
             [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] string pszUserName,
             [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] string pszDomain,
             [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.LPStr)] string pszPassword,
-            int dwLogonType,
-            int dwLogonProvider,
+            LogonType dwLogonType,
+            LogonProvider dwLogonProvider,
             ref System.IntPtr phToken);
 
     }
