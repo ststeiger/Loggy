@@ -36,6 +36,193 @@ namespace Loggy
         } // End Property IsPostGreSql 
 
 
+
+
+        // Anything else than a struct or a class
+        public virtual bool IsSimpleType(System.Type tThisType)
+        {
+            if (tThisType.IsPrimitive)
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(tThisType, typeof(System.String)))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(tThisType, typeof(System.DateTime)))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(tThisType, typeof(System.Guid)))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(tThisType, typeof(System.Decimal)))
+            {
+                return true;
+            }
+
+            if (object.ReferenceEquals(tThisType, typeof(System.Object)))
+            {
+                return true;
+            }
+
+            return false;
+        } // End Function IsSimpleType
+
+
+        private static bool IsNullable(System.Type t)
+        {
+            if (t == null)
+                return false;
+
+            return t.IsGenericType && object.ReferenceEquals(t.GetGenericTypeDefinition(), typeof(System.Nullable<>));
+        } // End Function IsNullable
+
+
+        private static object MyChangeType(object objVal, System.Type t)
+        {
+            bool typeIsNullable = IsNullable(t);
+            bool typeCanBeAssignedNull = !t.IsValueType || typeIsNullable;
+
+            if (objVal == null || object.ReferenceEquals(objVal, System.DBNull.Value))
+            {
+                if (typeCanBeAssignedNull)
+                    return null;
+                else
+                    throw new System.ArgumentNullException("objVal ([DataSource] => SetProperty => MyChangeType => you're trying to NULL a type that NULL cannot be assigned to...)");
+            }
+
+            //getbasetype
+            System.Type tThisType = objVal.GetType();
+
+            if (typeIsNullable)
+            {
+                t = System.Nullable.GetUnderlyingType(t);
+            }
+
+
+            if (object.ReferenceEquals(tThisType, t))
+                return objVal;
+
+            // Convert Guid => string 
+            if (object.ReferenceEquals(t, typeof(string)) && object.ReferenceEquals(tThisType, typeof(System.Guid)))
+            {
+                return objVal.ToString();
+            }
+
+            // Convert string => Guid 
+            if (object.ReferenceEquals(t, typeof(System.Guid)) && object.ReferenceEquals(tThisType, typeof(string)))
+            {
+                return new System.Guid(objVal.ToString());
+            }
+
+            return System.Convert.ChangeType(objVal, t);
+        } // End Function MyChangeType
+
+
+        protected const System.Reflection.BindingFlags m_CaseSensitivity = System.Reflection.BindingFlags.Instance
+            | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.IgnoreCase
+        ;
+
+
+        public virtual System.Collections.Generic.List<T> GetList<T>(System.Data.Common.DbCommand cmd)
+        {
+            System.Collections.Generic.List<T> lsReturnValue = new System.Collections.Generic.List<T>();
+            T tThisValue = default(T);
+            System.Type tThisType = typeof(T);
+
+            lock (cmd)
+            {
+                using (System.Data.IDataReader idr = ExecuteReader(cmd))
+                {
+
+                    lock (idr)
+                    {
+                        
+                        if (IsSimpleType(tThisType))
+                        {
+                            while (idr.Read())
+                            {
+                                object objVal = idr.GetValue(0);
+                                tThisValue = (T)MyChangeType(objVal, typeof(T));
+                                //tThisValue = System.Convert.ChangeType(objVal, T),
+
+                                lsReturnValue.Add(tThisValue);
+                            } // End while (idr.Read())
+
+                        }
+                        else
+                        {
+                            int myi = idr.FieldCount;
+
+                            System.Reflection.FieldInfo[] fis = new System.Reflection.FieldInfo[idr.FieldCount];
+                            //Action<T, object>[] setters = new Action<T, object>[idr.FieldCount];
+
+                            for (int i = 0; i < idr.FieldCount; ++i)
+                            {
+                                string strName = idr.GetName(i);
+                                System.Reflection.FieldInfo fi = tThisType.GetField(strName, m_CaseSensitivity);
+                                fis[i] = fi;
+
+                                //if (fi != null)
+                                //    setters[i] = GetSetter<T>(fi);
+                            } // Next i
+
+
+                            while (idr.Read())
+                            {
+                                //idr.GetOrdinal("")
+                                tThisValue = System.Activator.CreateInstance<T>();
+
+                                // Console.WriteLine(idr.FieldCount);
+                                for (int i = 0; i < idr.FieldCount; ++i)
+                                {
+                                    string strName = idr.GetName(i);
+                                    object objVal = idr.GetValue(i);
+
+                                    //System.Reflection.FieldInfo fi = t.GetField(strName, m_CaseSensitivity);
+                                    if (fis[i] != null)
+                                        //if (fi != null)
+                                    {
+                                        //fi.SetValue(tThisValue, System.Convert.ChangeType(objVal, fi.FieldType));
+                                        fis[i].SetValue(tThisValue, MyChangeType(objVal, fis[i].FieldType));
+                                    } // End if (fi != null) 
+                                    else
+                                    {
+                                        System.Reflection.PropertyInfo pi = tThisType.GetProperty(strName, m_CaseSensitivity);
+                                        if (pi != null)
+                                        {
+                                            //pi.SetValue(tThisValue, System.Convert.ChangeType(objVal, pi.PropertyType), null);
+                                            pi.SetValue(tThisValue, MyChangeType(objVal, pi.PropertyType), null);
+                                        } // End if (pi != null)
+
+                                        // Else silently ignore value
+                                    } // End else of if (fi != null)
+
+                                    //Console.WriteLine(strName);
+                                } // Next i
+
+                                lsReturnValue.Add(tThisValue);
+                            } // Whend
+
+                        } // End if IsSimpleType(tThisType)
+
+                        idr.Close();
+                    } // End Lock idr
+
+                } // End Using idr
+
+            } // End lock cmd
+
+            return lsReturnValue;
+        } // End Function GetList
+
+
         public static System.Data.Common.DbProviderFactory GetFactory(System.Type type)
         {
             if (type != null && type.IsSubclassOf(typeof(System.Data.Common.DbProviderFactory)))
