@@ -1,93 +1,11 @@
 ﻿
-using System.Net.Mail;
+// using System.Net.Mail.
 
 
 namespace Loggy
 {
 
-
-    public abstract class ErrorDispatcher   
-    {
-
-
-        public static System.Collections.Generic.Stack<System.Exception> GetExceptionStack(System.Exception exceptionChain)
-        {
-            System.Collections.Generic.Stack<System.Exception> stack = new System.Collections.Generic.Stack<System.Exception>();
-
-            while (exceptionChain != null)
-            {
-                stack.Push(exceptionChain);
-                exceptionChain = exceptionChain.InnerException;
-            }
-
-            return stack;
-        }
-
-
-        public virtual string StringifyException(System.Exception ex)
-        {
-            System.Guid entryUID = System.Guid.NewGuid();
-
-            string type = ex.GetType().Name;
-            string typeFullName = ex.GetType().FullName;
-            string message = ex.Message;
-            string stackTrace = ex.StackTrace;
-            string source = ex.Source;
-            System.Collections.IDictionary data = ex.Data;
-
-            return ex.Message;
-        }
-
-
-        public virtual void LogException(
-              string origin
-            , int level
-            , System.Exception exception
-            , System.Data.Common.DbCommand cmd
-            , string logMessage)
-        {
-            System.Collections.Generic.Stack<System.Exception> stack = GetExceptionStack(exception);
-
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-
-            int sequence = 0;
-            while (stack.Count > 0)
-            {
-                sequence++;
-
-                System.Exception ex = stack.Pop();
-                string exceptionText = StringifyException(ex);
-                sb.AppendLine(exceptionText);
-            }
-
-            string text = sb.ToString();
-            sb.Length = 0;
-            sb = null;
-
-            // SendMail(text);
-        }
-
-
-    }
-
-
-
-    public class ErrorMailer : ErrorDispatcher 
-    {
-        public override void LogException(
-              string origin
-            , int level
-            , System.Exception exception
-            , System.Data.Common.DbCommand cmd
-            , string logMessage)
-        { 
-            
-        }
-    }
-
-
-
+    
     public sealed class ErrorHandler
     {
 
@@ -128,11 +46,11 @@ namespace Loggy
 
             strErrorMessage = strMachineInfo + strErrorMessage;
 
-            MailMessage mail = new MailMessage();
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
             mail.Priority = MailPriority;
 
 
-            mail.From = new MailAddress(sender);
+            mail.From = new System.Net.Mail.MailAddress(sender);
             mail.To.Add(recipient);
 
             if (copyRecipient.Length > 0)
@@ -188,13 +106,13 @@ namespace Loggy
 
 
 
-            SmtpClient client = new SmtpClient();
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
             string host = SmtpServer ?? string.Empty;
 
             if (host.Length > 0)
             {
                 client.Host = host;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
             }
 
             int port = SmtpPort;
@@ -349,8 +267,6 @@ namespace Loggy
 
 
 
-
-
     public class MailSender
     {
 
@@ -397,7 +313,7 @@ namespace Loggy
 
 
             // SMTP-Server
-            SmtpClient oSMTP = new SmtpClient();
+            System.Net.Mail.SmtpClient oSMTP = new System.Net.Mail.SmtpClient();
             var _with1 = oSMTP;
             // Mailserver
             _with1.Host = System.Convert.ToString(smtp);
@@ -405,7 +321,7 @@ namespace Loggy
 
             // Erweiterte Mail-Einstellungen
             _with1.UseDefaultCredentials = false;
-            _with1.DeliveryMethod = SmtpDeliveryMethod.Network;
+            _with1.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
 
             // SMTP-AUTH mit UserName und Kennwort
             if (auth == 1)
@@ -413,11 +329,11 @@ namespace Loggy
                 _with1.Credentials = new System.Net.NetworkCredential(authUser, authPassword);
             }
 
-            MailMessage oMail = new MailMessage();
+            System.Net.Mail.MailMessage oMail = new System.Net.Mail.MailMessage();
             var _with2 = oMail;
             // Betreff
-            _with2.From = new MailAddress(sender);
-            _with2.To.Add(new MailAddress(mailto));
+            _with2.From = new System.Net.Mail.MailAddress(sender);
+            _with2.To.Add(new System.Net.Mail.MailAddress(mailto));
 
             _with2.Subject = System.Convert.ToString(subject);
 
@@ -426,16 +342,18 @@ namespace Loggy
             _with2.Body = System.Convert.ToString(mailtext);
 
             // ggf. Kopie-Empfänger hinzufügen
-            //.CC.Add(New MailAddress("emailadresse"))
+            // _with2.CC.Add(new System.Net.Mail.MailAddress("email address"));
+
 
             // ggf. BCC-Empfänger hinzufügen
-            // .Bcc.Add(New MailAddress("emailadresse"))
+            // _with2.Bcc.Add(new System.Net.Mail.MailAddress("email address"));
+
 
             // Anlagen hinzufügen
-            // .Attachments.Add(New Attachment(("pfad_und_dateiname")))
+            // _with2.Attachments.Add( new System.Net.Mail.Attachment("path and filename")  );
 
             // Priorität einstellen
-            _with2.Priority = MailPriority.Normal;
+            _with2.Priority = System.Net.Mail.MailPriority.Normal;
 
             try
             {
@@ -452,10 +370,6 @@ namespace Loggy
 
 
     }
-
-    
-
-
 
 
 }

@@ -117,6 +117,8 @@
     <Compile Include="Code\Helpers\caCert.cs" />
     <Compile Include="Code\Handler\InjectionBlockHandler.cs" />
     <Compile Include="Code\Helpers\Tools.cs" />
+    <Compile Include="Code\Mail\ErrorMailer.cs" />
+    <Compile Include="Code\Mail\ErrorDispatcher.cs" />
     <Compile Include="DAL\cMS_SQL.cs" />
     <Compile Include="DAL\Crypt.cs" />
     <Compile Include="DAL\DAL.cs" />

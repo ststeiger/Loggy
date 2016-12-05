@@ -1,18 +1,16 @@
 ﻿
-using System.Web;
-
 namespace Loggy
 {
 
-    
 
     /// <summary>
     /// Zusammenfassungsbeschreibung für table
     /// </summary>
-    public class table : IHttpHandler
+    public class table : System.Web.IHttpHandler
     {
 
         private static System.Random seed = new System.Random();
+
 
         public static int rand(int min, int max)
         {
@@ -20,7 +18,7 @@ namespace Loggy
         } // End Function rand 
 
 
-        public void ProcessRequest(HttpContext context)
+        public void ProcessRequest(System.Web.HttpContext context)
         {
             string html = @"<!DOCTYPE html>
 <html xmlns=""http://www.w3.org/1999/xhtml"" lang=""en"">
@@ -218,7 +216,7 @@ namespace Loggy
 
             context.Response.ContentType = "text/html";
             context.Response.Write(html);
-        }
+        } // End Sub ProcessRequest 
 
 
         // Generate a random word using a Markov chain.
@@ -286,6 +284,7 @@ namespace Loggy
             return captchaText;
         } // End Function generateCaptchaTextMarkov 
 
+
         public static string generateRandomWords()
         {
             var count = rand(1, 5);
@@ -295,10 +294,10 @@ namespace Loggy
             for (var i = 0; i < count; ++i)
             {
                 text[i] = generateCaptchaTextMarkov(rand(10, 50));
-            }
+            } // Next i 
 
             return string.Join(" ", text);
-        }
+        } // End Function generateRandomWords 
 
 
         public static System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> generateTableData()
@@ -312,7 +311,8 @@ namespace Loggy
             {
                 // columnNames[j] = "Column " + j.ToString();
                 columnNames[j] = generateCaptchaTextMarkov(rand(3, 12));
-            }
+            } // Next j 
+
 
             for (int i = 0; i < 11; ++i)
             {
@@ -324,13 +324,13 @@ namespace Loggy
                     // string value = "row " + i + " col " + j;
                     string value = generateRandomWords();
                     columns[key] = value;
-                }
+                } // Next j 
 
                 table.Add(columns);
-            }
+            } // Next i 
 
             return table;
-        }
+        } // End Function generateTableData 
 
 
         public static string responsiveTable(string id, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> table)
@@ -342,7 +342,7 @@ namespace Loggy
             sb.Length = 0;
             sb = null;
             return retVal;
-        }
+        } // End Function responsiveTable 
 
 
         public static void responsiveTable(string id, System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>> table, System.Text.StringBuilder sb)
@@ -354,7 +354,7 @@ namespace Loggy
             {
                 columns[k] = x.Key;
                 ++k;
-            }
+            } // Next k 
 
 
             sb.AppendLine(@"<div id=""" + System.Web.HttpUtility.HtmlAttributeEncode(id) + @""" class=""table"">");
@@ -364,7 +364,7 @@ namespace Loggy
                 sb.Append(@"<div class=""Table-row-item"">");
                 sb.Append(System.Web.HttpUtility.HtmlEncode(columns[i]));
                 sb.AppendLine("</div>"); // End Header-Cell
-            }
+            } // Next i 
             sb.AppendLine("</div>"); // End Header-Row
 
 
@@ -377,14 +377,11 @@ namespace Loggy
                     sb.Append(@"<div class=""Table-row-item"" data-header=""" + System.Web.HttpUtility.HtmlAttributeEncode(columns[j]) + @""">");
                     sb.Append(System.Web.HttpUtility.HtmlEncode(table[i][columns[j]]));
                     sb.AppendLine("</div>"); // End Cell
-                }
+                } // Next j 
                 sb.AppendLine("</div>"); // End Row
-            }
+            } // Next i 
             sb.AppendLine("</div>"); // End Table
-        }
-
-
-
+        } // End Sub responsiveTable 
 
 
         public bool IsReusable
@@ -393,6 +390,10 @@ namespace Loggy
             {
                 return false;
             }
-        }
-    }
-}
+        } // End Property IsReusable 
+
+
+    } // End Class table : System.Web.IHttpHandler 
+
+
+} // End Namespace Loggy 

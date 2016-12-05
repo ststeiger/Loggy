@@ -22,7 +22,7 @@ namespace Loggy
             {
                 csb.UserID = "DAL_Test";
                 csb.Password = "Test123";
-            }
+            } // End if (!csb.IntegratedSecurity) 
 
             csb.InitialCatalog = "COR_Basic_Demo_V4";
 
