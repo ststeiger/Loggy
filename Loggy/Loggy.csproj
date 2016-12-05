@@ -80,6 +80,8 @@
     <Content Include="cssControls\customflipswitch.htm" />
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
+    <Content Include="virtualRenderingHorizontal.htm" />
+    <Content Include="virtualRendering.htm" />
     <Content Include="table.htm" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="ErrorPageTemplate.txt" />
@@ -148,6 +150,9 @@
     <Compile Include="DAL\TopologicalSorter.cs" />
     <Compile Include="Code\Helpers\SomeDbOperations.cs" />
     <Compile Include="Code\Module\SqlInjectionScreeningModule.cs" />
+    <Compile Include="table.ashx.cs">
+      <DependentUpon>table.ashx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -157,6 +162,7 @@
   <ItemGroup>
     <Content Include="cssControls\prettyCheckboxes_uncompressed.1.1.zip" />
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
+    <Content Include="table.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
