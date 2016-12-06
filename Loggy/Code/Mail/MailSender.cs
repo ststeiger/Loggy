@@ -7,12 +7,12 @@ namespace Loggy
 
     public class LocalLogon
     {
-        public static void TestPassword()
+        public static bool TestPassword(string userName, string domain, string password)
         {
             if (System.Environment.OSVersion.Platform == System.PlatformID.Unix)
-                LocalAuth_Linux.PasswordValid("usr", "dom", "pw");
+                return LocalAuth_Linux.PasswordValid(userName, domain, password);
             else
-                LocalAuth_NativeMethods_Win32.PasswordValid("usn", "domain", "pw");
+                return LocalAuth_NativeMethods_Win32.PasswordValid(userName, domain, password);
         }
     }
 

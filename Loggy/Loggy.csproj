@@ -111,6 +111,8 @@
     <Content Include="Scripts\soll.png" />
     <Content Include="Scripts\Website is offline   522  Connection timed out.html" />
     <Content Include="Web.config" />
+    <Content Include="page.htm" />
+    <Content Include="newspaper.htm" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\BlackList.cs" />
