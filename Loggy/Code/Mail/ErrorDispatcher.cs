@@ -21,7 +21,7 @@ namespace Loggy
             }
 
             return stack;
-        }
+        } // End Function GetExceptionStack 
 
 
         public virtual string StringifyException(System.Exception ex)
@@ -36,7 +36,7 @@ namespace Loggy
             System.Collections.IDictionary data = ex.Data;
 
             return ex.Message;
-        }
+        } // End Function StringifyException 
 
 
         public virtual void LogException(
@@ -66,10 +66,10 @@ namespace Loggy
             sb = null;
 
             // SendMail(text);
-        }
+        } // End Function LogException 
 
 
-    }
+    } // End abstract class ErrorDispatcher
 
 
-} 
+} // End Namespace Loggy

@@ -38,17 +38,16 @@ namespace Loggy.Cryptography
             byte[] bIV;
             byte[] bKey;
 
-            // System.Security.Cryptography.RijndaelManaged objRijndael = new System.Security.Cryptography.RijndaelManaged();
-            using (System.Security.Cryptography.Aes objRijndael = System.Security.Cryptography.Aes.Create())
+            using (System.Security.Cryptography.Aes aes = System.Security.Cryptography.Aes.Create())
             {
 
-                objRijndael.GenerateKey();
-                objRijndael.GenerateIV();
+                aes.GenerateKey();
+                aes.GenerateIV();
 
-                bIV = objRijndael.IV;
-                bKey = objRijndael.Key;
-                // objRijndael.Clear();
-            }
+                bIV = aes.IV;
+                bKey = aes.Key;
+                // aes.Clear();
+            } // End Using aes 
 
             return "IV: " + ByteArrayToHexString(bIV) + System.Environment.NewLine + "Key: " + ByteArrayToHexString(bKey);
         } // End Function GenerateKey
@@ -59,35 +58,32 @@ namespace Loggy.Cryptography
         {
             byte[] baCipherTextBuffer = null;
 
-            //Dim roundtrip As String
-            //Dim encASCII As New System.Text.ASCIIEncoding()
+            // System.Text.Encoding enc = System.Text.Encoding.ASCII;
             System.Text.Encoding enc = System.Text.Encoding.UTF8;
 
-            // System.Security.Cryptography.RijndaelManaged objRijndael = new System.Security.Cryptography.RijndaelManaged();
-            using (System.Security.Cryptography.Aes objRijndael = System.Security.Cryptography.Aes.Create())
+            using (System.Security.Cryptography.Aes aes = System.Security.Cryptography.Aes.Create())
             {
-                //Dim fromEncrypt() As Byte
                 byte[] baPlainTextBuffer = null;
                 byte[] baEncryptionKey = null;
                 byte[] baInitializationVector = null;
 
-                //Create a new key and initialization vector.
-                //objRijndael.GenerateKey()
-                //objRijndael.GenerateIV()
-                objRijndael.Key = HexStringToByteArray(strKey);
-                objRijndael.IV = HexStringToByteArray(strIV);
+                // Create a new key and initialization vector.
+                // aes.GenerateKey()
+                // aes.GenerateIV()
+                aes.Key = HexStringToByteArray(strKey);
+                aes.IV = HexStringToByteArray(strIV);
 
 
-                //Get the key and initialization vector.
-                baEncryptionKey = objRijndael.Key;
-                baInitializationVector = objRijndael.IV;
-                //strKey = ByteArrayToHexString(baEncryptionKey)
-                //strIV = ByteArrayToHexString(baInitializationVector)
+                // Get the key and initialization vector.
+                baEncryptionKey = aes.Key;
+                baInitializationVector = aes.IV;
+                // strKey = ByteArrayToHexString(baEncryptionKey)
+                // strIV = ByteArrayToHexString(baInitializationVector)
 
-                //Get an encryptor.
-                System.Security.Cryptography.ICryptoTransform ifaceAESencryptor = objRijndael.CreateEncryptor(baEncryptionKey, baInitializationVector);
+                // Get an encryptor.
+                System.Security.Cryptography.ICryptoTransform ifaceAESencryptor = aes.CreateEncryptor(baEncryptionKey, baInitializationVector);
 
-                //Encrypt the data.
+                // Encrypt the data.
                 using (System.IO.MemoryStream msEncrypt = new System.IO.MemoryStream())
                 {
                     using (System.Security.Cryptography.CryptoStream csEncrypt = new System.Security.Cryptography.CryptoStream(msEncrypt, ifaceAESencryptor, System.Security.Cryptography.CryptoStreamMode.Write))
@@ -118,11 +114,10 @@ namespace Loggy.Cryptography
                 throw new System.ArgumentNullException("strEncryptedInput", "strEncryptedInput may not be string.Empty or NULL, because these are invid values.");
             }
 
-            // Dim encASCII As New System.Text.ASCIIEncoding()
+            // System.Text.Encoding enc = System.Text.Encoding.ASCII;
             System.Text.Encoding enc = System.Text.Encoding.UTF8;
 
-            // System.Security.Cryptography.RijndaelManaged objRijndael = new System.Security.Cryptography.RijndaelManaged();
-            using (System.Security.Cryptography.Aes objRijndael = System.Security.Cryptography.Aes.Create())
+            using (System.Security.Cryptography.Aes aes = System.Security.Cryptography.Aes.Create())
             {
 
                 byte[] baCipherTextBuffer = HexStringToByteArray(strEncryptedInput);
@@ -136,16 +131,16 @@ namespace Loggy.Cryptography
                 // also encrypt your secret key using a public key algorithm
                 // and pass it to the mesage recipient along with the RijnDael
                 // encrypted message.            
-                //Get a decryptor that uses the same key and IV as the encryptor.
-                System.Security.Cryptography.ICryptoTransform ifaceAESdecryptor = objRijndael.CreateDecryptor(baDecryptionKey, baInitializationVector);
+                // Get a decryptor that uses the same key and IV as the encryptor.
+                System.Security.Cryptography.ICryptoTransform ifaceAESdecryptor = aes.CreateDecryptor(baDecryptionKey, baInitializationVector);
 
-                //Now decrypt the previously encrypted message using the decryptor
+                // Now decrypt the previously encrypted message using the decryptor
                 // obtained in the above step.
                 System.IO.MemoryStream msDecrypt = new System.IO.MemoryStream(baCipherTextBuffer);
                 System.Security.Cryptography.CryptoStream csDecrypt = new System.Security.Cryptography.CryptoStream(msDecrypt, ifaceAESdecryptor, System.Security.Cryptography.CryptoStreamMode.Read);
 
-                //Dim baPlainTextBuffer() As Byte
-                //baPlainTextBuffer = New Byte(baCipherTextBuffer.Length) {}
+                // byte[] baPlainTextBuffer
+                // byte[] baPlainTextBuffer = new byte[baCipherTextBuffer.Length;
                 byte[] baPlainTextBuffer = new byte[baCipherTextBuffer.Length + 1];
 
                 //Read the data out of the crypto stream.
@@ -158,7 +153,7 @@ namespace Loggy.Cryptography
             }
             return strReturnValue;
         } // End Function DeCrypt
-            
+
 
         // VB.NET to convert a byte array into a hex string
         public static string ByteArrayToHexString(byte[] arrInput)
@@ -193,8 +188,9 @@ namespace Loggy.Cryptography
     {
 
 
+        // protected static string strSymmetricKey = "Arbitrary text can be used as symmatric-key. äöü";
         protected static string strSymmetricKey = "z67f3GHhdga78g3gZUIT(6/&ns289hsB_5Tzu6";
-        //Protected Shared strSymmetricKey As String = "Als symmetrischer Key kann irgendein Text verwendet werden. äöü'"
+
 
         // http://www.codeproject.com/KB/aspnet/ASPNET_20_Webconfig.aspx
         // http://www.codeproject.com/KB/database/Connection_Strings.aspx
@@ -208,21 +204,19 @@ namespace Loggy.Cryptography
             } // End if (string.IsNullOrEmpty(SourceText)) 
 
 
-            using (System.Security.Cryptography.TripleDES Des = System.Security.Cryptography.TripleDES.Create())
-            //using (System.Security.Cryptography.TripleDESCryptoServiceProvider Des = new System.Security.Cryptography.TripleDESCryptoServiceProvider())
+            using (System.Security.Cryptography.TripleDES des3 = System.Security.Cryptography.TripleDES.Create())
             {
-                // using (System.Security.Cryptography.MD5CryptoServiceProvider HashMD5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
-                using (System.Security.Cryptography.MD5 HashMD5 = System.Security.Cryptography.MD5.Create())
+                using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
                 {
-                    Des.Key = HashMD5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strSymmetricKey));
-                    Des.Mode = System.Security.Cryptography.CipherMode.ECB;
+                    des3.Key = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strSymmetricKey));
+                    des3.Mode = System.Security.Cryptography.CipherMode.ECB;
 
-                    System.Security.Cryptography.ICryptoTransform desdencrypt = Des.CreateDecryptor();
+                    System.Security.Cryptography.ICryptoTransform desdencrypt = des3.CreateDecryptor();
                     byte[] buff = System.Convert.FromBase64String(SourceText);
                     strReturnValue = System.Text.Encoding.UTF8.GetString(desdencrypt.TransformFinalBlock(buff, 0, buff.Length));
-                } // End Using HashMD5
+                } // End Using md5
 
-            } // End Using Des
+            } // End Using des3
 
             return strReturnValue;
         } // End Function DeCrypt
@@ -232,22 +226,20 @@ namespace Loggy.Cryptography
         {
             string strReturnValue = "";
 
-            using (System.Security.Cryptography.TripleDES Des = System.Security.Cryptography.TripleDES.Create())
-            // using (System.Security.Cryptography.TripleDESCryptoServiceProvider Des = new System.Security.Cryptography.TripleDESCryptoServiceProvider())
+            using (System.Security.Cryptography.TripleDES des3 = System.Security.Cryptography.TripleDES.Create())
             {
 
-                using (System.Security.Cryptography.MD5 HashMD5 = System.Security.Cryptography.MD5.Create())
-                // using (System.Security.Cryptography.MD5CryptoServiceProvider HashMD5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
+                using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
                 {
-                    Des.Key = HashMD5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strSymmetricKey));
-                    Des.Mode = System.Security.Cryptography.CipherMode.ECB;
-                    System.Security.Cryptography.ICryptoTransform desdencrypt = Des.CreateEncryptor();
+                    des3.Key = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(strSymmetricKey));
+                    des3.Mode = System.Security.Cryptography.CipherMode.ECB;
+                    System.Security.Cryptography.ICryptoTransform desdencrypt = des3.CreateEncryptor();
                     byte[] buff = System.Text.Encoding.UTF8.GetBytes(SourceText);
 
                     strReturnValue = System.Convert.ToBase64String(desdencrypt.TransformFinalBlock(buff, 0, buff.Length));
-                } // End Using HashMD5
+                } // End Using md5
 
-            } // End UsingDes
+            } // End UsingDes des3
 
             return strReturnValue;
         } // End Function Crypt
@@ -258,14 +250,13 @@ namespace Loggy.Cryptography
             byte[] bIV = null;
             byte[] bKey = null;
 
-            // System.Security.Cryptography.TripleDESCryptoServiceProvider objDESprovider = new System.Security.Cryptography.TripleDESCryptoServiceProvider();
-            using (System.Security.Cryptography.TripleDES objDESprovider = System.Security.Cryptography.TripleDES.Create())
+            using (System.Security.Cryptography.TripleDES des3 = System.Security.Cryptography.TripleDES.Create())
             {
-                objDESprovider.GenerateKey();
-                objDESprovider.GenerateIV();
-                bIV = objDESprovider.IV;
-                bKey = objDESprovider.Key;
-            }
+                des3.GenerateKey();
+                des3.GenerateIV();
+                bIV = des3.IV;
+                bKey = des3.Key;
+            } // End Using des3 
 
             return "IV: " + AES.ByteArrayToHexString(bIV) + System.Environment.NewLine + "Key: " + AES.ByteArrayToHexString(bKey);
         } // End Function GenerateKey
@@ -276,13 +267,12 @@ namespace Loggy.Cryptography
             string strReturnValue = "";
             byte[] ByteSourceText = System.Text.Encoding.UTF8.GetBytes(SourceText);
 
-            // using (System.Security.Cryptography.MD5CryptoServiceProvider Md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
-            using (System.Security.Cryptography.MD5 Md5 = System.Security.Cryptography.MD5.Create())
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
             {
-                byte[] ByteHash = Md5.ComputeHash(ByteSourceText);
+                byte[] ByteHash = md5.ComputeHash(ByteSourceText);
                 strReturnValue = System.Convert.ToBase64String(ByteHash);
                 ByteHash = null;
-            } // End Using Md5
+            } // End Using md5
 
             return strReturnValue;
         } // End Function GenerateHash
@@ -291,4 +281,4 @@ namespace Loggy.Cryptography
     } // End Class DES
 
 
-} // End Namespace COR.Tools.Cryptography
+} // End Namespace Loggy.Cryptography 
