@@ -1,6 +1,4 @@
 
-USE TestDB;
-
 -- http://www.unlimitedtricks.com/sorting-a-subtree-in-a-closure-table-hierarchical-data-structure/
 
 DECLARE @__in_rootnodeId AS bigint 

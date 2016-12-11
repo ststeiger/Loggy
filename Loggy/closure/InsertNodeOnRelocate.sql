@@ -1,7 +1,4 @@
 
-
-USE TestDB
-
 --INSERT INTO TreePaths (ancestor, descendant, depth)
 SELECT 
 	 supertree.ancestor 

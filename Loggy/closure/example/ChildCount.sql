@@ -8,15 +8,15 @@ SELECT
 
 	,
 	(
-		SELECT COUNT(*) FROM T_CommentClosure AS tp 
+		SELECT COUNT(*) FROM T_Comments_Closure AS tp 
 		WHERE tp.ancestor = T_Comments.COM_Id AND tp.depth = 1 
 	) AS ChildCount 
 
 FROM T_Comments 
 
-LEFT JOIN T_CommentClosure 
-	ON T_CommentClosure.descendant = T_Comments.COM_Id
+LEFT JOIN T_Comments_Closure 
+	ON T_Comments_Closure.descendant = T_Comments.COM_Id
 	
-WHERE T_CommentClosure.ancestor = 1 
+WHERE T_Comments_Closure.ancestor = 1 
 
 -- ORDER BY comment_date 

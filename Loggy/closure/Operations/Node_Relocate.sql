@@ -1,8 +1,4 @@
 
-USE TestDB
-
-
-
 DECLARE @__nodeid AS bigint
 SET @__nodeid = 9 -- B
 SET @__nodeid = 13 -- F

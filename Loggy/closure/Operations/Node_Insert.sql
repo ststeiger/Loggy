@@ -1,7 +1,4 @@
 
-USE [TestDB]
-GO
-
 -- SELECT * FROM Comments 
 
 

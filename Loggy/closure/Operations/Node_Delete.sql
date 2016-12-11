@@ -1,9 +1,4 @@
 
-USE TestDB
-
-
-
-
 -- SELECT * 
 DELETE 
 FROM TreePaths

@@ -1,9 +1,4 @@
 
-USE [TestDB]
-GO
-
-
-
 DECLARE @__minval integer 
 DECLARE @__maxval integer 
 DECLARE @__counter integer 

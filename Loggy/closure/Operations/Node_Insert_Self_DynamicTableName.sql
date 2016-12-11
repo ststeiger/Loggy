@@ -1,6 +1,3 @@
-USE [TestDB]
-GO
-
 
 DECLARE @__in_closuretable nvarchar(300) 
 DECLARE @__self bigint

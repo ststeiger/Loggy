@@ -1,7 +1,4 @@
 
-USE TestDB	
-
-
 DECLARE @__in_closuretable nvarchar(300) 
 DECLARE @__iNodeId AS integer 
 DECLARE @__iTargetId AS integer 

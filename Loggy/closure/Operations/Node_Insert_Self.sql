@@ -1,6 +1,3 @@
-USE [TestDB]
-GO
-
 
 DECLARE @__self bigint
 SET @__self = 3
@@ -18,6 +15,4 @@ VALUES
 	,@__self --<Child_Id, bigint,>
 	,0 --<Dept, int,>
 )
-GO
-
-
+; 

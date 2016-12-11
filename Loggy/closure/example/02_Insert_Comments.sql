@@ -1,6 +1,9 @@
-INSERT INTO `test`.`T_Comments`
-(`COM_Id`,
-`COM_Text`)
+
+
+SET IDENTITY_INSERT dbo.T_Comments ON 
+
+
+INSERT INTO T_Comments(COM_Id, COM_Text)
       SELECT 1 as id, 'What''s the cause of this bug ?' as comment 
 UNION SELECT 2 as id, 'I think it''s a NULL-Pointer.' as comment 
 UNION SELECT 3 as id, 'No, I checked for that.' as comment 
@@ -24,3 +27,7 @@ UNION SELECT 20 as id, 'MP3' as comment
 UNION SELECT 21 as id, 'CD' as comment 
 UNION SELECT 22 as id, 'Radio' as comment 
 UNION SELECT 23 as id, 'Flash' as comment 
+
+
+SET IDENTITY_INSERT dbo.T_Comments OFF
+GO
