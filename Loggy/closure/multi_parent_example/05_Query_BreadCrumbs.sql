@@ -1,4 +1,7 @@
 
+-- https://stackoverflow.com/questions/6874526/recursive-group-structure-in-mysql
+-- https://stackoverflow.com/questions/192220/what-is-the-most-efficient-elegant-way-to-parse-a-flat-table-into-a-tree/192462#192462
+
 SELECT 
 	 CTE.COM_Id 
 	,CTE.COM_Text 

@@ -6,6 +6,7 @@ GO
 
 
 
+
 -- ============================================================= 
 -- Author:		  Stefan Steiger 
 -- E-Mail:        stefan.steiger [at] cor-management [dot] ch 
@@ -30,9 +31,16 @@ BEGIN
 	-- INSERT INTO T_Comments_Paths OUTPUT INSERTED.path_id DEFAULT VALUES;
 	
 	
+	-- DECLARE @outputTable TABLE (id bigint); 
+	-- INSERT INTO T_Comments_Paths OUTPUT INSERTED.path_id INTO @outputTable DEFAULT VALUES; 
+	-- SET @__path_id = (SELECT TOP 1 id FROM @outputTable); 
+	
 	DECLARE @outputTable TABLE (id bigint); 
-	INSERT INTO T_Comments_Paths OUTPUT INSERTED.path_id INTO @outputTable DEFAULT VALUES; 
+	INSERT INTO T_Comments_Paths(path_com_id)
+	OUTPUT INSERTED.path_id INTO @outputTable 
+	VALUES(@__child);
 	SET @__path_id = (SELECT TOP 1 id FROM @outputTable); 
+	
 	
 	INSERT INTO T_Comments_Closure
 	(

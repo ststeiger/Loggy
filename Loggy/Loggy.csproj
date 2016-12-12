@@ -61,6 +61,7 @@
     <Content Include="closure\example\Query_Leaves_All.sql" />
     <Content Include="closure\example\Query_Children_All.sql" />
     <Content Include="closure\example\Query_Children_Direct.sql" />
+    <Content Include="closure\multi_parent_example\PEM.sql" />
     <Content Include="closure\multi_parent_example\05_Query_BreadCrumbs.sql" />
     <Content Include="closure\multi_parent_example\04_Insert_Data.sql" />
     <Content Include="closure\multi_parent_example\03_Insert_Node.sql" />
