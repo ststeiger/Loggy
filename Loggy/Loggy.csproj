@@ -49,17 +49,25 @@
   <ItemGroup>
     <EmbeddedResource Include="BlackErrorTemplate_Injection_DE.htm" />
     <Content Include="Chain.png" />
+    <Content Include="closure\example\BreadCrumbs_MSSQL.sql" />
     <Content Include="closure\example\BreadCrumbs_PostGre.sql" />
     <Content Include="closure\example\01_Schema.sql" />
     <Content Include="closure\example\03_Insert_Closure.sql" />
     <Content Include="closure\example\Closure.png" />
+    <Content Include="closure\example\InterDepGroups_MSSQL.sql" />
     <Content Include="closure\example\Query_Ancestors_All.sql" />
     <Content Include="closure\example\Query_Ancestors_Direct.sql" />
     <Content Include="closure\example\Query_Leaves_Specific.sql" />
     <Content Include="closure\example\Query_Leaves_All.sql" />
     <Content Include="closure\example\Query_Children_All.sql" />
     <Content Include="closure\example\Query_Children_Direct.sql" />
+    <Content Include="closure\multi_parent_example\05_Query_BreadCrumbs.sql" />
+    <Content Include="closure\multi_parent_example\04_Insert_Data.sql" />
+    <Content Include="closure\multi_parent_example\03_Insert_Node.sql" />
+    <Content Include="closure\multi_parent_example\02_Self_Insert.sql" />
+    <Content Include="closure\multi_parent_example\01_Schema.sql" />
     <Content Include="closure\Operations\Node_Delete_DynamicTableName.sql" />
+    <Content Include="closure\Operations\Node_Insert_NoDup.sql" />
     <Content Include="closure\Operations\Node_Insert_Self_Range_DynamicTable_Name.sql" />
     <Content Include="closure\Operations\Node_RemoveParentNodes_DynamicTableName.sql" />
     <Content Include="closure\Schema\Comment\ClearClosure.sql" />
@@ -131,6 +139,7 @@
     <Compile Include="Code\Helpers\caCert.cs" />
     <Compile Include="Code\Handler\InjectionBlockHandler.cs" />
     <Compile Include="Code\Helpers\Tools.cs" />
+    <Compile Include="Code\Logons.cs" />
     <Compile Include="Code\Mail\ErrorMailer.cs" />
     <Compile Include="Code\Mail\ErrorDispatcher.cs" />
     <Compile Include="Code\Module\UserAgentBanningModule.cs" />

@@ -11,36 +11,12 @@ SELECT
 	,ctAncestors.descendant AS child_id 
 	,tClosureItemsTable.COM_Id 
 	,tClosureItemsTable.COM_Text 
-	/*	
+	
 	,GROUP_CONCAT(ctAncestors.ancestor ORDER BY ctAncestors.depth DESC) AS breadcrumbs_id 
 	-- ,GROUP_CONCAT(breadcrumb_data.COM_Text ORDER BY ctAncestors.depth DESC) AS breadcrumbs 
 	,GROUP_CONCAT(breadcrumb_data.COM_Text ORDER BY ctAncestors.depth) AS breadcrumbs 
 	,GROUP_CONCAT(breadcrumb_data.COM_Text ORDER BY ctAncestors.depth DESC SEPARATOR '-') AS breadcrumbs2 
-	*/	
-
-	,
-	SUBSTRING
-	(
-		(
-			SELECT 
-				-- breadcrumb.ancestor AS 'text()'  -- Remove substring for this 
-				-- ', ' + CAST(breadcrumb.ancestor AS nvarchar(36)) AS 'text()'
-				', ' + CAST(breadcrumb_data.COM_Text AS nvarchar(36)) AS 'text()'
-			FROM T_Comments_Closure AS breadcrumb 
-			
-			LEFT JOIN T_Comments AS breadcrumb_data
-				ON breadcrumb_data.COM_Id = breadcrumb.ancestor
-
-			WHERE (breadcrumb.descendant = ctAncestors.descendant) 
-
-			ORDER BY breadcrumb.depth DESC
-			FOR XML PATH('')
-		)
-		,2
-		,8000
-	) AS breadcrumbs 
-
-
+	
 	,
 	(
 		SELECT COUNT(*) FROM T_Comments_Closure AS tp 

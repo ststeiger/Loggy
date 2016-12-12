@@ -27,7 +27,6 @@ BEGIN
 		-- ON p.descendant = @__parent AND c.ancestor = @__child 
 		ON p.descendant = __parent AND c.ancestor = __child 
 	;
-	-- RETURN 0;
 END; 
 $BODY$
   LANGUAGE plpgsql VOLATILE
@@ -37,6 +36,9 @@ $BODY$
 
 
 DELETE FROM T_Comments;
+
+
+-- SET IDENTITY_INSERT T_Comments ON
 
 INSERT INTO T_Comments(COM_Id, COM_Text)
       SELECT 1 as id, 'Alle' as comment 
@@ -49,6 +51,9 @@ UNION SELECT 7 as id, 'Stao 2' as comment
 UNION SELECT 8 as id, 'Stao3' as comment 
 ORDER BY id 
 ;
+
+-- SET IDENTITY_INSERT T_Comments OFF
+
 
 DELETE FROM T_Comments_Closure;
 

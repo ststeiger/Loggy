@@ -2,11 +2,11 @@
 -- SELECT * FROM Comments 
 
 
-DECLARE @__Parent bigint
-DECLARE @__Child bigint
+DECLARE @__parent bigint
+DECLARE @__child bigint
 
-SET @__Parent = 20
-SET @__Child = 23
+SET @__parent = 20
+SET @__child = 23
 
 
 INSERT INTO TreePaths
@@ -24,6 +24,7 @@ FROM TreePaths AS p
 -- ,TreePaths AS c  -- == CROSS JOIN TreePaths AS c 
 
 INNER JOIN TreePaths AS c 
-	ON p.descendant = @__Parent AND c.ancestor = @__Child
+	ON p.descendant = @__parent 
+	AND c.ancestor = @__child
 
---WHERE p.descendant = @__Parent AND c.ancestor = @__Child 
+--WHERE p.descendant = @__parent AND c.ancestor = @__child 
