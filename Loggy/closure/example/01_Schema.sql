@@ -5,7 +5,7 @@ BEGIN
 CREATE TABLE dbo.T_Comments
 (
 	COM_Id int IDENTITY(1,1) NOT NULL,
-	COM_Text nvarchar(255) NULL,
+	COM_Text national character varying(255) NULL,
 	CONSTRAINT PK_T_Comments PRIMARY KEY(COM_Id) 
 ); 
 END

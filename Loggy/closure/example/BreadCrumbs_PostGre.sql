@@ -18,44 +18,41 @@ SELECT
 	,string_agg(breadcrumb_data.COM_Text, ',' ORDER BY ctAncestors.depth DESC) AS breadcrumbs 
 	,array_to_string(array_agg(breadcrumb_data.COM_Text ORDER BY ctAncestors.depth DESC), ',') as breadcrumbs_manual
 
-
-
-
-
+	
 /*	
-,
+	,
 	SUBSTRING
 	(
 		(
 			SELECT 
 				-- breadcrumb.ancestor AS 'text()'  -- Remove substring for this 
 				-- ', ' + CAST(breadcrumb.ancestor AS nvarchar(36)) AS 'text()'
-				', ' + CAST(breadcrumb_data.comment AS nvarchar(36)) AS 'text()'
-			FROM T_CommentClosure AS breadcrumb 
+				', ' + CAST(breadcrumb_data.COM_Text AS nvarchar(36)) AS 'text()'
+			FROM T_Comments_Closure AS breadcrumb 
 			
-			LEFT JOIN Comments AS breadcrumb_data
+			LEFT JOIN T_Comments AS breadcrumb_data
 				ON breadcrumb_data.COM_Id = breadcrumb.ancestor
 
 			WHERE (breadcrumb.descendant = ctAncestors.descendant) 
 
-			ORDER BY breadcrumb.depth DESC
+			ORDER BY breadcrumb.depth DESC 
 			FOR XML PATH('')
 		)
 		,2
 		,8000
-	) AS breadcrumbs 
-*/	
-
+	) AS breadcrumbs	
+*/
+	
 	,
 	(
-		SELECT COUNT(*) FROM T_CommentClosure AS tp 
+		SELECT COUNT(*) FROM T_Comments_Closure AS tp 
 		WHERE tp.ancestor = tClosureItemsTable.COM_Id AND tp.depth = 1 
 	) AS ChildCount 
 
-FROM T_CommentClosure AS ctAncestors  
+FROM T_Comments_Closure AS ctAncestors  
 
 -- Must be left join, for root node
-LEFT JOIN T_CommentClosure AS ctDescendants 
+LEFT JOIN T_Comments_Closure AS ctDescendants 
 	ON (ctDescendants.descendant = ctAncestors.descendant) 
 	AND (ctDescendants.depth = 1) 
 

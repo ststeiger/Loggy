@@ -124,6 +124,7 @@
     <Content Include="Web.config" />
     <Content Include="page.htm" />
     <Content Include="newspaper.htm" />
+    <Content Include="closure\example\InterDepGroups.sql" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\BlackList.cs" />
