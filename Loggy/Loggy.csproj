@@ -17,6 +17,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,6 +136,7 @@
     <Content Include="page.htm" />
     <Content Include="newspaper.htm" />
     <Content Include="closure\example\InterDepGroups.sql" />
+    <Content Include="closure\multi_parent_example\01_Schema_PG.sql" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\BlackList.cs" />
