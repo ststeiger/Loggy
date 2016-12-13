@@ -67,6 +67,7 @@
     <Content Include="closure\multi_parent_example\04a_Insert_Data_MSSQL.sql" />
     <Content Include="closure\multi_parent_example\05b_Query_BreadCrumbs_PGSQL_vSimple.sql" />
     <Content Include="closure\multi_parent_example\05b_Query_BreadCrumbs_PGSQL.sql" />
+    <Content Include="closure\multi_parent_example\ListMembers.sql" />
     <Content Include="closure\multi_parent_example\666_PG_Specific.sql" />
     <Content Include="closure\multi_parent_example\ListDirectDescendantsOfItem.sql" />
     <Content Include="closure\multi_parent_example\MultiParentTree.png" />
