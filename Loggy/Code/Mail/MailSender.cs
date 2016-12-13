@@ -16,7 +16,55 @@ namespace Loggy
         }
 
 
-        public static void SendMail(string strErrorMessage)
+
+        public class SmtpConfig
+        {
+            public string Server { get; set; }
+            public string UserName { get; set; }
+            public string Password { get; set; }
+            public int Port { get; set; }
+            public bool UseSSL { get; set; }
+            public bool IntegratedSecurity { get; set; }
+        }
+
+
+        //string SmtpServer = "smtp.riz-itmotion.de";
+        //int SmtpPort = 25;
+        //string AuthUserName = "";
+        //string AuthPassword = "";
+        //bool UseSsl = false;
+        public SmtpConfig m_config;
+
+
+        public ErrorHandler(SmtpConfig config)
+        {
+            this.m_config = config;
+            InitiateSSLTrust();
+        }
+
+
+        // // http://stackoverflow.com/questions/1301127/how-to-ignore-a-certificate-error-with-c-2-0-webclient-without-the-certificate
+        public void InitiateSSLTrust()
+        {
+            if (!m_config.UseSSL)
+                return;
+
+            try
+            {
+                //Change SSL checks so that all checks pass
+                //System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback( delegate { return true; });
+                System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(InternalCallback);
+
+                //System.Net.ServicePointManager.CertificatePolicy = New AcceptAllCertificatePolicy()
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+        }
+
+
+        public void SendMail(string strErrorMessage)
         {
             string sender = "cor.ErrorLog@smtp.riz-itmotion.de";
             string recipient = "COR_SwissRe_Postfach@cor-management.ch";
@@ -97,69 +145,34 @@ namespace Loggy
         // SendMail
 
 
-        protected static void InternalSendMail(System.Net.Mail.MailMessage mail)
+
+        protected void InternalSendMail(System.Net.Mail.MailMessage mail)
         {
-            string SmtpServer = "smtp.riz-itmotion.de";
-            int SmtpPort = 25;
-            string AuthUserName = "";
-            string AuthPassword = "";
-            bool UseSsl = false;
-
-
-
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
-            string host = SmtpServer ?? string.Empty;
 
-            if (host.Length > 0)
-            {
-                client.Host = host;
-                client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
-            }
+            if (string.IsNullOrEmpty(this.m_config.Server))
+                return;
 
-            int port = SmtpPort;
-            if (port > 0)
-            {
-                client.Port = port;
-            }
+            client.Host = this.m_config.Server;
+            client.DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network;
 
-            string userName = AuthUserName ?? string.Empty;
-            string password = AuthPassword ?? string.Empty;
+            if (this.m_config.Port > 0)
+                client.Port = this.m_config.Port;
 
-            if (userName.Length > 0 && password.Length > 0)
-            {
-                client.Credentials = new System.Net.NetworkCredential(userName, password);
-            }
-            else
-            {
+
+            if (this.m_config.IntegratedSecurity)
+            { 
                 //client.Credentials = System.Net.CredentialCache.DefaultCredentials
                 client.Credentials = System.Net.CredentialCache.DefaultNetworkCredentials;
             }
-
-            client.EnableSsl = UseSsl;
-
-
-
-            if (UseSsl)
+            else
             {
-                // http://stackoverflow.com/questions/1301127/how-to-ignore-a-certificate-error-with-c-2-0-webclient-without-the-certificate
-                //InitiateSSLTrust()
-                try
-                {
-                    //Change SSL checks so that all checks pass
-                    //System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback( delegate { return true; });
-                    System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(InternalCallback);
-                    
-                    //System.Net.ServicePointManager.CertificatePolicy = New AcceptAllCertificatePolicy()
-                }
-                catch (System.Exception ex)
-                {
-                }
-
+                client.Credentials = new System.Net.NetworkCredential(this.m_config.UserName, this.m_config.Password);
             }
 
+            client.EnableSsl = this.m_config.UseSSL;
             client.Send(mail);
-        }
-        // InternalSendMail
+        } // InternalSendMail
 
 
         //system.security.cryptography.x509certificates.
