@@ -3,11 +3,7 @@
 DELETE FROM T_Comments_Closure; 
 DELETE FROM T_Comments_Paths; 
 DELETE FROM T_Comments;
-DBCC CHECKIDENT ('T_Comments_Paths', RESEED, 0);
-DBCC CHECKIDENT ('T_Comments', RESEED, 0);
 
-
-/*
 -- ALTER SEQUENCE <tablename>_<id>_seq RESTART WITH 1
 -- ALTER SEQUENCE T_Comments_Paths_path_id_seq RESTART WITH 1
 -- ALTER SEQUENCE T_Comments_com_id_seq RESTART WITH 1
@@ -16,10 +12,9 @@ SELECT setval('T_Comments_Paths_path_id_seq', (SELECT COALESCE(MAX(path_id), 1) 
 SELECT setval('T_Comments_com_id_seq', (SELECT COALESCE(MAX(com_id), 1) FROM T_Comments) ); 
 
 
-*/
 
 
-SET IDENTITY_INSERT T_Comments ON
+
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (1, N'Alle');
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (2, N'Kunde A');
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (3, N'Admin');
@@ -30,7 +25,6 @@ INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (7, N'Stao 2');
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (8, N'Stao 3');
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (9, N'Stao 4');
 INSERT INTO T_Comments(COM_Id, COM_Text) VALUES (10, N'Stao 1&3');
-SET IDENTITY_INSERT T_Comments OFF
 
 
 
@@ -60,20 +54,22 @@ FROM T_Comments_Paths
 
 
 
-EXEC sp_DATA_InsertComment 1, 2; 
-EXEC sp_DATA_InsertComment 2, 3; 
-EXEC sp_DATA_InsertComment 2, 4; 
-EXEC sp_DATA_InsertComment 3, 5; 
-EXEC sp_DATA_InsertComment 3, 6; 
-EXEC sp_DATA_InsertComment 3, 7; 
-EXEC sp_DATA_InsertComment 3, 8; 
-EXEC sp_DATA_InsertComment 3, 9; 
-EXEC sp_DATA_InsertComment 3, 10; 
-EXEC sp_DATA_InsertComment 5, 6; 
-EXEC sp_DATA_InsertComment 5, 7;
 
-EXEC sp_DATA_InsertComment 10, 6; 
-EXEC sp_DATA_InsertComment 10, 8; 
+SELECT sp_DATA_InsertComment(1, 2); 
+SELECT sp_DATA_InsertComment(2, 3); 
+SELECT sp_DATA_InsertComment(2, 4); 
+SELECT sp_DATA_InsertComment(3, 5); 
+SELECT sp_DATA_InsertComment(3, 6); 
+SELECT sp_DATA_InsertComment(3, 7); 
+SELECT sp_DATA_InsertComment(3, 8); 
+SELECT sp_DATA_InsertComment(3, 9); 
+SELECT sp_DATA_InsertComment(3, 10); 
+SELECT sp_DATA_InsertComment(5, 6); 
+SELECT sp_DATA_InsertComment(5, 7);
+
+SELECT sp_DATA_InsertComment(10, 6); 
+SELECT sp_DATA_InsertComment(10, 8); 
+
 
 
 SELECT 
