@@ -6,13 +6,16 @@ DELETE FROM T_Comments;
 DBCC CHECKIDENT ('T_Comments_Paths', RESEED, 0);
 DBCC CHECKIDENT ('T_Comments', RESEED, 0);
 
-DBCC CHECKIDENT ('T_Comments_Paths', RESEED, 0);
-DBCC CHECKIDENT ('T_Comments', RESEED, 0);
 
 /*
-ALTER SEQUENCE <tablename>_<id>_seq RESTART WITH 1
-ALTER SEQUENCE T_Comments_Paths_path_id_seq RESTART WITH 1
-ALTER SEQUENCE T_Comments_com_id_seq RESTART WITH 1
+-- ALTER SEQUENCE <tablename>_<id>_seq RESTART WITH 1
+-- ALTER SEQUENCE T_Comments_Paths_path_id_seq RESTART WITH 1
+-- ALTER SEQUENCE T_Comments_com_id_seq RESTART WITH 1
+
+SELECT setval('T_Comments_Paths_path_id_seq', (SELECT COALESCE(MAX(path_id), 1) FROM T_Comments_Paths) ); 
+SELECT setval('T_Comments_com_id_seq', (SELECT COALESCE(MAX(com_id), 1) FROM T_Comments) ); 
+
+
 */
 
 
@@ -37,7 +40,7 @@ SET IDENTITY_INSERT T_Comments OFF
 
 -- EXEC sp_DATA_SelfInsertComment;
 INSERT INTO T_Comments_Paths (path_com_id)
-SELECT COM_Id FROM T_Comments 
+SELECT COM_Id FROM T_Comments; 
 
 
 INSERT INTO T_Comments_Closure
