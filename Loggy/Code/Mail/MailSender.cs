@@ -44,15 +44,13 @@ namespace Loggy
 
     public class HttpInfo
     {
+        public string Method;
         public string Url;
+        public string Path; // Host + VirtDir
+        public string Query; // Host + VirtDir
         public string UserAgent;
         public string Languages; // Culture
 
-
-        public string UserAgent; // Host + VirtDir
-        public string Path; // Host + VirtDir
-
-        public string Method;
         public string Cookies;
 
         public System.Collections.Specialized.NameValueCollection RequestHeaders;
@@ -64,7 +62,8 @@ namespace Loggy
         
         // InputStream
 
-        public string FormsUser;
+        public string FormsUserId;
+        public string FormsUserName;
         
     }
 
