@@ -30,7 +30,6 @@ namespace Loggy
             // <p id="errorMessage">@error.Type: @error.Message</p>
             // <span>@error.StackTrace</span>
             string res = ResourceHelper.GetResource(typeof(ErrorTemplateHandler), "ErrorTemplate.htm");
-            
             response.Write(res);
 
             // response.Write("<html><body><h1>Hello 15Seconds   Reader ");

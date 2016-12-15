@@ -170,6 +170,7 @@
     <Compile Include="Code\Logons.cs" />
     <Compile Include="Code\Mail\ErrorMailer.cs" />
     <Compile Include="Code\Mail\ErrorDispatcher.cs" />
+    <Content Include="Code\Mail\FeatureList.txt" />
     <Compile Include="Code\Module\UserAgentBanningModule.cs" />
     <Compile Include="DAL\cMS_SQL.cs" />
     <Compile Include="DAL\Crypt.cs" />

@@ -1,0 +1,235 @@
+﻿
+ErrorLogger
+AddHandler(new ErrorDb(ConnectionString))
+AddHandler(new ErrorSysLog(SyslogConfig))
+AddHandler(new ErrorMail(SmtpConcif))
+AddHandler(new ErrorTweet(TwitterConfig))
+
+
+Soap
+WCF
+HttpPost/Put
+Console
+Trace
+Logfile
+EventLog
+CustomApplication (iPhone/iPad)
+IssueTracker
+Redmine
+
+
+LogLevel
+
+Trace - very detailed logs, which may include high-volume information such as protocol payloads. This log level is typically only enabled during development
+Debug - debugging information, less detailed than trace, typically not enabled in production environment.
+Info - information messages, which are normally enabled in production environment
+Warn - warning messages, typically for non-critical issues, which can be recovered or which are temporary failures
+Error - error messages - most of the time these are Exceptions
+Fatal - very serious errors!
+
+public enum LogLevel
+{
+  Debug = 1,
+  Verbose = 2,
+  Information = 3,
+  Warning = 4,
+  Error = 5,
+  Critical = 6,
+  None = int.MaxValue
+}
+
+Logger logger = LogManager.GetCurrentClassLogger();
+
+
+time, machinename, user, domain, bitness, os, os-version, clr, processor , pipeline,  
+httpcontext, exception, cmd, object customData, string fmt, params plabla 
+
+
+
+logger.Trace("Sample trace message");
+logger.Debug("Sample debug message");
+logger.Info("Sample informational message");
+logger.Warn("Sample warning message");
+logger.Error("Sample error message");
+logger.Fatal("Sample fatal error message");
+
+// alternatively you can call the Log() method 
+// and pass log level as the parameter.
+logger.Log(LogLevel.Info, "Sample informational message");
+
+
+
+
+functionality
+duplicate filtering
+
+--ExportFormat
+CSV, Excel, MS LogParser, RSS/Atom, JSON, XML
+
+
+-- logged info
+TIMESTAMP ! 
+user
+
+
+DB:
+Microsoft SQL Server
+Oracle (OracleErrorLog)
+SQLite (version 3) database file
+Microsoft Access (AccessErrorLog)
+VistaDB (VistaDBErrorLog); deprecated in release 1.2
+Loose XML files
+RAM (in-memory)
+SQL Server Compact Edition
+MySQL
+PostgreSQL
+
+
+
+others
+ELMAH
+NLOG
+log4net
+entlib
+
+
+
+
+------------------------------
+
+
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+
+
+namespace RedmineClient
+{
+
+
+    static class Program
+    {
+
+
+        public static void CreateInstance()
+        {
+
+            Redmine.Net.Api.RedmineManager rm2 = new Redmine.Net.Api.RedmineManager("host", "apikey"
+                , Redmine.Net.Api.MimeFormat.Xml
+                , false // Verify SSL-certificate
+                , null // Proxy
+                , System.Net.SecurityProtocolType.Tls);
+
+
+            Redmine.Net.Api.RedmineManager rm = new Redmine.Net.Api.RedmineManager("host"
+                , Redmine.Net.Api.MimeFormat.Xml, false, null, System.Net.SecurityProtocolType.Tls);
+
+
+        }
+
+
+
+        /// <summary>
+        /// Der Haupteinstiegspunkt für die Anwendung.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+#if false
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+#endif
+
+
+
+            var redman = new Redmine.Net.Api.RedmineManager("http://redmine.cor.local", "admin", "TOP_SECRET",
+                Redmine.Net.Api.MimeFormat.Xml, false, null, System.Net.SecurityProtocolType.Tls);
+
+
+            var projects = redman.GetObjects<Redmine.Net.Api.Types.Project>(100, 0);
+
+            foreach (Redmine.Net.Api.Types.Project proj in projects)
+            {
+                System.Console.WriteLine(proj);
+            }
+
+
+            var parameters = new System.Collections.Specialized.NameValueCollection { { "status_id", "*" } };
+
+            // https://stackoverflow.com/questions/14839712/nginx-reverse-proxy-passthrough-basic-authenication
+            // https://stackoverflow.com/questions/19751313/forward-request-headers-from-nginx-proxy-server
+            foreach (var issue in redman.GetObjects<Redmine.Net.Api.Types.Issue>(parameters))
+            {
+                Console.WriteLine("#{0}: {1}", issue.Id, issue.Subject);
+            }
+
+
+
+            // https://www.redmine.org/projects/redmine/wiki/Rest_API
+            // Enable REST API: in Administration -> Settings -> Authentication => Enable REST web service
+
+            //Create a issue.
+            var newIssue = new Redmine.Net.Api.Types.Issue { Subject = "test"
+                , Project = new Redmine.Net.Api.Types.IdentifiableName { Id = 1 } 
+            };
+            redman.CreateObject(newIssue);
+
+            /*
+            redman.CreateObject<Redmine.Net.Api.Types.Issue>(
+                new Redmine.Net.Api.Types.Issue() { 
+                    Author=null,
+                    Attachments=null,
+                    Children=null,
+                    ClosedOn= System.DateTime.Now,
+                    CreatedOn = System.DateTime.Now,
+                    EstimatedHours=5.5,
+                    Changesets=null,
+                    DueDate=System.DateTime.Now,
+                    DoneRatio=0.5,
+                    Description="Test",
+                    Id="test",
+                    AssignedTo=null,
+                    Category=null,
+                    Subject="Test Issue",
+
+                }
+            );
+            */
+
+
+
+            redman.CreateObject<Redmine.Net.Api.Types.Project>(
+                new Redmine.Net.Api.Types.Project() 
+                {
+                    // Id=null,
+                    Name = "ApiTestProject - Name",
+                    CreatedOn = System.DateTime.Now,
+                    Description = "Api Test Project",
+                    EnabledModules= null,
+                    HomePage= "",
+                    Identifier = "ApiTestProject".ToLowerInvariant(),
+                    InheritMembers=false,
+                    IsPublic=false,
+                    IssueCategories= null,
+                    Parent=null,
+                    Status=0,
+                    Trackers=null,
+                    UpdatedOn=System.DateTime.Now
+                }
+                )
+            ;
+            
+
+
+            System.Console.WriteLine(System.Environment.NewLine);
+            System.Console.WriteLine(System.Environment.NewLine);
+            System.Console.WriteLine(" --- Press any key to continue --- ");
+            System.Console.ReadKey();
+        }
+
+
+    }
+
+
+}

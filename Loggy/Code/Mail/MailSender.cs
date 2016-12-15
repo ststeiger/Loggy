@@ -6,9 +6,100 @@ namespace Loggy
 {
 
 
-    
+    public class ApplicationInfo
+    {
+        public string AssemblyVersion;
+        public string PublicIP;
+        public string LocalIP;
+
+        public string MachineName;
+        public string InstallPath;
+        public string FrameworkVersion;
+        public string PipeLineMode;
+        public string TrustLevel;
+        public int Bitness;
+        
+
+        public string UserName;
+        public string Domain;
+
+
+        public string OS;
+        public string OS_Version;
+        public string ApplicationServer;
+        public string Processor;
+
+        public string[] Shares;
+        public string[] DriveList;
+
+    }
+
+
+    public class DbInfo
+    {
+        public string ConnectionString;
+        public string DbVersion;
+    }
+
+
+    public class HttpInfo
+    {
+        public string Url;
+        public string UserAgent;
+        public string Languages; // Culture
+
+
+        public string UserAgent; // Host + VirtDir
+        public string Path; // Host + VirtDir
+
+        public string Method;
+        public string Cookies;
+
+        public System.Collections.Specialized.NameValueCollection RequestHeaders;
+        public System.Collections.Specialized.NameValueCollection ResponseHeaders; // Server:Microsoft-IIS/7.5
+        
+
+        public System.Collections.Specialized.NameValueCollection GetParameters;
+        public System.Collections.Specialized.NameValueCollection PostParameters;
+        
+        // InputStream
+
+        public string FormsUser;
+        
+    }
+
+
+    public class ExceptionInfo
+    {
+        public string Type;
+        public string Source;
+        public string StackTrace;
+    }
+
+
+    public class ErrorInfo
+    {
+        public System.DateTime When;
+        public ApplicationInfo App;
+        public DbInfo Db;
+        public HttpInfo Http;
+
+    }
+
+
+
+
+
+
+    // public string Url;
+    // public string VirtualDirectory;
+
+
+
+
     public sealed class ErrorHandler
     {
+
 
         public class Logging
         {
@@ -44,7 +135,7 @@ namespace Loggy
 
 
         // // http://stackoverflow.com/questions/1301127/how-to-ignore-a-certificate-error-with-c-2-0-webclient-without-the-certificate
-        public void InitiateSSLTrust()
+        protected void InitiateSSLTrust()
         {
             if (!m_config.UseSSL)
                 return;
@@ -127,9 +218,9 @@ namespace Loggy
                 {
                     System.Net.Mail.Attachment attach = new System.Net.Mail.Attachment(Logging.LogFilePath);
                     mail.Attachments.Add(attach);
-                }
+                } // End if (System.IO.File.Exists(Logging.LogFilePath)) 
 
-            }
+            } // End if (!string.IsNullOrEmpty(Logging.LogFilePath))
 
 
             //mail.ReplyTo = New System.Net.Mail.MailAddress("bimbo@example.com")

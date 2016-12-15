@@ -18,7 +18,7 @@ namespace Loggy
             {
                 stack.Push(exceptionChain);
                 exceptionChain = exceptionChain.InnerException;
-            }
+            } // Whend 
 
             return stack;
         } // End Function GetExceptionStack 
@@ -59,7 +59,7 @@ namespace Loggy
                 System.Exception ex = stack.Pop();
                 string exceptionText = StringifyException(ex);
                 sb.AppendLine(exceptionText);
-            }
+            } // Whend 
 
             string text = sb.ToString();
             sb.Length = 0;
@@ -69,7 +69,7 @@ namespace Loggy
         } // End Function LogException 
 
 
-    } // End abstract class ErrorDispatcher
+    } // End abstract class ErrorDispatcher 
 
 
-} // End Namespace Loggy
+} // End Namespace Loggy 
