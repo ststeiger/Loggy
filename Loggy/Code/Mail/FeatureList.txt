@@ -97,139 +97,22 @@ entlib
 
 ------------------------------
 
+http://www.haidongji.com/
+https://www.digitalocean.com/community/questions/how-to-update-openssl-from-1-0-1f-on-ubuntu-14-04-14-10
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+------------------------------
 
+https://3.bp.blogspot.com/-6oVrE-mCdeA/UON0Ey05HeI/AAAAAAAAA3Q/ZPTyDFmQR0k/s1600/DB-Model_RedMine_1.2.1_Custom.png
 
-namespace RedmineClient
-{
+Per-Project category
+Per-Project role
 
+https://www.redmine.org/projects/redmine/wiki/Rest_api
+https://www.redmine.org/projects/redmine/wiki/Rest_Attachments
+https://github.com/zapadi/redmine-net-api/wiki/Get-a-redmine-object-list
 
-    static class Program
-    {
-
-
-        public static void CreateInstance()
-        {
-
-            Redmine.Net.Api.RedmineManager rm2 = new Redmine.Net.Api.RedmineManager("host", "apikey"
-                , Redmine.Net.Api.MimeFormat.Xml
-                , false // Verify SSL-certificate
-                , null // Proxy
-                , System.Net.SecurityProtocolType.Tls);
+https://www.redmine.org/boards/2/topics/42476
+https://www.redmine.org/boards/2/topics/41847
 
 
-            Redmine.Net.Api.RedmineManager rm = new Redmine.Net.Api.RedmineManager("host"
-                , Redmine.Net.Api.MimeFormat.Xml, false, null, System.Net.SecurityProtocolType.Tls);
-
-
-        }
-
-
-
-        /// <summary>
-        /// Der Haupteinstiegspunkt für die Anwendung.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-#if false
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-#endif
-
-
-
-            var redman = new Redmine.Net.Api.RedmineManager("http://redmine.cor.local", "admin", "TOP_SECRET",
-                Redmine.Net.Api.MimeFormat.Xml, false, null, System.Net.SecurityProtocolType.Tls);
-
-
-            var projects = redman.GetObjects<Redmine.Net.Api.Types.Project>(100, 0);
-
-            foreach (Redmine.Net.Api.Types.Project proj in projects)
-            {
-                System.Console.WriteLine(proj);
-            }
-
-
-            var parameters = new System.Collections.Specialized.NameValueCollection { { "status_id", "*" } };
-
-            // https://stackoverflow.com/questions/14839712/nginx-reverse-proxy-passthrough-basic-authenication
-            // https://stackoverflow.com/questions/19751313/forward-request-headers-from-nginx-proxy-server
-            foreach (var issue in redman.GetObjects<Redmine.Net.Api.Types.Issue>(parameters))
-            {
-                Console.WriteLine("#{0}: {1}", issue.Id, issue.Subject);
-            }
-
-
-
-            // https://www.redmine.org/projects/redmine/wiki/Rest_API
-            // Enable REST API: in Administration -> Settings -> Authentication => Enable REST web service
-
-            //Create a issue.
-            var newIssue = new Redmine.Net.Api.Types.Issue { Subject = "test"
-                , Project = new Redmine.Net.Api.Types.IdentifiableName { Id = 1 } 
-            };
-            redman.CreateObject(newIssue);
-
-            /*
-            redman.CreateObject<Redmine.Net.Api.Types.Issue>(
-                new Redmine.Net.Api.Types.Issue() { 
-                    Author=null,
-                    Attachments=null,
-                    Children=null,
-                    ClosedOn= System.DateTime.Now,
-                    CreatedOn = System.DateTime.Now,
-                    EstimatedHours=5.5,
-                    Changesets=null,
-                    DueDate=System.DateTime.Now,
-                    DoneRatio=0.5,
-                    Description="Test",
-                    Id="test",
-                    AssignedTo=null,
-                    Category=null,
-                    Subject="Test Issue",
-
-                }
-            );
-            */
-
-
-
-            redman.CreateObject<Redmine.Net.Api.Types.Project>(
-                new Redmine.Net.Api.Types.Project() 
-                {
-                    // Id=null,
-                    Name = "ApiTestProject - Name",
-                    CreatedOn = System.DateTime.Now,
-                    Description = "Api Test Project",
-                    EnabledModules= null,
-                    HomePage= "",
-                    Identifier = "ApiTestProject".ToLowerInvariant(),
-                    InheritMembers=false,
-                    IsPublic=false,
-                    IssueCategories= null,
-                    Parent=null,
-                    Status=0,
-                    Trackers=null,
-                    UpdatedOn=System.DateTime.Now
-                }
-                )
-            ;
-            
-
-
-            System.Console.WriteLine(System.Environment.NewLine);
-            System.Console.WriteLine(System.Environment.NewLine);
-            System.Console.WriteLine(" --- Press any key to continue --- ");
-            System.Console.ReadKey();
-        }
-
-
-    }
-
-
-}
+https://www.youtube.com/watch?v=pGYAg7TMmp0

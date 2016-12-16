@@ -1,0 +1,134 @@
+﻿
+SELECT 
+	 [ErrorId]
+	,[Application]
+	,[Host]
+	,[Type]
+	,[Source]
+	,[Message]
+	,[User]
+	,[StatusCode]
+	,[TimeUtc]
+	,[Sequence]
+	,[AllXml]
+FROM [ELMAH_Error]
+
+
+SELECT 
+	 [Index]
+	,[All]
+	,implementationScript
+	,Message
+	,Parameters
+	,Processed
+	,Source
+	,SQL
+	,TaskUserName
+	,Trace
+	,Type
+	,URL
+	,Date
+FROM T_COR_Error
+
+
+SELECT 
+	 Log_ID
+	,Log_URL
+	,Log_Query
+	,Log_Session
+	,Log_Post
+	,Log_Browser
+	,Log_Date
+FROM T_COR_Log
+
+
+{    "UseOptimizedCacheKey": true,    "Capabilities": {      "canInitiateVoiceCall": "false",      
+"isColor": "true",      "requiresFullyQualifiedRedirectUrl": "false",      
+"requiresAttributeColonSubstitution": "false",      
+"maximumRenderedPageSize": "300000",      "backgroundsounds": "false",      
+"requiresUniqueHtmlCheckboxNames": "false",      "rendersBreakBeforeWmlSelectAndInput": "false",      
+"ecmascriptversion": "3.0",      "supportsXmlHttp": "true",      "isMobileDevice": "false",      
+"rendersBreaksAfterWmlInput": "false",      "vbscript": "false",      "rendersWmlSelectsAsMenuCards": "false",      
+"supportsAccesskeyAttribute": "true",      "javascript": "true",      "supportsDivNoWrap": "false",      
+"requiresLeadingPageBreak": "false",      "rendersWmlDoAcceptsInline": "true",      
+"requiresPhoneNumbersAsPlainText": "false",      "SupportsMaintainScrollPositionOnPostback": "true",      
+"minorversion": "0",      "jscriptversion": "0.0",      "supportsImageSubmit": "true",      
+"tagwriter": "System.Web.UI.HtmlTextWriter",      "preferredImageMime": "image/gif",      
+"supportsVCard": "false",      "screenBitDepth": "8",      "supportsFontSize": "true",      
+"layoutEngineVersion": "537",      "javascriptversion": "1.7",      
+"requiresContentTypeMetaTag": "false",      
+"w3cdomversion": "1.0",      "gatewayVersion": "None",      
+"requiresPostRedirectionHandling": "false",      "inputType": "keyboard",      
+"maximumSoftkeyLabelLength": "5",      "version": "53.0",      "beta": "false",      
+"canRenderOneventAndPrevElementsTogether": "true",      "supportsIModeSymbols": "false",      
+"requiresAdaptiveErrorReporting": "false",      "aol": "false",      "crawler": "false",      
+"requiresSpecialViewStateEncoding": "false",      "majorversion": "53",      
+"supportsQueryStringInFormAction": "true",      "supportsItalic": "true",      
+"requiresUrlEncodedPostfieldValues": "false",      "requiresNoBreakInFormatting": "false",      
+"supportsCacheControlMetaTag": "true",      "requiresXhtmlCssSuppression": "false",      
+"canRenderSetvarZeroWithMultiSelectionList": "true",      "supportsFontColor": "true",      
+"requiresControlStateInSession": "false",      "gatewayMajorVersion": "0",      "msdomversion": "0.0",      
+"canCombineFormsInDeck": "true",      "cookies": "true",      "mobileDeviceModel": "Unknown",      
+"supportsDivAlign": "true",      "supportsJPhoneMultiMediaAttributes": "false",      
+"requiresAbsolutePostbackUrl": "false",      "javaapplets": "true",      
+"canRenderAfterInputOrSelectElement": "true",      "supportsSelectMultiple": "true",      
+"mobileDeviceManufacturer": "Unknown",      "canSendMail": "true",      "supportsFontName": "true",      
+"supportsCallback": "true",      "supportsUncheck": "true",      "platform": "WinNT",      "canRenderPostBackCards": "true",      
+"": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36",      
+"supportsEmptyStringInCookieValue": "true",      "requiresUniqueFilePathSuffix": "false",      
+"requiresUniqueHtmlInputNames": "false",      "cdf": "false",      "supportsFileUpload": "true",      
+"supportsBodyColor": "true",      "defaultSubmitButtonLimit": "1",      "canRenderMixedSelects": "true",      
+"hasBackButton": "true",      "gatewayMinorVersion": "0",      "maximumHrefLength": "10000",      
+"requiresOutputOptimization": "false",      "requiredMetaTagNameValue": "",      
+"hidesRightAlignedMultiselectScrollbars": "false",      "type": "Chrome53",      
+"tables": "true",      "browser": "Chrome",      "layoutEngine": "WebKit",      "activexcontrols": "false",      
+"supportsCss": "true",      "supportsMultilineTextBoxDisplay": "true",      "win32": "true",      
+"frames": "true",      "preferredRenderingMime": "text/html",      "canRenderInputAndSelectElementsTogether": "true",      
+"canRenderEmptySelects": "true",      "supportsBold": "true",      "rendersBreaksAfterHtmlLists": "true",      
+"supportsRedirectWithCookie": "true",      "win16": "false",      "supportsInputMode": "false",      
+"supportsJPhoneSymbols": "false",      "numberOfSoftkeys": "0",      "requiresDBCSCharacter": "false",      
+"rendersBreaksAfterWmlAnchor": "false",      "supportsInputIStyle": "false",      
+"preferredRenderingType": "html32"    },    "Adapters": {},    "Id": "chrome"
+
+,    "Browsers": [      "default",      "mozilla",      "webkit",      "chrome"    ],    
+"ClrVersion": {      "Major": 0,      "Minor": 0,      "Build": -1,      "Revision": -1,      
+"MajorRevision": -1,      "MinorRevision": -1    },    "Type": "Chrome53",    "Browser": "Chrome",    
+"Version": "53.0",    "MajorVersion": 53,    "MinorVersionString": "0",    "MinorVersion": 0.0,    
+"Platform": "WinNT",    "TagWriter": "System.Web.UI.HtmlTextWriter, System.Web, Version=2.0.0.0, 
+Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",    "EcmaScriptVersion": {      "Major": 3,      
+"Minor": 0,      "Build": -1,      "Revision": -1,      "MajorRevision": -1,      "MinorRevision": -1    }
+,    "MSDomVersion": {      "Major": 0,      "Minor": 0,      "Build": -1,      "Revision": -1,      
+"MajorRevision": -1,      "MinorRevision": -1    },    "W3CDomVersion": {      "Major": 1,      
+"Minor": 0,      "Build": -1,      "Revision": -1,      "MajorRevision": -1,      "MinorRevision": -1    }
+,    "Beta": false,    "Crawler": false,    "AOL": false,    "Win16": false,    "Win32": true,    
+"Frames": true,    "RequiresControlStateInSession": false,    "Tables": true,    "Cookies": true,    
+"VBScript": false,    "JavaScript": true,    "JavaApplets": true,    "JScriptVersion": {      "Major": 0,      
+"Minor": 0,      "Build": -1,      "Revision": -1,      "MajorRevision": -1,      "MinorRevision": -1    },    
+"ActiveXControls": false,    "BackgroundSounds": false,    "CDF": false,    "MobileDeviceManufacturer": "Unknown",    
+"MobileDeviceModel": "Unknown",    "GatewayVersion": "None",    "GatewayMajorVersion": 0,    "GatewayMinorVersion": 0.0,    
+"PreferredRenderingType": "html32",    "PreferredRenderingMime": "text/html",    "PreferredImageMime": "image/gif",    
+"ScreenCharactersWidth": 80,    "ScreenCharactersHeight": 40,    "ScreenPixelsWidth": 640,    
+"ScreenPixelsHeight": 480,    "ScreenBitDepth": 8,    "IsColor": true,    "InputType": "keyboard",    
+"NumberOfSoftkeys": 0,    "MaximumSoftkeyLabelLength": 5,    "CanInitiateVoiceCall": false,    
+"CanSendMail": true,    "HasBackButton": true,    "RendersWmlDoAcceptsInline": true,    
+"RendersWmlSelectsAsMenuCards": false,    "RendersBreaksAfterWmlAnchor": false,    
+"RendersBreaksAfterWmlInput": false,    "RendersBreakBeforeWmlSelectAndInput": false,    
+"RequiresPhoneNumbersAsPlainText": false,    "RequiresUrlEncodedPostfieldValues": false,    
+"RendersBreaksAfterHtmlLists": true,    "RequiresUniqueHtmlInputNames": false,    
+"RequiresUniqueHtmlCheckboxNames": false,    "SupportsCss": true,    "HidesRightAlignedMultiselectScrollbars": false,    
+"IsMobileDevice": false,    "RequiresAttributeColonSubstitution": false,    "CanRenderOneventAndPrevElementsTogether": true,    
+"CanRenderInputAndSelectElementsTogether": true,    "CanRenderAfterInputOrSelectElement": true,    
+"CanRenderPostBackCards": true,    "CanRenderMixedSelects": true,    "CanCombineFormsInDeck": true,    
+"CanRenderSetvarZeroWithMultiSelectionList": true,    "SupportsImageSubmit": true,    "RequiresUniqueFilePathSuffix": false,    
+"RequiresNoBreakInFormatting": false,    "RequiresLeadingPageBreak": false,    "SupportsSelectMultiple": true,    
+"SupportsBold": true,    "SupportsItalic": true,    "SupportsFontSize": true,    "SupportsFontName": true,    
+"SupportsFontColor": true,    "SupportsBodyColor": true,    "SupportsDivAlign": true,    "SupportsDivNoWrap": false,    
+"RequiresContentTypeMetaTag": false,    "RequiresDBCSCharacter": false,    "RequiresHtmlAdaptiveErrorReporting": false,    
+"RequiresOutputOptimization": false,    "SupportsAccesskeyAttribute": true,    "SupportsInputIStyle": false,    
+"SupportsInputMode": false,    "SupportsIModeSymbols": false,    "SupportsJPhoneSymbols": false,    
+"SupportsJPhoneMultiMediaAttributes": false,    "MaximumRenderedPageSize": 300000,    
+"RequiresSpecialViewStateEncoding": false,    "SupportsQueryStringInFormAction": true,    
+"SupportsCacheControlMetaTag": true,    "SupportsUncheck": true,    "CanRenderEmptySelects": true,    
+"SupportsRedirectWithCookie": true,    "SupportsEmptyStringInCookieValue": true,    
+"DefaultSubmitButtonLimit": 1,    "SupportsXmlHttp": true,    "SupportsCallback": true,    
+"MaximumHrefLength": 10000  }

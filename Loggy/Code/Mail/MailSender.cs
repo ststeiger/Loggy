@@ -8,6 +8,7 @@ namespace Loggy
 
     public class ApplicationInfo
     {
+        public string ApplicationName;
         public string AssemblyVersion;
         public string PublicIP;
         public string LocalIP;
@@ -40,8 +41,9 @@ namespace Loggy
 
     public class DbInfo
     {
-        public string ConnectionString;
+        public string DbType;
         public string DbVersion;
+        public string ConnectionString;
     }
 
 
@@ -56,12 +58,19 @@ namespace Loggy
 
         public string Cookies;
 
+
+        public string ClientIP;
+        public string ForwardedClientIP;
+
+
         public System.Collections.Specialized.NameValueCollection RequestHeaders;
         public System.Collections.Specialized.NameValueCollection ResponseHeaders; // Server:Microsoft-IIS/7.5
         
 
         public System.Collections.Specialized.NameValueCollection GetParameters;
         public System.Collections.Specialized.NameValueCollection PostParameters;
+
+        public System.Collections.Specialized.NameValueCollection Session;
         
         // InputStream
 
@@ -85,7 +94,6 @@ namespace Loggy
         public ApplicationInfo App;
         public DbInfo Db;
         public HttpInfo Http;
-
     }
 
 
