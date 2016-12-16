@@ -32,6 +32,9 @@ namespace Loggy
         public string[] Shares;
         public string[] DriveList;
 
+
+        public System.Collections.Specialized.NameValueCollection EnvironmentVariables;
+
     }
 
 
@@ -48,7 +51,7 @@ namespace Loggy
         public string Url;
         public string Path; // Host + VirtDir
         public string Query; // Host + VirtDir
-        public string UserAgent;
+        public string UserAgent; // Screen-size
         public string Languages; // Culture
 
         public string Cookies;
