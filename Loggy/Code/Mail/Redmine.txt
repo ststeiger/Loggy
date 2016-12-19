@@ -11,8 +11,9 @@ namespace RedmineClient
     {
 
 
-        public static void CreateInstance()
+        public static Redmine.Net.Api.RedmineManager CreateInstance()
         {
+            /*
             Redmine.Net.Api.RedmineManager rm2 = new Redmine.Net.Api.RedmineManager(
                  "host"
                 ,"apikey"
@@ -30,7 +31,22 @@ namespace RedmineClient
                 ,null // Proxy
                 ,System.Net.SecurityProtocolType.Tls
             );
+            */
 
+
+            Redmine.Net.Api.RedmineManager redmineManager = new Redmine.Net.Api.RedmineManager(
+                 "http://redmine.cor.local" 
+				 //"http://redmine.cor-management.ch"
+                , "admin"
+                , "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                , Redmine.Net.Api.MimeFormat.Xml
+                , false // Verify SSL-certificate
+                , null // Proxy
+                // ,new System.Net.WebProxy("http://127.0.0.1:80") //server IP and port
+                , System.Net.SecurityProtocolType.Tls
+            );
+
+            return redmineManager;
         } // End Sub CreateInstance 
 
 
@@ -71,8 +87,28 @@ namespace RedmineClient
                 str = "___" + str;
             
             return str;
-        } 
+        }
 
+
+        public static Redmine.Net.Api.Types.IdentifiableName GetUser(string login)
+        {
+            Redmine.Net.Api.RedmineManager redman = CreateInstance();
+
+            List<Redmine.Net.Api.Types.User> users = redman.GetObjects<Redmine.Net.Api.Types.User>();
+            System.Console.WriteLine(users);
+
+            for (int i = 0; i < users.Count; ++i)
+            {
+
+                if (string.Equals(users[i].Login, login, System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return new Redmine.Net.Api.Types.IdentifiableName() { Id = users[i].Id };
+                } // End if (string.Equals(users[i].Login, login, System.StringComparison.InvariantCultureIgnoreCase)) 
+
+            } // Next i 
+
+            return null;
+        } // End Function GetUser 
 
 
         /// <summary>
@@ -87,15 +123,10 @@ namespace RedmineClient
             Application.Run(new Form1());
 #endif
 
-            Redmine.Net.Api.RedmineManager redman = new Redmine.Net.Api.RedmineManager(
-                 "http://redmine.cor.local" 
-                ,"admin" 
-                ,"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
-                ,Redmine.Net.Api.MimeFormat.Xml
-                ,false // Verify SSL-certificate
-                ,null // Proxy
-                ,System.Net.SecurityProtocolType.Tls 
-            );
+            Redmine.Net.Api.RedmineManager redman = CreateInstance();
+
+
+
 
 
 #if false
@@ -186,26 +217,45 @@ namespace RedmineClient
 
             // https://www.redmine.org/boards/2/topics/42476
             // https://github.com/zapadi/redmine-net-api/wiki/Upload-file
-            //byte[] fileData = System.IO.File.ReadAllBytes(@"D:\stefan.steiger\Downloads\signature.png");
-            //Redmine.Net.Api.Types.Upload fileToAttach = redman.UploadFile(fileData);
-            //fileToAttach.FileName = "foobar.png";
-            //fileToAttach.Description = "File uploaded using REST API";
-            //fileToAttach.ContentType = "image/png";
+            byte[] fileData = System.IO.File.ReadAllBytes(@"D:\stefan.steiger\Downloads\signature.png");
+            Redmine.Net.Api.Types.Upload fileToAttach = redman.UploadFile(fileData);
+            System.Console.WriteLine(fileToAttach);
+            fileToAttach.FileName = "foobar.png";
+            fileToAttach.Description = "File uploaded using REST API";
+            fileToAttach.ContentType = "image/png";
 
 
-            var ls = redman.GetObjects<Redmine.Net.Api.Types.Tracker>("apitestproject");
-            System.Console.WriteLine(ls);
+            //var ls = redman.GetObjects<Redmine.Net.Api.Types.Tracker>("apitestproject");
+            //System.Console.WriteLine(ls);
 
 
            
-            // attachment
-            Redmine.Net.Api.Types.Attachment attach = new Redmine.Net.Api.Types.Attachment();
-            attach.ContentUrl = "http://redmine.cor.local/attachments/download/9/7_6R55O.jpg";
-            attach.Id = 9;
+            //// attachment
+            //Redmine.Net.Api.Types.Attachment attach = new Redmine.Net.Api.Types.Attachment();
+            //attach.ContentUrl = "http://redmine.cor.local/attachments/download/9/7_6R55O.jpg";
+            ////attach.Id = 9;
+            //attach.FileName = "foobar.png";
+            //attach.FileSize = fileData.Length;
+            //attach.CreatedOn = System.DateTime.Now;
+            //attach.ContentType = "image/png";
+            //attach.Description = "OMG";
 
-            List<Redmine.Net.Api.Types.Attachment> attachments = new List<Redmine.Net.Api.Types.Attachment>();
-            attachments.Add(attach);
-            
+
+
+
+            //List<Redmine.Net.Api.Types.Attachment> attachments = new List<Redmine.Net.Api.Types.Attachment>();
+            //attachments.Add(attach);
+
+
+
+            /*
+            List<Redmine.Net.Api.Types.Tracker> trackers = redman.GetObjects<Redmine.Net.Api.Types.Tracker>();
+            System.Console.WriteLine(trackers);
+
+
+            List<Redmine.Net.Api.Types.Upload> uploads = new List<Redmine.Net.Api.Types.Upload>();
+            uploads.Add(fileToAttach);
+            */
 
 
             redman.CreateObject<Redmine.Net.Api.Types.Issue>(
@@ -215,9 +265,10 @@ namespace RedmineClient
                     CreatedOn = System.DateTime.Now,
                     Author = null,
                     Project = Projects.apitestproject,
-                    Subject = "I am a extemely new test Issue",
-                    Description = "I am a extemely new test",
-                    Attachments = attachments,
+                    Subject = "i1iiI am a extemely new test Issue",
+                    Description = "I i1iiiiam a extemely new test",
+                    // Attachments = attachments,
+                    Attachments = null,
                     Priority = Priorities.Hoch,
                     StartDate = System.DateTime.Now,
                     EstimatedHours = 5.5f,
@@ -225,7 +276,9 @@ namespace RedmineClient
                     SpentHours = 1.1f,
                     DoneRatio = 20.0f,
 
-                    AssignedTo = null,
+                    // AssignedTo = new Redmine.Net.Api.Types.IdentifiableName() { Id = 4 }, // Sprenger
+                    // AssignedTo = new Redmine.Net.Api.Types.IdentifiableName() { Id = 6 }, // Zihlmann
+                    AssignedTo = GetUser("thomas.hartmann"),
                     Category = null,
                     Children = null,
                     Changesets = null,
@@ -234,10 +287,12 @@ namespace RedmineClient
 
                     IsPrivate = false,
                     Journals = null,
-                    
+
                     Notes = null,
                     Relations = null,
-                    Tracker = null,
+                    // Tracker = null,
+                    Tracker = Trackers.Fehler,
+
                     Watchers = null,
                     ParentIssue = null,
 
@@ -245,6 +300,8 @@ namespace RedmineClient
                     // Status = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 },
                     Status = IssueStatus.Neu,
                     UpdatedOn = System.DateTime.Now,
+
+                    //Uploads = uploads,
                     Uploads = null,
                     FixedVersion = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 },
                     Id = 123,
@@ -322,6 +379,32 @@ namespace RedmineClient
             public static Redmine.Net.Api.Types.IdentifiableName Feedback = new Redmine.Net.Api.Types.IdentifiableName() { Id = 4 };
             public static Redmine.Net.Api.Types.IdentifiableName Erledigt = new Redmine.Net.Api.Types.IdentifiableName() { Id = 5 };
             public static Redmine.Net.Api.Types.IdentifiableName Abgewiesen = new Redmine.Net.Api.Types.IdentifiableName() { Id = 6 };
+        }
+
+          
+
+        //SELECT 
+        //    'public static Redmine.Net.Api.Types.IdentifiableName '
+        //    ,REPLACE(name, ' ', '_') AS name 
+        //    ,'= new Redmine.Net.Api.Types.IdentifiableName() { Id ='
+        //    ,id
+        //    ,'} ;'
+        //FROM trackers
+        //WHERE (1=1) 
+        //ORDER BY position 
+        public sealed class Trackersssssssssssss
+        {
+            public static Redmine.Net.Api.Types.IdentifiableName Fehler = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
+            public static Redmine.Net.Api.Types.IdentifiableName Feature = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
+            public static Redmine.Net.Api.Types.IdentifiableName Unterstützung = new Redmine.Net.Api.Types.IdentifiableName() { Id = 3 };
+        }
+
+        public sealed class Trackers
+        {
+            public static Redmine.Net.Api.Types.IdentifiableName Supportanfrage = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
+            public static Redmine.Net.Api.Types.IdentifiableName Anpassung = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
+            public static Redmine.Net.Api.Types.IdentifiableName Fehler = new Redmine.Net.Api.Types.IdentifiableName() { Id = 5 };
+            public static Redmine.Net.Api.Types.IdentifiableName Handling = new Redmine.Net.Api.Types.IdentifiableName() { Id = 8 };
         }
 
 
