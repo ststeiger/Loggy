@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Language" content="en" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+
+    <!--
+    <meta name="author" content="name" />
+    <meta name="description" content="description here" />
+    <meta name="keywords" content="keywords,here" />
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="stylesheet.css" type="text/css" />
+    -->
+
+    <title>Title</title>
+
+    <style type="text/css" media="all">
+        body
+        {
+            background-color: #0c70b4;
+            color: #546775;
+            font: normal 400 18px "PT Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+    </style>
+
+
+    <script type="text/javascript">
+
+        // Returns a random integer between min (included) and max (excluded)
+        // Using Math.round() will give you a non-uniform distribution!
+        function rand(min, max)
+        {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function output(a)
+        {
+            // alert(arr.join('\n\n'));
+            console.log(a);
+        }
+
+
+        function printStackTrace()
+        {
+            var callstack = [];
+            var isCallstackPopulated = false;
+            try
+            {
+                i.dont.exist += 0; //doesn't exist- that's the point
+            }
+            catch (e)
+            {
+                console.log(e);
+
+                if (e.stack)
+                { // Firefox
+                    var lines = e.stack.split('\n');
+                    console.log(lines);
+                    for (var i = 0, len = lines.length; i < len; i++)
+                    {
+                        if (lines[i].match(/^\s*[A-Za-z0-9\-_\$]+\(/))
+                        {
+                            console.log(lines[i]);
+                            callstack.push(lines[i]);
+                        } 
+                    } // Next i 
+                    //Remove call to printStackTrace()
+                    callstack.shift();
+                    isCallstackPopulated = true;
+                }
+                
+            }
+
+            
+            console.log("args:", arguments);
+
+            if (!isCallstackPopulated)
+            { //IE and Safari
+                var currentFunction = arguments.callee.caller;
+                while (currentFunction)
+                {
+                    var fn = currentFunction.toString();
+                    var fname = fn.substring(fn.indexOf("function") + 8, fn.indexOf('')) || 'anonymous';
+                    callstack.push(fname);
+                    currentFunction = currentFunction.caller;
+                }
+            }
+            output(callstack);
+        }
+
+
+
+    </script>
+
+</head>
+<body>
+
+
+    <script type="text/javascript">
+
+        /*
+        window.addEventListener("error", function (e)
+        {
+            alert("Error occured: " + e.error.message);
+            return false;
+        });
+        */
+
+        window.onerror = function myErrorHandler(errorMsg, url, lineNumber)
+        {
+            alert("Error occured: " + errorMsg);//or any message
+            return false;
+        }
+
+
+
+        function eToString(ex)
+        {
+            var r = "";
+            for (var key in ex)
+            {
+                if (ex.hasOwnProperty(key) && key != "toString")
+                {
+                    r += r !== "" ? "\n" : "";
+                    r += key + "=" + ex[key];
+                }
+            }
+            return r;
+        }
+     
+
+
+        function testme(obj)
+        {
+            var a = obj + "hello";
+            i.dont.exist += 0; //doesn't exist- that's the point
+
+            try
+            {
+                // window["foo"]();
+                // i.dont.exist += 0; //doesn't exist- that's the point
+            }
+            catch (e)
+            {
+                // console.log(e)
+                // console.log(eToString(e))
+
+                // console.log("foo", e.toString())
+                //console.log(JSON.stringify(e))
+                //console.log("msg", e.message)
+                //console.log("name", e.name) // Typ
+
+
+                //console.log("description", e.description)
+                //console.log("number", e.number) 
+
+                //console.log("filename", e.fileName)
+                //console.log("lineNumber", e.lineNumber)
+                //console.log("columnNumber", e.columnNumber)
+                //console.log("stack", e.stack)
+
+
+
+
+                //// ALL
+                //Error.prototype.message
+                //Error.prototype.name
+
+
+                //// MS
+                //Error.prototype.description
+                //Error.prototype.number
+
+
+                //Error.prototype.fileName
+                //Error.prototype.lineNumber
+                //Error.prototype.columnNumber
+                //Error.prototype.stack
+                //Error.prototype.toSource()
+                //Error.prototype.toString()
+                //console.log(StackTrace.toString(e));
+                
+
+            }
+            return a;
+        }
+
+
+        function autorun()
+        {
+            console.clear();
+            // printStackTrace();
+            testme("more");
+            // printStackTrace("foobar");
+            
+            
+        }
+
+        if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
+        else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
+        else window.onload = autorun;
+    </script>
+
+</body>
+</html>
