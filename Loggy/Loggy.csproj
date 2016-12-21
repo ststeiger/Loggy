@@ -129,6 +129,7 @@
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
     <Content Include="errorhandler.htm" />
+    <Content Include="Scripts\errorz.txt" />
     <Content Include="Scripts\stacktrace.min.js" />
     <Content Include="virtualRenderingHorizontal.htm" />
     <Content Include="virtualRendering.htm" />
