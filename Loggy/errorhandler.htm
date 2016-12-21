@@ -50,10 +50,20 @@
             return Math.floor(Math.random() * (max - min)) + min;
         }
 
-        function output(a)
+
+        function eToString(ex)
         {
-            // alert(arr.join('\n\n'));
-            console.log(a);
+            var r = "";
+            for (var key in ex)
+            {
+                if (ex.hasOwnProperty(key) && key != "toString")
+                {
+                    r += r !== "" ? "\n" : "";
+                    r += key + "=" + ex[key];
+                }
+            }
+
+            return r;
         }
 
 
@@ -79,12 +89,14 @@
                         {
                             console.log(lines[i]);
                             callstack.push(lines[i]);
-                        } 
+                        }
+
                     } // Next i 
+
                     //Remove call to printStackTrace()
                     callstack.shift();
                     isCallstackPopulated = true;
-                }
+                } // End if (e.stack) 
                 
             }
 
@@ -102,10 +114,10 @@
                     currentFunction = currentFunction.caller;
                 }
             }
-            output(callstack);
+            
+            // console.log(callstack.join('\n\n'));
+            console.log(callstack);
         }
-
-
 
     </script>
 
@@ -115,37 +127,40 @@
 
     <script type="text/javascript">
 
-        /*
+        
         window.addEventListener("error", function (e)
         {
-            alert("Error occured: " + e.error.message);
+            console.log("aaaaaa");
+            console.log("args", arguments)
+
+            console.log("e.message: ", e.message);
+
+            console.log("filename: ", e.filename);
+            console.log("lineno: ", e.lineno);
+            console.log("colno: ", e.colno);
+            
+            console.log("message: ", e.error.message);
+            console.log("name: ", e.error.name);
+            console.log("stack: ", e.error.stack);
+
+            // e.preventDefault();
             return false;
         });
-        */
-
+        
+        
+        /*
         window.onerror = function myErrorHandler(errorMsg, url, lineNumber)
         {
-            alert("Error occured: " + errorMsg);//or any message
+            console.log("Error occured: " + errorMsg);//or any message
+            console.log(arguments)
+
+            errorMsg.preventDefault = true
+
+            // https://stackoverflow.com/questions/8087240/if-i-override-window-onerror-in-javascript-should-i-return-true-or-false
             return false;
         }
-
-
-
-        function eToString(ex)
-        {
-            var r = "";
-            for (var key in ex)
-            {
-                if (ex.hasOwnProperty(key) && key != "toString")
-                {
-                    r += r !== "" ? "\n" : "";
-                    r += key + "=" + ex[key];
-                }
-            }
-            return r;
-        }
-     
-
+        */
+        
 
         function testme(obj)
         {
@@ -177,8 +192,6 @@
                 //console.log("stack", e.stack)
 
 
-
-
                 //// ALL
                 //Error.prototype.message
                 //Error.prototype.name
@@ -196,9 +209,8 @@
                 //Error.prototype.toSource()
                 //Error.prototype.toString()
                 //console.log(StackTrace.toString(e));
-                
-
             }
+
             return a;
         }
 
@@ -210,8 +222,8 @@
             testme("more");
             // printStackTrace("foobar");
             
-            
         }
+
 
         if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
         else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
