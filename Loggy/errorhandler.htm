@@ -15,6 +15,8 @@
     <meta http-equiv="Content-Language" content="en" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
+    <script charset="utf-8" src="./Scripts/EasyAjax.js"></script>
+
 
     <!--
     <meta name="author" content="name" />
@@ -28,6 +30,7 @@
     <title>Title</title>
 
     <style type="text/css" media="all">
+
         body
         {
             background-color: #0c70b4;
@@ -131,10 +134,10 @@
         window.addEventListener("error", function (e)
         {
             console.log("aaaaaa");
-            console.log("args", arguments)
+            console.log("args", arguments);
 
             console.log("e.message: ", e.message);
-
+            
             console.log("filename: ", e.filename);
             console.log("lineno: ", e.lineno);
             console.log("colno: ", e.colno);
@@ -215,11 +218,50 @@
         }
 
 
+
+        function abc()
+        {
+
+            var onFail = function (r)
+            {
+                console.log("fail");
+            }
+
+
+            var onSuccess = function (r)
+            {
+                // r = JSON.parse(r);
+                //COR.Basic.SIBE.Populate(r.data);
+
+                // r.data[i].SIBE_UID
+                // console.log(r.data);
+                console.log(r);
+            };
+
+            var uid = "NEWID()";
+
+            var postData = {
+                SQL: "foobar" //SQL: "SELECT * FROM T_INV_Investitionen WHERE INV_Status = 1 AND INV_UID = @uid "
+                , "uid": uid
+            };
+
+            console.log(postData);
+
+
+            new Http.Post("./ajax/jsErrorLog.ashx", postData)
+                .success(onSuccess)
+                .failure(onFail)
+                .send()
+            ;
+        }
+
+
         function autorun()
         {
             console.clear();
             // printStackTrace();
-            testme("more");
+            // testme("more");
+            abc();
             // printStackTrace("foobar");
             
         }
