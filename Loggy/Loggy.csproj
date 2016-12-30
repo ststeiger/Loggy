@@ -122,6 +122,7 @@
     <Content Include="closure\Operations\Node_Insert_Self_Range.sql" />
     <Content Include="closure\Operations\xxxx_CrossJoinDelete.sql" />
     <Content Include="Code\Mail\ErrorList.txt" />
+    <Content Include="Code\Mail\redm_abc.txt" />
     <Content Include="Code\Mail\Redmine.txt" />
     <Content Include="cssControls\beautifulCheckbox.htm" />
     <Content Include="cssControls\beautifulRadio.htm" />

@@ -181,37 +181,37 @@
                 // console.log(eToString(e))
 
                 // console.log("foo", e.toString())
-                //console.log(JSON.stringify(e))
-                //console.log("msg", e.message)
-                //console.log("name", e.name) // Typ
+                // console.log(JSON.stringify(e))
+                // console.log("msg", e.message)
+                // console.log("name", e.name) // Typ
 
 
-                //console.log("description", e.description)
-                //console.log("number", e.number) 
+                // console.log("description", e.description)
+                // console.log("number", e.number) 
 
-                //console.log("filename", e.fileName)
-                //console.log("lineNumber", e.lineNumber)
-                //console.log("columnNumber", e.columnNumber)
-                //console.log("stack", e.stack)
+                // console.log("filename", e.fileName)
+                // console.log("lineNumber", e.lineNumber)
+                // console.log("columnNumber", e.columnNumber)
+                // console.log("stack", e.stack)
 
 
                 //// ALL
-                //Error.prototype.message
-                //Error.prototype.name
+                // Error.prototype.message
+                // Error.prototype.name
 
 
                 //// MS
-                //Error.prototype.description
-                //Error.prototype.number
+                // Error.prototype.description
+                // Error.prototype.number
 
 
-                //Error.prototype.fileName
-                //Error.prototype.lineNumber
-                //Error.prototype.columnNumber
-                //Error.prototype.stack
-                //Error.prototype.toSource()
-                //Error.prototype.toString()
-                //console.log(StackTrace.toString(e));
+                // Error.prototype.fileName
+                // Error.prototype.lineNumber
+                // Error.prototype.columnNumber
+                // Error.prototype.stack
+                // Error.prototype.toSource()
+                // Error.prototype.toString()
+                // console.log(StackTrace.toString(e));
             }
 
             return a;
@@ -224,14 +224,15 @@
 
             var onFail = function (r)
             {
+                // throw "is not a number";
                 console.log("fail");
             }
 
             var onSuccess = function (r)
             {
                 // r = JSON.parse(r);
-                //COR.Basic.SIBE.Populate(r.data);
-
+                // COR.Basic.SIBE.Populate(r.data);
+                
                 // r.data[i].SIBE_UID
                 // console.log(r.data);
                 console.log(r);
@@ -244,12 +245,13 @@
                 , "uid": uid
             };
 
-            console.log(postData);
 
+            console.log(postData);
 
             new Http.Post("./ajax/jsErrorLog.ashx", postData)
                 .success(onSuccess)
-                .failure(onFail)
+                // .failure(onFail)
+                //.always(cbAlways)
                 .send()
             ;
         }
@@ -262,7 +264,7 @@
             // testme("more");
             LogError();
             // printStackTrace("foobar");
-            
+
         }
 
 

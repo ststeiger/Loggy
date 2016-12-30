@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+// SELECT [enabled_modules].[name] FROM [enabled_modules] WHERE [enabled_modules].[project_id] = 71
 
 namespace RedmineClient
 {
@@ -35,14 +36,16 @@ namespace RedmineClient
 
 
             Redmine.Net.Api.RedmineManager redmineManager = new Redmine.Net.Api.RedmineManager(
-                 "http://redmine.cor.local" 
-				 //"http://redmine.cor-management.ch"
-                , "admin"
-                , "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                 // "http://redmine.cor.local"
+                 // "http://redmine.cor-management.ch"
+
+                 "https://servicedesk.cor-management.ch/Servicedesk/"
+                , "username"
+                , "PW"
                 , Redmine.Net.Api.MimeFormat.Xml
                 , false // Verify SSL-certificate
                 , null // Proxy
-                // ,new System.Net.WebProxy("http://127.0.0.1:80") //server IP and port
+                // ,new System.Net.WebProxy("http://PUBLIC_IP:80") // server IP and port
                 , System.Net.SecurityProtocolType.Tls
             );
 
@@ -52,20 +55,21 @@ namespace RedmineClient
 
         static string RemoveDiacritics(string text)
         {
-            var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
-            var stringBuilder = new System.Text.StringBuilder();
+            string normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
 
-            foreach (var c in normalizedString)
+            foreach (char c in normalizedString)
             {
-                var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+                System.Globalization.UnicodeCategory unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
                 if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
                 {
                     stringBuilder.Append(c);
-                }
-            }
+                } // End if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark) 
+
+            } // Next c 
 
             return stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC);
-        }
+        } // End Function RemoveDiacritics 
 
 
         public static string GenerateVariableSlug(this string phrase)
@@ -81,13 +85,12 @@ namespace RedmineClient
             str = str.Replace("-", "_");
 
 
-
             System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex("^[0-9].*");
             if (reg.IsMatch(str))
                 str = "___" + str;
             
             return str;
-        }
+        } // End Function GenerateVariableSlug 
 
 
         public static Redmine.Net.Api.Types.IdentifiableName GetUser(string login)
@@ -124,9 +127,6 @@ namespace RedmineClient
 #endif
 
             Redmine.Net.Api.RedmineManager redman = CreateInstance();
-
-
-
 
 
 #if false
@@ -225,11 +225,10 @@ namespace RedmineClient
             fileToAttach.ContentType = "image/png";
 
 
-            //var ls = redman.GetObjects<Redmine.Net.Api.Types.Tracker>("apitestproject");
-            //System.Console.WriteLine(ls);
+            // List<Redmine.Net.Api.Types.Tracker> ls = redman.GetObjects<Redmine.Net.Api.Types.Tracker>("apitestproject");
+            // System.Console.WriteLine(ls);
 
 
-           
             //// attachment
             //Redmine.Net.Api.Types.Attachment attach = new Redmine.Net.Api.Types.Attachment();
             //attach.ContentUrl = "http://redmine.cor.local/attachments/download/9/7_6R55O.jpg";
@@ -241,11 +240,8 @@ namespace RedmineClient
             //attach.Description = "OMG";
 
 
-
-
             //List<Redmine.Net.Api.Types.Attachment> attachments = new List<Redmine.Net.Api.Types.Attachment>();
             //attachments.Add(attach);
-
 
 
             /*
@@ -264,12 +260,12 @@ namespace RedmineClient
                     // Id = 123,
                     CreatedOn = System.DateTime.Now,
                     Author = null,
-                    Project = Projects.apitestproject,
+                    Project = Projects.test,
                     Subject = "i1iiI am a extemely new test Issue",
                     Description = "I i1iiiiam a extemely new test",
                     // Attachments = attachments,
                     Attachments = null,
-                    Priority = Priorities.Hoch,
+                    Priority = Priorities.hoch,
                     StartDate = System.DateTime.Now,
                     EstimatedHours = 5.5f,
                     DueDate = System.DateTime.Now.AddHours(5.5),
@@ -278,7 +274,7 @@ namespace RedmineClient
 
                     // AssignedTo = new Redmine.Net.Api.Types.IdentifiableName() { Id = 4 }, // Sprenger
                     // AssignedTo = new Redmine.Net.Api.Types.IdentifiableName() { Id = 6 }, // Zihlmann
-                    AssignedTo = GetUser("thomas.hartmann"),
+                    AssignedTo = GetUser("nobody"),
                     Category = null,
                     Children = null,
                     Changesets = null,
@@ -317,98 +313,7 @@ namespace RedmineClient
         } // End Sub Main 
 
 
-        public sealed class Projects
-        {
-            // darf nicht mit zahl anfangen: 111apitestproject
-            public static Redmine.Net.Api.Types.IdentifiableName apitestproject = new Redmine.Net.Api.Types.IdentifiableName() { Id = 13 };
-            public static Redmine.Net.Api.Types.IdentifiableName bkb = new Redmine.Net.Api.Types.IdentifiableName() { Id = 12 };
-            public static Redmine.Net.Api.Types.IdentifiableName basic = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
-            public static Redmine.Net.Api.Types.IdentifiableName cor_intern = new Redmine.Net.Api.Types.IdentifiableName() { Id = 3 };
-            public static Redmine.Net.Api.Types.IdentifiableName helpdesk = new Redmine.Net.Api.Types.IdentifiableName() { Id = 6 };
-            public static Redmine.Net.Api.Types.IdentifiableName kunde_a = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
-            public static Redmine.Net.Api.Types.IdentifiableName swisscom = new Redmine.Net.Api.Types.IdentifiableName() { Id = 10 };
-            public static Redmine.Net.Api.Types.IdentifiableName swisscom_test = new Redmine.Net.Api.Types.IdentifiableName() { Id = 11 };
-            public static Redmine.Net.Api.Types.IdentifiableName wincas_basic = new Redmine.Net.Api.Types.IdentifiableName() { Id = 9 };
-
-        }
-
-
-
-        //SELECT 
-        //    'public static Redmine.Net.Api.Types.IdentifiableName '
-        //    ,name
-        //    ,'= new Redmine.Net.Api.Types.IdentifiableName() { Id ='
-        //    ,id
-        //    ,'} ;'
-        //    --,is_default
-        //    --,type
-        //    --------,project_id
-        //    --,parent_id
-        //    --,position_name
-        //FROM enumerations
-        //WHERE type = 'IssuePriority' 
-        //AND active = 1 
-        //ORDER BY position 
-
-        public sealed class Priorities
-        {
-            public static Redmine.Net.Api.Types.IdentifiableName Niedrig = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
-            public static Redmine.Net.Api.Types.IdentifiableName Normal = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
-            public static Redmine.Net.Api.Types.IdentifiableName Hoch = new Redmine.Net.Api.Types.IdentifiableName() { Id = 3 };
-            public static Redmine.Net.Api.Types.IdentifiableName Dringend = new Redmine.Net.Api.Types.IdentifiableName() { Id = 4 };
-            public static Redmine.Net.Api.Types.IdentifiableName Sofort = new Redmine.Net.Api.Types.IdentifiableName() { Id = 5 };
-        }
-
-
-        
-        //SELECT 
-        //    'public static Redmine.Net.Api.Types.IdentifiableName '
-        //    ,REPLACE(name, ' ', '_') AS name 
-        //    ,'= new Redmine.Net.Api.Types.IdentifiableName() { Id ='
-        //    ,id
-        //    ,'} ;'
-        //FROM issue_statuses
-        //WHERE (1=1) 
-        //ORDER BY position 
-
-        public sealed class IssueStatus
-        {
-            public static Redmine.Net.Api.Types.IdentifiableName Neu = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
-            public static Redmine.Net.Api.Types.IdentifiableName In_Bearbeitung = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
-            public static Redmine.Net.Api.Types.IdentifiableName Geloest = new Redmine.Net.Api.Types.IdentifiableName() { Id = 3 };
-            public static Redmine.Net.Api.Types.IdentifiableName Feedback = new Redmine.Net.Api.Types.IdentifiableName() { Id = 4 };
-            public static Redmine.Net.Api.Types.IdentifiableName Erledigt = new Redmine.Net.Api.Types.IdentifiableName() { Id = 5 };
-            public static Redmine.Net.Api.Types.IdentifiableName Abgewiesen = new Redmine.Net.Api.Types.IdentifiableName() { Id = 6 };
-        }
-
-          
-
-        //SELECT 
-        //    'public static Redmine.Net.Api.Types.IdentifiableName '
-        //    ,REPLACE(name, ' ', '_') AS name 
-        //    ,'= new Redmine.Net.Api.Types.IdentifiableName() { Id ='
-        //    ,id
-        //    ,'} ;'
-        //FROM trackers
-        //WHERE (1=1) 
-        //ORDER BY position 
-        public sealed class Trackersssssssssssss
-        {
-            public static Redmine.Net.Api.Types.IdentifiableName Fehler = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
-            public static Redmine.Net.Api.Types.IdentifiableName Feature = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
-            public static Redmine.Net.Api.Types.IdentifiableName Unterstützung = new Redmine.Net.Api.Types.IdentifiableName() { Id = 3 };
-        }
-
-        public sealed class Trackers
-        {
-            public static Redmine.Net.Api.Types.IdentifiableName Supportanfrage = new Redmine.Net.Api.Types.IdentifiableName() { Id = 1 };
-            public static Redmine.Net.Api.Types.IdentifiableName Anpassung = new Redmine.Net.Api.Types.IdentifiableName() { Id = 2 };
-            public static Redmine.Net.Api.Types.IdentifiableName Fehler = new Redmine.Net.Api.Types.IdentifiableName() { Id = 5 };
-            public static Redmine.Net.Api.Types.IdentifiableName Handling = new Redmine.Net.Api.Types.IdentifiableName() { Id = 8 };
-        }
-
-
-    } // Ennd Class Program 
+    } // End Class Program 
 
 
 } // End Namespace RedmineClient 
