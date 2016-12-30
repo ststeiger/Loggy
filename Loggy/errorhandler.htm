@@ -219,14 +219,13 @@
 
 
 
-        function abc()
+        function LogError(error)
         {
 
             var onFail = function (r)
             {
                 console.log("fail");
             }
-
 
             var onSuccess = function (r)
             {
@@ -241,7 +240,7 @@
             var uid = "NEWID()";
 
             var postData = {
-                SQL: "foobar" //SQL: "SELECT * FROM T_INV_Investitionen WHERE INV_Status = 1 AND INV_UID = @uid "
+                  SQL: "Test 123" //SQL: "SELECT * FROM T_INV_Investitionen WHERE INV_Status = 1 AND INV_UID = @uid "
                 , "uid": uid
             };
 
@@ -261,7 +260,7 @@
             console.clear();
             // printStackTrace();
             // testme("more");
-            abc();
+            LogError();
             // printStackTrace("foobar");
             
         }
