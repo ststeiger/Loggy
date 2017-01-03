@@ -131,6 +131,64 @@
 
     <script type="text/javascript">
 
+
+        function LogError(error)
+        {
+
+            var onFail = function (r)
+            {
+                // throw "is not a number";
+                console.log("fail");
+            }
+
+            var onSuccess = function (r)
+            {
+                // r = JSON.parse(r);
+                // COR.Basic.SIBE.Populate(r.data);
+
+                // r.data[i].SIBE_UID
+                // console.log(r.data);
+                console.log(r);
+            };
+
+            var postData = {
+                "e": error
+                , "msg": error.message
+                , "name": error.name
+                // , "filename": error.filename
+                // , "columnNumber": error.columnNumber
+                // , "lineNumber": error.lineNumber
+                // , "stack": error.stack
+            };
+
+            if (error.filename)
+                postData.filename = error.filename;
+
+            if (error.columnNumber)
+                postData.columnNumber = error.columnNumber;
+
+            if (error.lineNumber)
+                postData.lineNumber = error.lineNumber;
+
+            if (error.stack)
+                postData.stack = error.stack;
+
+            if (error.description)
+                postData.description = error.description;
+
+
+
+
+            console.log(postData);
+
+            new Http.Post("./ajax/jsErrorLog.ashx", postData)
+                .success(onSuccess)
+                // .failure(onFail)
+                // .always(cbAlways)
+                .send()
+            ;
+        }
+
         
         window.addEventListener("error", function (e)
         {
@@ -146,6 +204,9 @@
             console.log("message: ", e.error.message);
             console.log("name: ", e.error.name);
             console.log("stack: ", e.error.stack);
+
+            LogError(e.error);
+
 
             // e.preventDefault();
             return false;
@@ -180,39 +241,6 @@
             {
                 // console.log(e)
                 // console.log(eToString(e))
-
-
-                var postData = {
-                      "e": e
-                    , "msg": e.message
-                    // , "name": e.name
-                    // , "filename": e.filename
-                    // , "columnNumber": e.columnNumber
-                    // , "lineNumber": e.lineNumber
-                    // , "stack": e.stack
-                };
-
-
-                if (e.name)
-                    postData.name = e.name;
-
-                if (e.message)
-                    postData.message = e.message;
-
-                if (e.filename)
-                    postData.filename = e.filename;
-
-                if (e.columnNumber)
-                    postData.columnNumber = e.columnNumber;
-
-                if (e.lineNumber)
-                    postData.lineNumber = e.lineNumber;
-
-                if (e.stack)
-                    postData.stack = e.stack;
-
-                if (e.description)
-                    postData.description = e.description;
 
 
                 // console.log("foo", e.toString())
@@ -252,82 +280,6 @@
             return a;
         }
 
-
-
-        function LogError(error)
-        {
-
-            var onFail = function (r)
-            {
-                // throw "is not a number";
-                console.log("fail");
-            }
-
-            var onSuccess = function (r)
-            {
-                // r = JSON.parse(r);
-                // COR.Basic.SIBE.Populate(r.data);
-                
-                // r.data[i].SIBE_UID
-                // console.log(r.data);
-                console.log(r);
-            };
-
-            var uid = "NEWID()";
-
-            var postData = {
-                  SQL: "Test 123" //SQL: "SELECT * FROM T_INV_Investitionen WHERE INV_Status = 1 AND INV_UID = @uid "
-                , "uid": uid
-            };
-
-
-
-
-
-            var postData = {
-                "e": e
-                , "msg": e.message
-                // , "name": e.name
-                // , "filename": e.filename
-                // , "columnNumber": e.columnNumber
-                // , "lineNumber": e.lineNumber
-                // , "stack": e.stack
-            };
-
-
-            if (e.name)
-                postData.name = e.name;
-
-            if (e.message)
-                postData.message = e.message;
-
-            if (e.filename)
-                postData.filename = e.filename;
-
-            if (e.columnNumber)
-                postData.columnNumber = e.columnNumber;
-
-            if (e.lineNumber)
-                postData.lineNumber = e.lineNumber;
-
-            if (e.stack)
-                postData.stack = e.stack;
-
-            if (e.description)
-                postData.description = e.description;
-
-
-
-
-            console.log(postData);
-
-            new Http.Post("./ajax/jsErrorLog.ashx", postData)
-                .success(onSuccess)
-                // .failure(onFail)
-                // .always(cbAlways)
-                .send()
-            ;
-        }
 
 
         function autorun()

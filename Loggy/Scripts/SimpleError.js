@@ -19,7 +19,7 @@ function autoStartTest(error) {
     var uid = "NEWID()";
 
     var postData = {
-        SQL: "Test 123" //SQL: "SELECT * FROM T_INV_Investitionen WHERE INV_Status = 1 AND INV_UID = @uid "
+        SQL: "Test 123" 
         , "uid": uid
     };
 
