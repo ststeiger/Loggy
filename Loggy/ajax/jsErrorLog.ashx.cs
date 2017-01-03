@@ -1,5 +1,5 @@
 ﻿
-namespace Loggy.ajax111
+namespace Loggy.ajax
 {
 
 
@@ -9,9 +9,26 @@ namespace Loggy.ajax111
     public class jsErrorLog : System.Web.IHttpHandler
     {
 
+        class PostData
+        {
+            public string e;
+            public string msg;
+            public string name;
+            public string filename;
+            public string columnNumber;
+            public string lineNumber;
+            public string stack;
+        }
+
 
         public void ProcessRequest(System.Web.HttpContext context)
         {
+            string refe = context.Request.UrlReferrer.OriginalString;
+
+            // referer is html document.
+
+
+            System.Console.WriteLine(refe);
             context.Response.ContentType = "text/plain";
             context.Response.Write("Hello World");
         }

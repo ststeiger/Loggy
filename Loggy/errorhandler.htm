@@ -16,6 +16,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
     <script charset="utf-8" src="./Scripts/EasyAjax.js"></script>
+    <script charset="utf-8" src="./Scripts/SimpleError.js"></script>
 
 
     <!--
@@ -180,6 +181,40 @@
                 // console.log(e)
                 // console.log(eToString(e))
 
+
+                var postData = {
+                      "e": e
+                    , "msg": e.message
+                    // , "name": e.name
+                    // , "filename": e.filename
+                    // , "columnNumber": e.columnNumber
+                    // , "lineNumber": e.lineNumber
+                    // , "stack": e.stack
+                };
+
+
+                if (e.name)
+                    postData.name = e.name;
+
+                if (e.message)
+                    postData.message = e.message;
+
+                if (e.filename)
+                    postData.filename = e.filename;
+
+                if (e.columnNumber)
+                    postData.columnNumber = e.columnNumber;
+
+                if (e.lineNumber)
+                    postData.lineNumber = e.lineNumber;
+
+                if (e.stack)
+                    postData.stack = e.stack;
+
+                if (e.description)
+                    postData.description = e.description;
+
+
                 // console.log("foo", e.toString())
                 // console.log(JSON.stringify(e))
                 // console.log("msg", e.message)
@@ -246,12 +281,50 @@
             };
 
 
+
+
+
+            var postData = {
+                "e": e
+                , "msg": e.message
+                // , "name": e.name
+                // , "filename": e.filename
+                // , "columnNumber": e.columnNumber
+                // , "lineNumber": e.lineNumber
+                // , "stack": e.stack
+            };
+
+
+            if (e.name)
+                postData.name = e.name;
+
+            if (e.message)
+                postData.message = e.message;
+
+            if (e.filename)
+                postData.filename = e.filename;
+
+            if (e.columnNumber)
+                postData.columnNumber = e.columnNumber;
+
+            if (e.lineNumber)
+                postData.lineNumber = e.lineNumber;
+
+            if (e.stack)
+                postData.stack = e.stack;
+
+            if (e.description)
+                postData.description = e.description;
+
+
+
+
             console.log(postData);
 
             new Http.Post("./ajax/jsErrorLog.ashx", postData)
                 .success(onSuccess)
                 // .failure(onFail)
-                //.always(cbAlways)
+                // .always(cbAlways)
                 .send()
             ;
         }
@@ -259,18 +332,19 @@
 
         function autorun()
         {
-            console.clear();
+            console.log("ar")
+            // console.clear();
             // printStackTrace();
             // testme("more");
-            LogError();
+            // LogError();
             // printStackTrace("foobar");
 
         }
 
-
         if (document.addEventListener) document.addEventListener("DOMContentLoaded", autorun, false);
         else if (document.attachEvent) document.attachEvent("onreadystatechange", autorun);
         else window.onload = autorun;
+        
     </script>
 
 </body>

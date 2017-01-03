@@ -132,6 +132,7 @@
     <Content Include="errorhandler.htm" />
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
+    <Content Include="Scripts\SimpleError.js" />
     <Content Include="Scripts\EasyAjax.js" />
     <Content Include="Scripts\EasyAjax.ts.js" />
     <Content Include="Scripts\errorz.txt" />
