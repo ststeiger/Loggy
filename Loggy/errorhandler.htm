@@ -177,8 +177,6 @@
                 postData.description = error.description;
 
 
-
-
             console.log(postData);
 
             new Http.Post("./ajax/jsErrorLog.ashx", postData)
@@ -204,6 +202,8 @@
             console.log("message: ", e.error.message);
             console.log("name: ", e.error.name);
             console.log("stack: ", e.error.stack);
+
+            console.log("omgz", e.error);
 
             LogError(e.error);
 
@@ -281,10 +281,9 @@
         }
 
 
-
         function autorun()
         {
-            console.log("ar")
+            // console.log("ar")
             // console.clear();
             // printStackTrace();
             // testme("more");

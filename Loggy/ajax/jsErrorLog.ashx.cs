@@ -23,12 +23,23 @@ namespace Loggy.ajax
 
         public void ProcessRequest(System.Web.HttpContext context)
         {
-            string refe = context.Request.UrlReferrer.OriginalString;
-
             // referer is html document.
+            string refe = context.Request.UrlReferrer.OriginalString;
+            string postData = "Referrer: " + refe + System.Environment.NewLine;
 
+            if (context.Request.Form != null)
+            {
+
+                foreach (string key in context.Request.Form.AllKeys)
+                {
+                    postData += key + ": " + context.Request.Form[key] + System.Environment.NewLine;
+                } // Next key 
+
+            } // End if (context.Request.Form != null)
 
             System.Console.WriteLine(refe);
+            System.Console.WriteLine(postData);
+
             context.Response.ContentType = "text/plain";
             context.Response.Write("Hello World");
         }
