@@ -37,7 +37,6 @@ namespace Loggy.ajax
 
             } // End if (context.Request.Form != null)
 
-            System.Console.WriteLine(refe);
             System.Console.WriteLine(postData);
 
             context.Response.ContentType = "text/plain";

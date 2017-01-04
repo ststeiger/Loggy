@@ -24,7 +24,7 @@ namespace Loggy
             //"/*",
             //"*/",
             "@@",
-            "@",
+            //"@",
             "char",
             "nchar",
             "varchar",
@@ -102,9 +102,45 @@ namespace Loggy
         } // End Sub OnBeginRequest 
 
 
+
+        private bool MustNotCheckThisUrl(System.Web.HttpRequest request)
+        {
+            string strAbsPath = request.Url.AbsolutePath;
+            
+            if (!string.IsNullOrEmpty(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath))
+            {
+                strAbsPath = strAbsPath.Substring(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath.Length);
+            }
+            
+            if(strAbsPath.StartsWith("/"))
+                strAbsPath = strAbsPath.Substring(1);
+
+
+            System.Console.WriteLine(strAbsPath);
+
+            System.Collections.Hashtable AllowedUrls = new System.Collections.Hashtable(System.StringComparer.OrdinalIgnoreCase);
+            
+            AllowedUrls.Add("", null);
+            // AllowedUrls.Add("default.aspx", null);
+            // AllowedUrls.Add("w8/index.html", null);
+            // AllowedUrls.Add("css/w8/Layout.ashx", null);
+            // AllowedUrls.Add("js/w8/Script.ashx", null);
+            // AllowedUrls.Add("w8/Loading.html", null);
+
+            	
+            // "autoStartTest@http://localhost:57566/Scripts/SimpleError.js:3:5\n"
+            // <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" />
+            bool result = AllowedUrls.ContainsKey(strAbsPath);
+            return result;
+        }
+
+
         // System.Web.HttpRequest request
         private bool CheckInjection(System.Web.HttpRequest request)
         {
+            if (MustNotCheckThisUrl(request))
+                return false;
+
             string ip = request.UserHostAddress;
 
             foreach (string key in request.QueryString)

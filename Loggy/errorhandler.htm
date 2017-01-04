@@ -82,26 +82,6 @@
             catch (e)
             {
                 console.log(e);
-
-                if (e.stack)
-                { // Firefox
-                    var lines = e.stack.split('\n');
-                    console.log(lines);
-                    for (var i = 0, len = lines.length; i < len; i++)
-                    {
-                        if (lines[i].match(/^\s*[A-Za-z0-9\-_\$]+\(/))
-                        {
-                            console.log(lines[i]);
-                            callstack.push(lines[i]);
-                        }
-
-                    } // Next i 
-
-                    //Remove call to printStackTrace()
-                    callstack.shift();
-                    isCallstackPopulated = true;
-                } // End if (e.stack) 
-                
             }
 
             
@@ -123,96 +103,89 @@
             console.log(callstack);
         }
 
-    </script>
-
-</head>
-<body>
 
 
-    <script type="text/javascript">
-
-
-        function LogError(error)
+        function LogError(e)
         {
+            console.clear();
 
             var onFail = function (r)
             {
-                // throw "is not a number";
                 console.log("fail");
             }
 
             var onSuccess = function (r)
             {
                 // r = JSON.parse(r);
-                // COR.Basic.SIBE.Populate(r.data);
-
-                // r.data[i].SIBE_UID
-                // console.log(r.data);
+                // SIBE.Populate(r.data);
                 console.log(r);
             };
 
             var postData = {
-                "e": error
-                , "msg": error.message
-                , "name": error.name
-                // , "filename": error.filename
-                // , "columnNumber": error.columnNumber
-                // , "lineNumber": error.lineNumber
-                // , "stack": error.stack
+                "e": e.error
+                , "msg": e.error.message
+                , "name": e.error.name
+                // ,"filename": e.error.filename
+                // ,"columnNumber": e.error.columnNumber
+                // ,"lineNumber": e.error.lineNumber
+                // ,"stack": e.error.stack
             };
 
-            if (error.filename)
-                postData.filename = error.filename;
+            if (e.filename)
+                postData.filename = e.filename;
 
-            if (error.columnNumber)
-                postData.columnNumber = error.columnNumber;
+            if (e.colno)
+                postData.columnNumber = e.colno;
 
-            if (error.lineNumber)
-                postData.lineNumber = error.lineNumber;
+            if (e.lineno)
+                postData.lineNumber = e.lineno;
 
-            if (error.stack)
-                postData.stack = error.stack;
+            if (e.error.stack)
+                postData.stack = e.error.stack;
 
-            if (error.description)
-                postData.description = error.description;
+            if (e.error.description)
+                postData.description = e.error.description;
 
-
+            console.log("postDataa")
             console.log(postData);
 
             new Http.Post("./ajax/jsErrorLog.ashx", postData)
                 .success(onSuccess)
-                // .failure(onFail)
-                // .always(cbAlways)
+                .failure(onFail)
+                //.always(cbAlways)
                 .send()
             ;
         }
 
-        
+
         window.addEventListener("error", function (e)
         {
-            console.log("aaaaaa");
+            console.log("Entering Error Listener");
             console.log("args", arguments);
 
-            console.log("e.message: ", e.message);
-            
-            console.log("filename: ", e.filename);
-            console.log("lineno: ", e.lineno);
-            console.log("colno: ", e.colno);
-            
-            console.log("message: ", e.error.message);
-            console.log("name: ", e.error.name);
-            console.log("stack: ", e.error.stack);
+            // console.log("filename: ", e.filename);
+            // console.log("lineno: ", e.lineno);
+            // console.log("colno: ", e.colno);
 
-            console.log("omgz", e.error);
+            // console.log("error", e.error);
+            // console.log("message: ", e.error.message);
+            // console.log("name: ", e.error.name);
+            // console.log("stack: ", e.error.stack);
 
-            LogError(e.error);
+            LogError(e);
 
-
+            // https://stackoverflow.com/questions/8087240/if-i-override-window-onerror-in-javascript-should-i-return-true-or-false
             // e.preventDefault();
             return false;
         });
-        
-        
+
+    </script>
+
+</head>
+<body>
+
+    <script type="text/javascript">
+
         /*
         window.onerror = function myErrorHandler(errorMsg, url, lineNumber)
         {
@@ -241,22 +214,6 @@
             {
                 // console.log(e)
                 // console.log(eToString(e))
-
-
-                // console.log("foo", e.toString())
-                // console.log(JSON.stringify(e))
-                // console.log("msg", e.message)
-                // console.log("name", e.name) // Typ
-
-
-                // console.log("description", e.description)
-                // console.log("number", e.number) 
-
-                // console.log("filename", e.fileName)
-                // console.log("lineNumber", e.lineNumber)
-                // console.log("columnNumber", e.columnNumber)
-                // console.log("stack", e.stack)
-
 
                 //// ALL
                 // Error.prototype.message
