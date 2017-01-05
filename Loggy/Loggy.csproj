@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -130,6 +134,7 @@
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
     <Content Include="errorhandler.htm" />
+    <Content Include="Libs\Newtonsoft.Json.dll" />
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
     <Content Include="Scripts\SimpleError.js" />
@@ -177,6 +182,7 @@
     <Compile Include="ajax\jsErrorLog.ashx.cs">
       <DependentUpon>jsErrorLog.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Code\JsonPrettyPrinter.cs" />
     <Compile Include="Code\BlackList.cs" />
     <Compile Include="Code\Helpers\caCert.cs" />
     <Compile Include="Code\Handler\InjectionBlockHandler.cs" />

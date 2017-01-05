@@ -9,16 +9,126 @@ namespace Loggy.ajax
     public class jsErrorLog : System.Web.IHttpHandler
     {
 
-        class PostData
+        public class PostData
         {
-            public string e;
-            public string msg;
-            public string name;
+            public string msg; // Message
+            public string name; // Type 
             public string filename;
             public string columnNumber;
             public string lineNumber;
-            public string stack;
+            public string stack; // stacktrace
+
+            public string href;
+            public string referrer;
+
         }
+
+
+        public class JavaScriptException : System.Exception
+        {
+
+            public JavaScriptException() : base() 
+            { }
+
+
+            public JavaScriptException(string message)
+                : base(message)
+            {
+                this.m_Message = message;
+            }
+
+
+            public JavaScriptException(string message, System.Exception innerException)
+                : base(message, innerException)
+            {
+                this.m_Message = message;
+            }
+
+
+            public JavaScriptException(PostData data)
+                : base()
+            {
+                this.m_Message = data.msg;
+                this.m_StackTrace = data.stack;
+                // this.m_Source = data.referer;
+            }
+
+
+
+            // protected JavaScriptException(SerializationInfo info, StreamingContext context);
+
+
+            protected System.Collections.IDictionary m_Data;
+            public override System.Collections.IDictionary Data
+            {
+                get
+                {
+                    return m_Data;
+                }
+            }
+
+            protected string m_HelpLink;
+            public override string HelpLink
+            {
+
+                get
+                {
+                    return this.m_HelpLink;
+                }
+
+                set
+                {
+                    this.m_HelpLink = value;
+                }
+            }
+
+            protected string m_Message;
+            public override string Message
+            {
+
+                get
+                {
+                    return m_Message;
+                }
+
+            }
+
+            protected string m_Source;
+            public override string Source
+            {
+
+                get
+                {
+                    return m_Source;
+                }
+
+                set
+                {
+                    this.m_Source = value;
+                }
+            }
+
+            protected string m_StackTrace;
+            public override string StackTrace
+            {
+
+                get
+                {
+                    return m_StackTrace;
+                }
+
+            }
+
+            // public virtual Exception GetBaseException();
+            // public virtual void GetObjectData(SerializationInfo info, StreamingContext context);
+
+            public override string ToString()
+            {
+                return null;
+            }
+
+        }
+
 
 
         public void ProcessRequest(System.Web.HttpContext context)
@@ -38,6 +148,18 @@ namespace Loggy.ajax
             } // End if (context.Request.Form != null)
 
             System.Console.WriteLine(postData);
+
+            if (context.Request.InputStream != null)
+            {
+                using (System.IO.StreamReader iss = new System.IO.StreamReader(context.Request.InputStream))
+                {
+                    string json = iss.ReadToEnd();
+                    json = JsonPrettyPrinter.Format(json);
+
+                    PostData data = Newtonsoft.Json.JsonConvert.DeserializeObject<PostData>(json);
+                    System.Console.WriteLine(data);
+                }
+            }
 
             context.Response.ContentType = "text/plain";
             context.Response.Write("Hello World");
