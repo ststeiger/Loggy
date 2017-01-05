@@ -9,6 +9,7 @@ namespace Loggy.ajax
     public class jsErrorLog : System.Web.IHttpHandler
     {
 
+
         public class PostData
         {
             public string msg; // Message
@@ -46,11 +47,22 @@ namespace Loggy.ajax
 
 
             public JavaScriptException(PostData data)
-                : base()
+                : base(data.msg)
             {
                 this.m_Message = data.msg;
-                this.m_StackTrace = data.stack;
-                // this.m_Source = data.referer;
+                this.m_StackTrace =
+                    "Referer:       " + data.referrer + System.Environment.NewLine +
+                    "URL:           " + data.href + System.Environment.NewLine +
+                    "Type:          " + data.name + System.Environment.NewLine +
+                    "File-Name:     " + data.filename + System.Environment.NewLine +
+                    "Line-Number:   " + data.lineNumber + System.Environment.NewLine +
+                    "Column-Number: " + data.columnNumber + System.Environment.NewLine +
+                    System.Environment.NewLine +
+                    "Stacktrace:    " + data.stack + System.Environment.NewLine
+                ;
+                
+                this.m_Source = "JavaScript";
+                this.m_Data = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
 
 
@@ -125,9 +137,81 @@ namespace Loggy.ajax
             public override string ToString()
             {
                 return null;
+            } // End Function ToString 
+
+        } // End Class JavaScriptException 
+
+
+        public class CookieValues
+        {
+            public string Name;
+            public string Value;
+            public string Path;
+            public System.DateTime Expires;
+
+            public bool Secure;
+            public bool HttpOnly;
+
+
+            public CookieValues(System.Web.HttpCookie c)
+            {
+
+                this.Name = c.Name;
+                this.Value = c.Value;
+                this.Path = c.Path;
+                this.Expires = c.Expires;
+                this.Secure = c.Secure;
+                this.HttpOnly = c.HttpOnly;
+                
+            }
+
+
+        }
+
+
+
+        public static void GatherCookieData(System.Web.HttpContext context)
+        {
+            System.Collections.Generic.Dictionary<string, CookieValues> dict = new System.Collections.Generic.Dictionary<string, CookieValues>(System.StringComparer.OrdinalIgnoreCase);
+
+            foreach (System.Web.HttpCookie c in context.Request.Cookies)
+            {
+                dict.Add(c.Name, new CookieValues(c));
             }
 
         }
+
+
+
+
+        public static System.Collections.Generic.Dictionary<string, object> GetSessionInfo()
+        {
+            System.Collections.Generic.Dictionary<string, object> Session = 
+                new System.Collections.Generic.Dictionary<string, object>();
+
+            if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.Session != null)
+            {
+                foreach (string strSessionKey in System.Web.HttpContext.Current.Session.Keys)
+                {
+                    Session[strSessionKey] = System.Web.HttpContext.Current.Session[strSessionKey];
+                }
+            }
+
+            return Session;
+        }
+
+
+        public static void GatherSessionData(System.Web.HttpContext context)
+        {
+            System.Collections.Generic.Dictionary<string, CookieValues> dict = new System.Collections.Generic.Dictionary<string, CookieValues>(System.StringComparer.OrdinalIgnoreCase);
+
+            foreach (System.Web.HttpCookie c in context.Request.Cookies)
+            {
+                dict.Add(c.Name, new CookieValues(c));
+            }
+
+        }
+
 
 
 
@@ -151,19 +235,23 @@ namespace Loggy.ajax
 
             if (context.Request.InputStream != null)
             {
-                using (System.IO.StreamReader iss = new System.IO.StreamReader(context.Request.InputStream))
+
+                using (System.IO.StreamReader stream = new System.IO.StreamReader(context.Request.InputStream))
                 {
-                    string json = iss.ReadToEnd();
+                    string json = stream.ReadToEnd();
                     json = JsonPrettyPrinter.Format(json);
 
                     PostData data = Newtonsoft.Json.JsonConvert.DeserializeObject<PostData>(json);
+                    JavaScriptException exJS = new JavaScriptException(data);
                     System.Console.WriteLine(data);
-                }
-            }
+                    System.Console.WriteLine(exJS);
+                } // End Using stream 
+
+            } // End if (context.Request.InputStream != null) 
 
             context.Response.ContentType = "text/plain";
             context.Response.Write("Hello World");
-        }
+        } // End Sub ProcessRequest 
 
 
         public bool IsReusable

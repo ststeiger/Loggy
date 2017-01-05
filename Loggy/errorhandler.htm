@@ -121,36 +121,29 @@
                 console.log(r);
             };
 
-            var postData = {
-                // "e": e.error
-                  "msg": e.error.message
-                , "name": e.error.name
-                // ,"filename": e.error.filename
-                // ,"columnNumber": e.error.columnNumber
-                // ,"lineNumber": e.error.lineNumber
-                // ,"stack": e.error.stack
-            };
+            var postData = { };
 
-            if (window.location.href)
-                postData.href = window.location.href;
+            function addKeyPair(key, value)
+            {
+                try
+                {
+                    if (value)
+                        postData[key] = value;
+                }
+                catch (ex) { }
+            }
 
-            if (document.referrer)
-                postData.referrer = document.referrer;
+            addKeyPair("msg", e.error.message);
+            addKeyPair("name", e.error.name);
+
+            addKeyPair("referrer", document.referrer);
+            addKeyPair("href", window.location.href);
+            addKeyPair("filename", e.filename);
+            addKeyPair("lineNumber", e.lineno);
+            addKeyPair("columnNumber", e.colno);
+            addKeyPair("stack", e.error.stack);
+            addKeyPair("description", e.error.description);
             
-            if (e.filename)
-                postData.filename = e.filename;
-
-            if (e.colno)
-                postData.columnNumber = e.colno;
-
-            if (e.lineno)
-                postData.lineNumber = e.lineno;
-
-            if (e.error.stack)
-                postData.stack = e.error.stack;
-
-            if (e.error.description)
-                postData.description = e.error.description;
 
             console.log("postData");
             console.log(postData);
