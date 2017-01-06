@@ -1,7 +1,4 @@
 ﻿
-using System.Collections.Generic;
-
-
 namespace Loggy
 {
 
@@ -56,6 +53,9 @@ namespace Loggy
         public string Languages; // Culture
 
         public string Cookies;
+        public string Sessions;
+
+        public System.Collections.Specialized.NameValueCollection Session;
 
 
         public string ClientIP;
@@ -69,7 +69,6 @@ namespace Loggy
         public System.Collections.Specialized.NameValueCollection GetParameters;
         public System.Collections.Specialized.NameValueCollection PostParameters;
 
-        public System.Collections.Specialized.NameValueCollection Session;
 
         // InputStream
 
