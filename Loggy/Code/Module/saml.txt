@@ -1,0 +1,44 @@
+
+/*
+        Private ReadOnly Property UserID() As String
+            Get
+                Dim tV As String = Me.VAR.Item("HTTP_USERID")
+                If String.IsNullOrEmpty(tV) Then tV = Me.VAR.Item("HTTP_ACCOUNT")
+                If String.IsNullOrEmpty(tV) Then tV = Me.VAR.Item("HTTP_REMOTEUSER")
+                If Not String.IsNullOrEmpty(tV) Then Return tV.ToLower
+				
+                Return String.Empty
+            End Get
+        End Property
+        
+        
+        Private ReadOnly Property Password() As String
+            Get
+                Return Portal.Crypt.Crypt(Me.UserID)
+            End Get
+        End Property
+*/
+
+-- SELECT ascii('e'), ascii('e') 
+
+SELECT BE_Passwort, COUNT(*) AS cnt 
+FROM T_Benutzer 
+GROUP BY BE_Passwort 
+
+ORDER BY cnt DESC 
+
+
+
+
+-- 584: F0HXhCow9qmJJ7sMXCGZSA== 
+--      Sommer_2016 
+--      SELECT * FROM T_Benutzer WHERE BE_Passwort = 'F0HXhCow9qmJJ7sMXCGZSA==' 
+
+
+
+--  17: DbxyXerMqkVueCazlrLsNw== 
+--      CORcafmAdmin1 
+--      SELECT * FROM T_Benutzer WHERE BE_Passwort = 'DbxyXerMqkVueCazlrLsNw==' 
+
+
+-- SELECT 584 + 17 -- = 601 

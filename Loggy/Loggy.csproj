@@ -132,6 +132,7 @@
     <Content Include="Code\Module\QuirksModeDetectorModule.vb.txt" />
     <Content Include="Code\Module\VisitorTrackingModule.vb.txt" />
     <Content Include="Code\Module\WhiteSpaceModule.vb.txt" />
+    <Content Include="Code\Module\saml.txt" />
     <Content Include="cssControls\beautifulCheckbox.htm" />
     <Content Include="cssControls\beautifulRadio.htm" />
     <Content Include="cssControls\customflipswitch.htm" />
