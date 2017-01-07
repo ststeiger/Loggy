@@ -93,7 +93,7 @@ namespace Loggy
 
             foreach (System.Web.HttpCookie thisCookie in context.Request.Cookies)
             {
-                dict.Add(c.Name, new CookieValues(thisCookie));
+                dict.Add(thisCookie.Name, new CookieValues(thisCookie));
             } // Next thisCookie 
 
         } // End Function GatherCookieData 
@@ -171,12 +171,12 @@ namespace Loggy
             {
                 System.Console.WriteLine(x.GetType());
             }
-            context.Request.PathInfo
-            //context.Request.InputStream
-            context.Request.ContentType
-            context.Request.ContentEncoding
-            context.Request.Browser
-            context.Request.ApplicationPath
+            //context.Request.PathInfo
+            ////context.Request.InputStream
+            //context.Request.ContentType
+            //context.Request.ContentEncoding
+            //context.Request.Browser
+            //context.Request.ApplicationPath
 
             foreach (string header in context.Request.Headers.AllKeys)
             {
