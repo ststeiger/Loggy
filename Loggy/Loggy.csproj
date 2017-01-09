@@ -142,6 +142,7 @@
     <Content Include="Libs\Newtonsoft.Json.dll" />
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
+    <Content Include="Scripts\msg.js.ts" />
     <Content Include="Scripts\scriptLoader.js.ts" />
     <Content Include="Scripts\SimpleError.js" />
     <Content Include="Scripts\EasyAjax.js" />
