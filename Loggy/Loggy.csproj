@@ -148,6 +148,7 @@
     <Content Include="Scripts\EasyAjax.ts.js" />
     <Content Include="Scripts\errorz.txt" />
     <Content Include="Scripts\scriptLoader.js" />
+    <Content Include="Scripts\newid.js" />
     <Content Include="Scripts\stacktrace.min.js" />
     <Content Include="virtualRenderingHorizontal.htm" />
     <Content Include="virtualRendering.htm" />
