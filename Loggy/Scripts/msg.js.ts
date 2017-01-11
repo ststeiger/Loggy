@@ -24,7 +24,7 @@ if (true)
 <div style="position: relative;">
 <image id="imgCaptcha" style="padding-left: 100px" width="200px" height="112px" src="{@CaptchaLink}" alt="Captcha" /><br />
 <img class="captchaRefresh" title="Reload / Refresh" style="border-radius: 16px; position: absolute; right: -16px; 
-top: 50%; margin-top: -16px; width: 32px; height: 32px;" src="{@src}" onclick="document.getElementById('imgCaptcha').src = mPortalLink + 'ajax/login.ashx?captcha=true&uid=' + guid();" />
+top: 50%; margin-top: -16px; width: 32px; height: 32px;" src="{@src}" onclick="document.getElementById('imgCaptcha').src = {@CaptchaLink};" />
 </div>
 <span>&nbsp;</span>
 
