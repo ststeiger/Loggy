@@ -15,7 +15,7 @@ namespace Loggy
             // http://eng.eelcowesemann.nl/linux-unix/nginx/nginx-blocking/
             // http://community.spiceworks.com/how_to/show/1443
             //string regex = @"(libwww-perl|msnbot/1\.1|msnbot|Java/|Purebot|Lipperhey|MaMa CaSpEr|Mail.Ru|gold crawler|MSIE)";//ConfigurationManager.AppSettings["UserAgentBasedRedirecter.UserAgentsRegex"];
-            string regex = @"(libwww-perl|libcurl|msnbot|Java/|Purebot|Lipperhey|MaMa CaSpEr|Mail.Ru|gold crawler|MSIE 4.|MSIE 5.|MSIE 6.|MSIE 7.|MSIE 8.|MSIE 3.)";//ConfigurationManager.AppSettings["UserAgentBasedRedirecter.UserAgentsRegex"];
+            string regex = @"(libwww-perl|libcurl|sqlmap|msnbot|Java/|Purebot|Lipperhey|MaMa CaSpEr|Mail.Ru|gold crawler|MSIE 4.|MSIE 5.|MSIE 6.|MSIE 7.|MSIE 8.|MSIE 3.)";//ConfigurationManager.AppSettings["UserAgentBasedRedirecter.UserAgentsRegex"];
             System.Web.HttpContext.Current.Application["ProhibitedUserAgents"] = regex;
             
             //regex = ".*chrome.*";
@@ -27,7 +27,7 @@ namespace Loggy
 
         public void Init(System.Web.HttpApplication context)
         {
-            context.PreRequestHandlerExecute += RedirectMatchedUserAgents;
+            context.PreRequestHandlerExecute += new System.EventHandler(RedirectMatchedUserAgents);
         } // End Sub Init
 
 
