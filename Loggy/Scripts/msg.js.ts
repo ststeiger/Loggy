@@ -30,7 +30,7 @@ top: 50%; margin-top: -16px; width: 32px; height: 32px;" src="{@src}" onclick="d
 
 <br />
 <span>Captcha:</span>
-<input id='inCaptcha' placeholder="Bitte Captcha-Text hier eingeben" name='inCaptcha' style="box-shadow: inset 0 0 3px #777;margin-bottom: 5px;width: 200px;" type='text' /><br />
+<input id='inCaptcha' placeholder="Bitte Captcha-Text hier eingeben" name='inCaptcha' style="box-shadow: inset 0 0 3px #777;margin-bottom: 5px;width: 200px;" type='text' />
 `;
 
 msg = msg + "</div>";
