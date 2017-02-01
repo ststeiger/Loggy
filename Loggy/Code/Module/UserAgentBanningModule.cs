@@ -41,19 +41,22 @@ namespace Loggy
                 if (m_bannedUserAgentsRegex.Match(app.Request.UserAgent).Success)
                 {
 
-                    if (m_strRedirectURL == null)
-                    {
-                        //var cbAppContextBase = new HttpContextWrapper(app.Context);
-                        //string strRedirectURL = System.Web.Mvc.UrlHelper.GenerateContentUrl("~/Ban/UserAgentBanned", cbAppContextBase);
+                    // if (m_strRedirectURL == null)
+                    // {
+                    // var cbAppContextBase = new HttpContextWrapper(app.Context);
+                    // string strRedirectURL = System.Web.Mvc.UrlHelper.GenerateContentUrl("~/Ban/UserAgentBanned", cbAppContextBase);
 
-                        // m_strRedirectURL = uh.Action("UserAgentBanned", "Ban");
-                        
-                    } // End if (m_strRedirectURL == null)
+                    // m_strRedirectURL = uh.Action("UserAgentBanned", "Ban");
 
-                    if (!System.StringComparer.OrdinalIgnoreCase.Equals(m_strRedirectURL, app.Request.Url.LocalPath))
-                    {
-                        app.Response.Redirect(m_strRedirectURL);
-                    } // End if (!StringComparer.OrdinalIgnoreCase.Equals(m_strRedirectURL, app.Request.Url.LocalPath))
+                    // } // End if (m_strRedirectURL == null)
+
+                    // if (!System.StringComparer.OrdinalIgnoreCase.Equals(m_strRedirectURL, app.Request.Url.LocalPath))
+                    // {
+                    //     app.Response.Redirect(m_strRedirectURL);
+                    // } // End if (!StringComparer.OrdinalIgnoreCase.Equals(m_strRedirectURL, app.Request.Url.LocalPath))
+
+                    app.CompleteRequest();
+
 
                 } // End if (m_bannedUserAgentsRegex.Match(app.Request.UserAgent).Success)
 

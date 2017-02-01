@@ -138,6 +138,7 @@
     <Content Include="cssControls\customflipswitch.htm" />
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
+    <Content Include="promise.htm" />
     <Content Include="errorhandler.htm" />
     <Content Include="Libs\Newtonsoft.Json.dll" />
     <Content Include="Scripts\Cookie.js" />
@@ -191,6 +192,9 @@
   <ItemGroup>
     <Compile Include="ajax\jsErrorLog.ashx.cs">
       <DependentUpon>jsErrorLog.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ajax\json.ashx.cs">
+      <DependentUpon>json.ashx</DependentUpon>
     </Compile>
     <Compile Include="Code\JsonPrettyPrinter.cs" />
     <Compile Include="Code\BlackList.cs" />
@@ -255,6 +259,7 @@
     <Content Include="cssControls\prettyCheckboxes_uncompressed.1.1.zip" />
     <Content Include="closure\multi_parent_example\MultiParentTree.pptx" />
     <Content Include="ajax\jsErrorLog.ashx" />
+    <Content Include="ajax\json.ashx" />
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
     <Content Include="table.ashx" />
     <EmbeddedResource Include="UAParser.regexes.yaml" />

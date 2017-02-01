@@ -40,6 +40,9 @@ namespace Loggy
         public string DbType;
         public string DbVersion;
         public string ConnectionString;
+        public string DbName;
+        public string ServerName;
+
     }
 
 
@@ -79,7 +82,6 @@ namespace Loggy
                 this.Expires = c.Expires;
                 this.Secure = c.Secure;
                 this.HttpOnly = c.HttpOnly;
-
             }
 
 
