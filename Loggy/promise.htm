@@ -165,12 +165,6 @@
             console.log("quote: ", quote);
         }
 
-        async function main2() {
-            var quote = await getQuote();
-            console.log("quote: ", quote);
-        }
-
-
         function myGetQuote() {
             var quote = async function () { return await getQuote(); };
 
@@ -179,11 +173,52 @@
             return quote;
         }
 
+        function spawn(generatorFunc) {
+            function continuer(verb, arg) {
+                var result;
+                try {
+                    result = generator[verb](arg);
+                } catch (err) {
+                    return Promise.reject(err);
+                }
+                if (result.done) {
+                    return result.value;
+                } else {
+                    return Promise.resolve(result.value).then(onFulfilled, onRejected);
+                }
+            }
+            var generator = generatorFunc();
+            var onFulfilled = continuer.bind(continuer, "next");
+            var onRejected = continuer.bind(continuer, "throw");
+            return onFulfilled();
+        }
+
+        
+        function loadQuote() 
+        {
+            return spawn(function *() {
+                try {
+                    let story = yield getQuote();
+
+                    console.log("story:", story);
+                    // addHtmlToPage(story.heading);
+                    // for (let chapter of story.chapterURLs.map(getJSON)) { addHtmlToPage((yield chapter).html); } addTextToPage("All done");
+                } catch (err) {
+                    //addTextToPage("Argh, broken: " + err.message);
+                    console.log("Argh, broken: " + err.message);
+                }
+                //document.querySelector('.spinner').style.display = 'none';
+            });
+        }
+
+
 
         function autorun()
-        {            
+        {           
+            console.clear();    
             // main();
-            main();
+            // main();
+            loadQuote();
 
             //var quote = myGetQuote();
             
