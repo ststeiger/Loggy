@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BlackErrorTemplate_Injection_DE.htm" />
+    <Content Include="aajax_IE.htm" />
     <Content Include="Chain.png" />
     <Content Include="closure\example\BreadCrumbs_MSSQL.sql" />
     <Content Include="closure\example\BreadCrumbs_PostGre.sql" />
@@ -138,11 +139,14 @@
     <Content Include="cssControls\customflipswitch.htm" />
     <Content Include="Default.aspx" />
     <Content Include="circles.svg" />
+    <Content Include=".htm" />
+    <Content Include="aajax.htm" />
     <Content Include="promise.htm" />
     <Content Include="errorhandler.htm" />
     <Content Include="Libs\Newtonsoft.Json.dll" />
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
+    <Content Include="Scripts\es6-promise-2.0.0.min.js" />
     <Content Include="Scripts\msg.js.ts" />
     <Content Include="Scripts\url_vars.js" />
     <Content Include="Scripts\scriptLoader.js.ts" />
