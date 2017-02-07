@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BlackErrorTemplate_Injection_DE.htm" />
+    <Content Include="aajax_reduced.htm" />
     <Content Include="aajax_IE.htm" />
     <Content Include="Chain.png" />
     <Content Include="closure\example\BreadCrumbs_MSSQL.sql" />

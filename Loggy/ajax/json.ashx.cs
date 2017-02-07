@@ -22,6 +22,9 @@ namespace Loggy.ajax
         {
             // context.Response.ContentType = "text/plain"; context.Response.Write("Hello World");
 
+            throw new Exception("omg a bug");
+
+
             context.Response.ContentType = "application/json";
             context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(new JsonResult()));
 

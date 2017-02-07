@@ -44,6 +44,12 @@
         <!-- 
         // http://localhost:57566/foobar/ajax/json.ashx
 
+
+
+
+
+
+
         var ajax = {};
         ajax.x = function () {
             if (typeof XMLHttpRequest !== 'undefined') {
@@ -164,11 +170,62 @@
             console.log("ajaxResult: ", ajaxResult);
         }
 
+        async function lol() { 
+            var res = null;
+
+        var myPromise = new Promise(function (resolve, reject)
+        {
+            // Standard AJAX request setup and load.
+            var request = new XMLHttpRequest();
+
+            // Request a user's comment from our fake blog.
+            request.open('GET', 'https://localhost:57566/ajax/json.ashx');
+
+            // Set function to call when resource is loaded.
+            request.onload = function ()
+            {
+                // internal server error/404
+                if (request.status === 200)
+                {
+                    res = request.response;
+                    // console.log(request.response);
+                    resolve(request.response);
+                } else
+                {
+                    reject('Page loaded, but status not OK.');
+                }
+            };
+
+            // Set function to call when loading fails.
+            request.onerror = function ()
+            {
+                // Cannot connect 
+                console.log("rrror");
+                reject('Aww, didn\'t work at all.');
+            }
+
+            request.send();
+        });
+
+        return myPromise;
+        }
+
 
         async function autorun()
         {
             console.clear();
-            await main();
+            // await main();
+            try
+            {
+                var resp = await lol();
+                console.log(resp);
+            }
+            catch (ex)
+            {
+                console.log("foo");
+            }
+
+            
 
             console.log("I am here !");
         }
