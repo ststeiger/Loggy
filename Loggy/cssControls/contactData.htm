@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+
+    <style type="text/css" media="all">
+
+        *
+        {
+            box-sizing: border-box;
+        }
+
+
+        .container
+        {
+            font-family: 'Roboto';
+            width: 600px;
+            margin: 30px auto 0;
+            display: block;
+            background: #FFF;
+            padding: 10px 50px 50px;
+        }
+
+
+        .group
+        {
+            #form starting stylings;
+            position: relative;
+            margin-bottom: 45px;
+        }
+
+        input
+        {
+            font-size: 18px;
+            padding: 10px 10px 10px 5px;
+            display: block;
+            width: 300px;
+            border: none;
+            border-bottom: 1px solid #757575;
+            background-color: rgb(239, 239, 239);
+        }
+
+        input:focus
+        {
+            outline: none;
+        }
+
+        label
+        {
+            position: absolute;
+            left: 5px;
+            top: 10px;
+
+            padding-left: 0.25cm;
+
+            color: #999;
+            font-size: 18px;
+            font-weight: normal;
+            pointer-events: none;
+            
+            transition: 0.2s ease all;
+            -moz-transition: 0.2s ease all;
+            -webkit-transition: 0.2s ease all;
+        }
+
+
+        input:focus ~ label, input:valid ~ label, input:invalid:not(.blank) ~ label
+        {
+            #active state;
+            top: -20px;
+            font-size: 14px;
+            color: #5264AE;
+        }
+
+
+        /*
+        
+        .bar
+        {
+            #BOTTOM BARS; 
+            position: relative;
+            display: block;
+            width: 300px;
+        }
+        
+            .bar:before, .bar:after
+            {
+                content: '';
+                height: 2px;
+                width: 0;
+                bottom: 1px;
+                position: absolute;
+                background: #5264AE;
+                transition: 0.2s ease all;
+                -moz-transition: 0.2s ease all;
+                -webkit-transition: 0.2s ease all;
+            }
+
+            .bar:before
+            {
+                left: 50%;
+            }
+
+            .bar:after
+            {
+                right: 50%;
+            }
+
+         
+        input:focus ~ .bar:before, input:focus ~ .bar:after
+        {
+            #active state; 
+            width: 50%;
+        }
+
+        
+        .highlight
+        {
+            #HIGHLIGHTER; 
+            position: absolute;
+            height: 60%;
+            width: 100px;
+            top: 25%;
+            left: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        input:focus ~ .highlight
+        {
+            #active state;
+            -webkit-animation: inputHighlighter 0.3s ease;
+            -moz-animation: inputHighlighter 0.3s ease;
+            animation: inputHighlighter 0.3s ease;
+        }
+        */
+
+        /*
+        @-webkit-keyframes inputHighlighter
+        {
+            #ANIMATIONS;
+                
+            from
+            {
+                background: #5264AE;
+            }
+
+            to
+            {
+                width: 0;
+                background: transparent;
+            }
+        }
+
+        @-moz-keyframes inputHighlighter
+        {
+            from
+            {
+                background: #5264AE;
+            }
+
+            to
+            {
+                width: 0;
+                background: transparent;
+            }
+        }
+
+        @keyframes inputHighlighter
+        {
+            from
+            {
+                background: #5264AE;
+            }
+
+            to
+            {
+                width: 0;
+                background: transparent;
+            }
+        }
+        */
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+
+    <script type="text/javascript">
+
+
+        function removeClass(txt, name)
+        {
+            txt = " " + txt + " ";
+            txt = txt.replace(new RegExp(" " + name + " ", "g"), "");
+            txt = txt.trim();
+
+            return txt;
+        }
+
+
+        function addClass(txt, name)
+        {
+            txt = removeClass(txt, name);
+            txt = txt + " " + name;
+            txt = txt.trim();
+
+            return txt;
+        }
+
+
+        function setInputClass(element)
+        {
+            element.className = (element.value && element.value != '') ?
+                removeClass(element.className, 'blank') : addClass(element.className, 'blank');
+        }
+
+
+    </script>
+
+
+    <div class="container">
+
+        <form>
+
+            <div class="group">
+                <input type="text" class="blank" oninput="setInputClass(this);" required="required">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Name</label>
+            </div>
+
+            <div class="group">
+                <input placeholder="example@gmail.com" type="email" class="blank" oninput="setInputClass(this);" required="required">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>E-Mail</label>
+            </div>
+
+        </form>
+
+    </div>
+    
+    <script type="text/javascript">
+        // 
+    </script>
+
+</body>
+</html>

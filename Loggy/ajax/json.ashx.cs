@@ -24,6 +24,9 @@ namespace Loggy.ajax
 
             throw new Exception("omg a bug");
 
+            // System.Data.DataTable dt = new System.Data.DataTable();
+            // dt.Load(null, System.Data.LoadOption.OverwriteChanges);
+
 
             context.Response.ContentType = "application/json";
             context.Response.Write(Newtonsoft.Json.JsonConvert.SerializeObject(new JsonResult()));

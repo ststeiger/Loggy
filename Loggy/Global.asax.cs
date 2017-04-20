@@ -17,6 +17,12 @@ namespace Loggy
     public class Global : System.Web.HttpApplication
     {
 
+        public static System.Collections.Generic.Dictionary<string, ajax.ConnectionInfo>
+            ConnectionDix = new System.Collections.Generic.Dictionary<string, ajax.ConnectionInfo>(
+                System.StringComparer.OrdinalIgnoreCase);
+
+
+
 
         // The Application_Start and Application_End methods are special methods that do not represent HttpApplication events. 
         // ASP.NET calls them once for the lifetime of the application domain, not for each HttpApplication instance.
@@ -25,7 +31,7 @@ namespace Loggy
         // Every one of them initializes their own list of modules but only the first one executes the Application_OnStart event handler.
         protected void Application_Start(object sender, System.EventArgs e)
         {
-            moduleError.Init(this);
+            // moduleError.Init(this);
             System.Console.WriteLine("Redirect");
             System.Console.SetOut(new DebugTextWriter());
             System.Console.SetError(new DebugTextWriter());
@@ -39,7 +45,7 @@ namespace Loggy
         // public static IHttpModule modul404 = new ErrorLogModule();
         public static System.Web.IHttpModule moduleError = new ErrorLogModule();
 
-        public static System.Web.IHttpModule moduleSqlScreening = new SqlInjectionScreeningModule();
+        // public static System.Web.IHttpModule moduleSqlScreening = new SqlInjectionScreeningModule();
 
 
 
@@ -47,8 +53,8 @@ namespace Loggy
         // ASP.NET calls them once for the lifetime of the application domain, not for each HttpApplication instance.
         public override void Init()
         {
-            moduleError.Init(this);
-            moduleSqlScreening.Init(this);
+            // moduleError.Init(this);
+            // moduleSqlScreening.Init(this);
             base.Init();
         }
 
