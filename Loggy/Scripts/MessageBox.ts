@@ -201,19 +201,22 @@ class MessageBox
 
     show()
     {
-        const overlayStyle:string = `
+        const overlayStyle: string = `
 position:fixed; 
-left: 0px; right: 0px; top: 0px; bottom: 0px; 
-background: url(../../images/Confirm/ie.png);
-background: -moz-linear-gradient(rgba(11,11,11,0.1), rgba(11,11,11,0.6)) repeat-x rgba(11,11,11,0.2);
-background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(11,11,11,0.1)), to(rgba(11,11,11,0.6))) repeat-x rgba(11,11,11,0.2);
 z-index: 9990;
-}
+left: 0px; right: 0px; top: 0px; bottom: 0px; 
+background-color: rgba(11,11,11,0.6);
+background: -moz-linear-gradient(top, rgba(11,11,11,0.1) 0%, rgba(11,11,11,0.6) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(11,11,11,0.1)), color-stop(100%, rgba(11,11,11,0.6)));
+background: -webkit-linear-gradient(top, rgba(11,11,11,0.1) 0%, rgba(11,11,11,0.6) 100%);
+background: -o-linear-gradient(top, rgba(11,11,11,0.1) 0%, rgba(11,11,11,0.6) 100%);
+background: -ms-linear-gradient(top, rgba(11,11,11,0.1) 0%, rgba(11,11,11,0.6) 100%);
+background: linear-gradient(to bottom, rgba(11,11,11,0.1) 0%, rgba(11,11,11,0.6) 100%);
 `;
 
 
 
-        const msgboxStyle:string = `
+        const msgboxStyle: string = `
 display: block; width: 500px; height: 500px; 
 position:absolute;
 left: 50%;
@@ -231,7 +234,8 @@ box-shadow: 4px 4px 5px 0px #000;
 -webkit
 `;
 
-        const titleStyle: string = `font: 0.65cm/1 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        const titleStyle: string = `
+font: 0.65cm/1 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 background: url(../../images/Confirm/header_bg.jpg) repeat-x left bottom #f5f5f5;
 
 background: rgba(255,255,255,1);
@@ -256,6 +260,17 @@ padding: 14px 25px;
 margin-top: 0px;
 `;
 
+        // https://css-tricks.com/almanac/properties/j/justify-content/
+        const footerStyle: string = `
+padding: 3mm;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+align-items: center;
+#justify-content: space-between;
+#justify-content: space-around;
+justify-content: center;
+`;
 
 
         var overlay: HTMLDivElement = document.createElement("div");
@@ -268,7 +283,6 @@ margin-top: 0px;
         var footerAfter: HTMLDivElement = document.createElement("div");
 
         overlay.id = "uuid_" + this.guid("");
-        // overlay.setAttribute("style", "position:fixed; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 9999; background-color: red;");
         overlay.setAttribute("style", overlayStyle);
 
         msgbox.setAttribute("style", msgboxStyle);
@@ -278,9 +292,8 @@ margin-top: 0px;
 
         content.setAttribute("style", "background-color: red; color: white; font-weight: bold; padding: 5mm;");
         contentAfter.setAttribute("style", "clear: both;");
-
-        //footer.setAttribute("style", "background-color: #888;");
-        footer.setAttribute("style", "padding: 3mm;");
+        
+        footer.setAttribute("style", footerStyle);
         footerAfter.setAttribute("style", "clear: both;");
 
 

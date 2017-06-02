@@ -38,6 +38,75 @@ $color: #BEE;
 }
 
 
+// https://css-tricks.com/snippets/sass/mixin-prefix-properties/
+
+/// Mixin to prefix a property
+/// @author Hugo Giraudel
+/// @param {String} $property - Property name
+/// @param {*} $value - Property value
+/// @param {List} $prefixes (()) - List of prefixes to print
+@mixin prefix($property, $value, $prefixes: ())
+{
+    @each $prefix in $prefixes
+    {
+        #{'-' + $prefix + '-' + $property}: $value;
+    }
+    // Output standard non-prefixed declaration
+    #{$property}: $value;
+}
+
+$allPrefixes: ("-webkit-","-moz-", "-o-", "-ms-", "");
+
+@mixin prefixall($property, $value)
+{
+
+    @each $prefix in $allPrefixes
+    {
+        #{$prefix}#{$property}: #{$value};
+    }
+
+    // Output standard non-prefixed declaration
+    #{$property}: $value;
+}
+
+
+
+/// Mixin to prefix several properties at once
+/// @author Hugo Giraudel
+/// @param {Map} $declarations - Declarations to prefix
+/// @param {List} $prefixes (()) - List of prefixes to print
+@mixin multiprefix($declarations, $prefixes: ())
+{
+    @each $property, $value in $declarations
+    {
+        @each $prefix in $prefixes
+        {
+            #{'-' + $prefix + '-' + $property}: $value;
+        }
+        // Output standard non-prefixed declaration
+        #{$property}: $value;
+    }
+}
+
+
+/// Mixin to prefix several properties at once
+/// @author Stefan Steiger
+/// @param {Map} $declarations - Declarations to prefix
+/// @param {List} $prefixes (()) - List of prefixes to print
+@mixin multiprefixall($declarations)
+{
+    @each $property, $value in $declarations
+    {
+        @each $prefix in $allPrefixes
+        {
+            #{'-' + $prefix + '-' + $property}: $value;
+        }
+        // Output standard non-prefixed declaration
+        #{$property}: $value;
+    }
+}
+
+
 // local variable name takes precendence
 @function bgcolor2textcolor($color)
 {
@@ -49,6 +118,16 @@ $color: #BEE;
     {
         @return #ffffff; // Darker background, return light color
     }
+}
+
+
+.lol2
+{
+    @include prefixall(transform, rotate(45deg));
+    @include prefix(transform, rotate(45deg), webkit ms);
+
+    @include multiprefix(( column-count: 3, column-gap: 1.5em, column-rule: 2px solid hotpink ), webkit moz);
+    @include multiprefixall(( column-count: 3, column-gap: 1.5em, column-rule: 2px solid hotpink ));
 }
 
 
