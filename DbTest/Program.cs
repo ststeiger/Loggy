@@ -231,7 +231,7 @@ namespace DbTest
                 csb.Password = "Test123";
             }
 
-            csb.InitialCatalog = "Aperture_RSI";
+            csb.InitialCatalog = "TestDB";
 
 
 

@@ -453,6 +453,7 @@
     <Content Include="ace\src-noconflict\worker-php.js" />
     <Content Include="ace\src-noconflict\worker-xml.js" />
     <Content Include="ace\src-noconflict\worker-xquery.js" />
+    <Content Include="async\messageBox.html" />
     <Content Include="bc2.htm" />
     <Content Include="breadcrumbs.htm" />
     <Content Include="aajax_reduced.htm" />
@@ -547,12 +548,19 @@
     <Content Include="promise.htm" />
     <Content Include="errorhandler.htm" />
     <Content Include="Libs\Newtonsoft.Json.dll" />
+    <Content Include="Scripts\buttons.css">
+      <DependentUpon>buttons.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\buttons.min.css">
+      <DependentUpon>buttons.css</DependentUpon>
+    </Content>
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
     <Content Include="Scripts\es6-promise-2.0.0.min.js" />
     <Content Include="Scripts\msg.js.ts" />
+    <Content Include="Scripts\oldbutton.css" />
+    <Content Include="Scripts\stacko.css" />
     <Content Include="Scripts\url_vars.js" />
-    <Content Include="Scripts\scriptLoader.js.ts" />
     <Content Include="Scripts\SimpleError.js" />
     <Content Include="Scripts\EasyAjax.js" />
     <Content Include="Scripts\EasyAjax.ts.js" />
@@ -796,9 +804,14 @@
     <Content Include="ace\demo\kitchen-sink\docs\xquery.xq" />
     <Content Include="ace\demo\kitchen-sink\docs\yaml.yaml" />
     <Content Include="ajax\test.ashx" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Properties\PublishProfiles\Steve.pubxml" />
     <Content Include="table.ashx" />
     <EmbeddedResource Include="UAParser.regexes.yaml" />
+    <Content Include="Scripts\buttons.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -812,6 +825,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="ace\demo\kitchen-sink\docs\tsx.tsx" />
     <TypeScriptCompile Include="ace\demo\kitchen-sink\docs\typescript.ts" />
+    <TypeScriptCompile Include="Scripts\colorInfluence.ts" />
+    <TypeScriptCompile Include="Scripts\HtmlTools.ts" />
+    <TypeScriptCompile Include="Scripts\MessageBox.ts" />
+    <TypeScriptCompile Include="Scripts\messageBoxTest.ts" />
+    <TypeScriptCompile Include="Scripts\ScriptLoader.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

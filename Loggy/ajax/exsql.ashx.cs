@@ -30,16 +30,17 @@ namespace Loggy.ajax
         public static string getconstr()
         {
             System.Data.SqlClient.SqlConnectionStringBuilder csb = new System.Data.SqlClient.SqlConnectionStringBuilder();
-            csb.IntegratedSecurity = false;
+            csb.IntegratedSecurity = true;
 
             if (!csb.IntegratedSecurity)
             {
-                csb.UserID = "ApertureWebServicesEN";
-                csb.Password = "meridian08";
+                csb.UserID = "postgres";
+                csb.Password = "TOP_SECRET";
             }
 
             csb.DataSource= "127.0.0.1";
-            csb.InitialCatalog = "SwissRe_Test";
+            csb.DataSource = System.Environment.MachineName;
+            csb.InitialCatalog = "TestDB";
 
             return csb.ConnectionString;
         }

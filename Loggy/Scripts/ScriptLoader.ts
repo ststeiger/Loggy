@@ -1,60 +1,63 @@
-
-class cScriptLoader {
+﻿
+class cScriptLoader
+{
     private m_js_files: string[];
     private m_css_files: string[];
-    private m_head:HTMLHeadElement;
+    private m_head: HTMLHeadElement;
 
-    private log = (t:any) =>
+    private log = (t: any) =>
     {
         console.log("ScriptLoader: " + t);
     }
 
 
-    constructor(files: string[]) {
+    constructor(files: string[])
+    {
         this.m_js_files = [];
         this.m_css_files = [];
         this.m_head = document.getElementsByTagName("head")[0];
         // this.m_head = document.head; // IE9+ only
+        
 
-
-        function endsWith(str:string, suffix:string):boolean 
+        function endsWith(str: string, suffix: string): boolean 
         {
-            if(str === null || suffix === null)
+            if (str === null || suffix === null)
                 return false;
 
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         }
 
 
-        for(var i:number = 0; i < files.length; ++i) 
+        for (var i: number = 0; i < files.length; ++i) 
         {
-            if(endsWith(files[i], ".css"))
+            if (endsWith(files[i], ".css"))
             {
                 this.m_css_files.push(files[i]);
             }
-            else if(endsWith(files[i], ".js"))
+            else if (endsWith(files[i], ".js"))
             {
                 this.m_js_files.push(files[i]);
             }
             else
-                this.log('Error unknown filetype "' + files[i] +'".');
+                this.log('Error unknown filetype "' + files[i] + '".');
         }
 
+        this.loadFiles();
     }
 
 
-    public withNoCache = (filename:string):string =>
+    public withNoCache = (filename: string): string =>
     {
-        if(filename.indexOf("?") === -1)
+        if (filename.indexOf("?") === -1)
             filename += "?no_cache=" + new Date().getTime();
         else
             filename += "&no_cache=" + new Date().getTime();
 
-        return filename;    
+        return filename;
     }
 
 
-    public loadStyle = (filename:string) =>
+    public loadStyle = (filename: string) =>
     {
         // HTMLLinkElement
         var link = document.createElement("link");
@@ -78,7 +81,7 @@ class cScriptLoader {
     }
 
 
-    public loadScript = (i:number) => 
+    public loadScript = (i: number) => 
     {
         var script = document.createElement('script');
         script.type = 'text/javascript';
@@ -115,14 +118,10 @@ class cScriptLoader {
         // this.log(this.m_css_files);
         // this.log(this.m_js_files);
 
-        for(var i:number = 0; i < this.m_css_files.length; ++i)
+        for (var i: number = 0; i < this.m_css_files.length; ++i)
             this.loadStyle(this.m_css_files[i])
 
         this.loadScript(0);
     }
 
 }
-
-
-var ScriptLoader = new cScriptLoader(["foo.css", "Scripts/Script4.js", "foobar.css", "Scripts/Script1.js", "Scripts/Script2.js", "Scripts/Script3.js"]);
-ScriptLoader.loadFiles();

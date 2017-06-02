@@ -1,0 +1,42 @@
+﻿
+input[type="submit"], input[type="button"], a.button, a.button:visited, button, .button, .btn
+{
+    color: #FFF;
+    background-color: #0095ff;
+    border-color: #07c;
+    box-shadow: inset 0 1px 0 #66bfff;
+}
+
+input[type="submit"], input[type="button"], button, .button, .btn, [class*="btn-"]
+{
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    outline: none;
+    #padding: .61538462em 1em;
+    padding: 0mm 5mm;
+    line-height: 10mm;
+    vertical-align: middle;
+    #min-height: 2.46153846em;
+    font-weight: 400;
+    font-family: inherit;
+    #line-height: 1;
+    text-align: center;
+    text-decoration: none;
+    background-color: transparent;
+    #border-radius: 2px;
+    border-radius: 5px;
+    margin: 1mm;
+    border: 1px solid transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: all .1s ease-in;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus, input[type="button"]:hover, input[type="button"]:focus, a.button:hover, a.button:focus, a.button:visited:hover, a.button:visited:focus, button:hover, button:focus, .button:hover, .button:focus, .btn:hover, .btn:focus
+{
+    color: rgba(255,255,255,0.9);
+    background-color: #07c;
+    border-color: #005999;
+    box-shadow: inset 0 1px 0 #3af;
+}

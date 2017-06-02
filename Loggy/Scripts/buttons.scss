@@ -1,0 +1,104 @@
+﻿
+$color_red: #950000;
+$color_blue: #0095ff;
+$color_green: #00cc00;
+$color_black: #333;
+$color_whitet: #eee;
+$color_winered: maroon;
+
+// bada55.io
+// darkturquoise, darkslategray, navy, silver,
+// blau: ace, 1CE, 007, 5AD,50B, 0077CC, 5ca1ed, 1AD1E5, 01d, A1BED0, CCE8FF, 0082ff, 262f59, 404f96, 3c51b9, 2d47c8, 2E84CF, 00A0FE, 057DD2, 1C97EA, 007ACC
+// hellblau: 0DD, BEE
+// weissgrau: F2F2F2, DADADA, A5A5A5, DFDFDF,D1E5E1
+// schwarz: 1A1D20, 011, 101010, 1a1a1a, 101
+// grau: BBC, DEDEDE, #333; #666, C6C6C6, ADADAD, CACACA, CCC, C0DEC5
+// pink: FE11A5, F15CA1, #FF369B, FF0382, F0E, EDD1E5, F06, DE1E7E
+// violet: C0D, BA0BAB, BAD, DAD, B000B5, BAAAAD, CAFEBA, BAB1EE, C1A, E0F, D0E, D0D, DABEEF, A1D, 505, DEC0DE, B0B, D0C
+// green: BADDAD, BADBAD, 5AD5AD, 1AD1AD, CADCAD, CE0, BADB01, BADA55, DEA, 1EA, 1DEA15, 5EA, DEFACE, ACCE55, 5E0, 1C0
+// orange/brown: FB1, DEAD33, F13F03
+// red: F05, A55, A55A55, F00, C05, A11, B10, DA151E, B00, BA2B1E, A55, B00B1E
+// various: FED, DEAD15, 5e1f1e, CAC, CEB01D, 5EC
+
+$color: #BEE;
+
+
+@mixin clearfix($width)
+{
+
+    @if $width == 'auto'
+    {
+        // if width is not passed, or empty do this
+    }
+    @else
+    {
+        display: inline-block;
+        width: $width;
+    }
+}
+
+
+// local variable name takes precendence
+@function bgcolor2textcolor($color)
+{
+    @if (lightness($color) > 50)
+    {
+        @return #000000; // Lighter backgorund, return dark color
+    }
+    @else
+    {
+        @return #ffffff; // Darker background, return light color
+    }
+}
+
+
+.lol
+{
+    font-size: lightness($color); 
+    background-color: lighten(#FF00FF,20%);
+    border-right-color: darken(#FF00FF,20%);
+    color: bgcolor2textcolor($color);
+    @include clearfix(100%);
+}
+
+
+
+
+input[type="submit"], input[type="button"], a.button, a.button:visited, button, .button, .btn
+{
+    color: bgcolor2textcolor($color);
+    background-color: $color;
+    border-color: darken($color,10%);
+    box-shadow: inset 0 1px 0 lighten($color,20%)
+}
+
+
+input[type="submit"], input[type="button"], button, .button, .btn, [class*="btn-"]
+{
+    box-sizing: border-box;
+    display: inline-block;
+    position: relative;
+    outline: none;
+    padding: 0mm 5mm;
+    line-height: 10mm;
+    vertical-align: middle;
+    font-weight: 400;
+    font-family: inherit;
+    text-align: center;
+    text-decoration: none;
+    background-color: transparent;
+    border-radius: 5px;
+    margin: 1mm;
+    border: 1px solid transparent;
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: all .1s ease-in;
+}
+
+input[type="submit"]:hover, input[type="submit"]:focus, input[type="button"]:hover, input[type="button"]:focus, a.button:hover, a.button:focus, a.button:visited:hover, a.button:visited:focus, button:hover, button:focus, .button:hover, .button:focus, .btn:hover, .btn:focus
+{
+    color: rgba(bgcolor2textcolor($color), 0.9);
+    background-color: darken($color,10%);
+    border-color: darken($color,20%);
+    box-shadow: inset 0 1px 0 lighten($color,10%);
+}

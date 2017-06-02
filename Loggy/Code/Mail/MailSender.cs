@@ -70,8 +70,8 @@ namespace Loggy
 
         public void SendMail(string strErrorMessage)
         {
-            string sender = "cor.ErrorLog@smtp.riz-itmotion.de";
-            string recipient = "COR_SwissRe_Postfach@cor-management.ch";
+            string sender = "cor.ErrorLog@example.com";
+            string recipient = "postmaster@example.com";
             string copyRecipient = "";
             string blindCopyRecipient = "";
             System.Net.Mail.MailPriority MailPriority = System.Net.Mail.MailPriority.Normal;

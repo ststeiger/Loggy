@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Scripts/StyleSheet1.css",
+    "inputFile": "Scripts/StyleSheet1.scss"
+  },
+  {
+    "outputFile": "Scripts/buttons.css",
+    "inputFile": "Scripts/buttons.scss"
+  }
+]
