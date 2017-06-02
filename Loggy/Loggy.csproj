@@ -545,6 +545,7 @@
     <Content Include="circles.svg" />
     <Content Include=".htm" />
     <Content Include="aajax.htm" />
+    <Content Include="global_error_handler.htm" />
     <Content Include="promise.htm" />
     <Content Include="errorhandler.htm" />
     <Content Include="Libs\Newtonsoft.Json.dll" />
