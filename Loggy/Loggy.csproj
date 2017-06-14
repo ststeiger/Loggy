@@ -558,6 +558,25 @@
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
     <Content Include="Scripts\es6-promise-2.0.0.min.js" />
+    <Content Include="Scripts\experimental\MessageBox.css">
+      <DependentUpon>MessageBox.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\MessageBox.min.css">
+      <DependentUpon>MessageBox.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\SomeLibrary.css" />
+    <Content Include="Scripts\experimental\Spinner.css">
+      <DependentUpon>Spinner.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\Spinner.min.css">
+      <DependentUpon>Spinner.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\style.css">
+      <DependentUpon>style.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
     <Content Include="Scripts\msg.js.ts" />
     <Content Include="Scripts\oldbutton.css" />
     <Content Include="Scripts\stacko.css" />
@@ -813,6 +832,9 @@
     <Content Include="table.ashx" />
     <EmbeddedResource Include="UAParser.regexes.yaml" />
     <Content Include="Scripts\buttons.scss" />
+    <Content Include="Scripts\experimental\Spinner.scss" />
+    <Content Include="Scripts\experimental\MessageBox.scss" />
+    <Content Include="Scripts\experimental\style.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
