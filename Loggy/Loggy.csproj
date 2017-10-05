@@ -20,9 +20,7 @@
     <UseGlobalApplicationHostFile />
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
-    <Use64BitIISExpress />
-    <TargetFrameworkProfile />
+    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -557,9 +555,136 @@
     <Content Include="Scripts\buttons.min.css">
       <DependentUpon>buttons.css</DependentUpon>
     </Content>
+    <Content Include="Scripts\contentTools\editor.js">
+      <DependentUpon>editor.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\editor.min.js">
+      <DependentUpon>editor.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\history.js">
+      <DependentUpon>history.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\history.min.js">
+      <DependentUpon>history.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\namespace.js">
+      <DependentUpon>namespace.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\namespace.min.js">
+      <DependentUpon>namespace.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\styles.js">
+      <DependentUpon>styles.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\styles.min.js">
+      <DependentUpon>styles.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\tools.js">
+      <DependentUpon>tools.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\tools.min.js">
+      <DependentUpon>tools.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\dialogs.js">
+      <DependentUpon>dialogs.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\dialogs.min.js">
+      <DependentUpon>dialogs.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\image.js">
+      <DependentUpon>image.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\image.min.js">
+      <DependentUpon>image.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\link.js">
+      <DependentUpon>link.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\link.min.js">
+      <DependentUpon>link.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\properties.js">
+      <DependentUpon>properties.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\properties.min.js">
+      <DependentUpon>properties.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\table.js">
+      <DependentUpon>table.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\table.min.js">
+      <DependentUpon>table.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\video.js">
+      <DependentUpon>video.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\dialogs\video.min.js">
+      <DependentUpon>video.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\events.js">
+      <DependentUpon>events.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\events.min.js">
+      <DependentUpon>events.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\flashes.js">
+      <DependentUpon>flashes.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\flashes.min.js">
+      <DependentUpon>flashes.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\ignition.js">
+      <DependentUpon>ignition.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\ignition.min.js">
+      <DependentUpon>ignition.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\inspector.js">
+      <DependentUpon>inspector.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\inspector.min.js">
+      <DependentUpon>inspector.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\modal.js">
+      <DependentUpon>modal.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\modal.min.js">
+      <DependentUpon>modal.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\toolbox.js">
+      <DependentUpon>toolbox.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\toolbox.min.js">
+      <DependentUpon>toolbox.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\ui.js">
+      <DependentUpon>ui.coffee</DependentUpon>
+    </Content>
+    <Content Include="Scripts\contentTools\ui\ui.min.js">
+      <DependentUpon>ui.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Cookie.js" />
     <Content Include="Scripts\Cookie.ts.js" />
     <Content Include="Scripts\es6-promise-2.0.0.min.js" />
+    <Content Include="Scripts\experimental\MessageBox.css">
+      <DependentUpon>MessageBox.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\MessageBox.min.css">
+      <DependentUpon>MessageBox.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\SomeLibrary.css" />
+    <Content Include="Scripts\experimental\Spinner.css">
+      <DependentUpon>Spinner.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\Spinner.min.css">
+      <DependentUpon>Spinner.css</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\style.css">
+      <DependentUpon>style.scss</DependentUpon>
+    </Content>
+    <Content Include="Scripts\experimental\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
     <Content Include="Scripts\msg.js.ts" />
     <Content Include="Scripts\oldbutton.css" />
     <Content Include="Scripts\stacko.css" />
@@ -601,6 +726,7 @@
     <Content Include="cssControls\simpleRadiobox.htm" />
     <Content Include="Scripts\soll.png" />
     <Content Include="Scripts\Website is offline   522  Connection timed out.html" />
+    <Content Include="Web.config" />
     <Content Include="page.htm" />
     <Content Include="newspaper.htm" />
     <Content Include="closure\example\InterDepGroups.sql" />
@@ -617,15 +743,9 @@
     <Compile Include="ajax\json.ashx.cs">
       <DependentUpon>json.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ajax\serializeRequest.ashx.cs">
-      <DependentUpon>serializeRequest.ashx</DependentUpon>
-    </Compile>
     <Compile Include="ajax\test.ashx.cs">
       <DependentUpon>test.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Code\HelperArgs.cs" />
-    <Compile Include="Code\HelperReflection.cs" />
-    <Compile Include="Code\IntrospectionExtensions.cs" />
     <Compile Include="Code\JsonPrettyPrinter.cs" />
     <Compile Include="Code\BlackList.cs" />
     <Compile Include="Code\Helpers\caCert.cs" />
@@ -812,7 +932,6 @@
     <Content Include="ace\demo\kitchen-sink\docs\xquery.xq" />
     <Content Include="ace\demo\kitchen-sink\docs\yaml.yaml" />
     <Content Include="ajax\test.ashx" />
-    <Content Include="ajax\serializeRequest.ashx" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -821,12 +940,32 @@
     <Content Include="table.ashx" />
     <EmbeddedResource Include="UAParser.regexes.yaml" />
     <Content Include="Scripts\buttons.scss" />
-    <Content Include="web.config" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
+    <Content Include="Scripts\experimental\Spinner.scss" />
+    <Content Include="Scripts\experimental\MessageBox.scss" />
+    <Content Include="Scripts\experimental\style.scss" />
+    <Content Include="Scripts\contentTools\editor.coffee" />
+    <Content Include="Scripts\contentTools\history.coffee" />
+    <Content Include="Scripts\contentTools\namespace.coffee" />
+    <Content Include="Scripts\contentTools\styles.coffee" />
+    <Content Include="Scripts\contentTools\tools.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\dialogs.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\image.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\link.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\properties.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\table.coffee" />
+    <Content Include="Scripts\contentTools\ui\dialogs\video.coffee" />
+    <Content Include="Scripts\contentTools\ui\events.coffee" />
+    <Content Include="Scripts\contentTools\ui\flashes.coffee" />
+    <Content Include="Scripts\contentTools\ui\ignition.coffee" />
+    <Content Include="Scripts\contentTools\ui\inspector.coffee" />
+    <Content Include="Scripts\contentTools\ui\modal.coffee" />
+    <Content Include="Scripts\contentTools\ui\toolbox.coffee" />
+    <Content Include="Scripts\contentTools\ui\ui.coffee" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
     </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

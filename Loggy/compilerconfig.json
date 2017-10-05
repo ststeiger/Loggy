@@ -6,5 +6,89 @@
   {
     "outputFile": "Scripts/buttons.css",
     "inputFile": "Scripts/buttons.scss"
+  },
+  {
+    "outputFile": "Scripts/experimental/MessageBox.css",
+    "inputFile": "Scripts/experimental/MessageBox.scss"
+  },
+  {
+    "outputFile": "Scripts/experimental/Spinner.css",
+    "inputFile": "Scripts/experimental/Spinner.scss"
+  },
+  {
+    "outputFile": "Scripts/experimental/style.css",
+    "inputFile": "Scripts/experimental/style.scss"
+  },
+  {
+    "outputFile": "Scripts/contentTools/editor.js",
+    "inputFile": "Scripts/contentTools/editor.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/history.js",
+    "inputFile": "Scripts/contentTools/history.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/namespace.js",
+    "inputFile": "Scripts/contentTools/namespace.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/styles.js",
+    "inputFile": "Scripts/contentTools/styles.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/tools.js",
+    "inputFile": "Scripts/contentTools/tools.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/events.js",
+    "inputFile": "Scripts/contentTools/ui/events.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/flashes.js",
+    "inputFile": "Scripts/contentTools/ui/flashes.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/ignition.js",
+    "inputFile": "Scripts/contentTools/ui/ignition.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/inspector.js",
+    "inputFile": "Scripts/contentTools/ui/inspector.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/modal.js",
+    "inputFile": "Scripts/contentTools/ui/modal.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/toolbox.js",
+    "inputFile": "Scripts/contentTools/ui/toolbox.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/ui.js",
+    "inputFile": "Scripts/contentTools/ui/ui.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/dialogs.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/dialogs.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/link.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/link.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/image.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/image.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/properties.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/properties.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/table.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/table.coffee"
+  },
+  {
+    "outputFile": "Scripts/contentTools/ui/dialogs/video.js",
+    "inputFile": "Scripts/contentTools/ui/dialogs/video.coffee"
   }
 ]
