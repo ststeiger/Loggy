@@ -20,7 +20,8 @@
     <UseGlobalApplicationHostFile />
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <TypeScriptToolsVersion>2.2</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -743,9 +744,15 @@
     <Compile Include="ajax\json.ashx.cs">
       <DependentUpon>json.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ajax\serializeRequest.ashx.cs">
+      <DependentUpon>serializeRequest.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ajax\test.ashx.cs">
       <DependentUpon>test.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Code\HelperArgs.cs" />
+    <Compile Include="Code\HelperReflection.cs" />
+    <Compile Include="Code\IntrospectionExtensions.cs" />
     <Compile Include="Code\JsonPrettyPrinter.cs" />
     <Compile Include="Code\BlackList.cs" />
     <Compile Include="Code\Helpers\caCert.cs" />
@@ -932,6 +939,7 @@
     <Content Include="ace\demo\kitchen-sink\docs\xquery.xq" />
     <Content Include="ace\demo\kitchen-sink\docs\yaml.yaml" />
     <Content Include="ajax\test.ashx" />
+    <Content Include="ajax\serializeRequest.ashx" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
