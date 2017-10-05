@@ -20,7 +20,9 @@
     <UseGlobalApplicationHostFile />
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <TypeScriptToolsVersion>2.1</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <Use64BitIISExpress />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -599,7 +601,6 @@
     <Content Include="cssControls\simpleRadiobox.htm" />
     <Content Include="Scripts\soll.png" />
     <Content Include="Scripts\Website is offline   522  Connection timed out.html" />
-    <Content Include="Web.config" />
     <Content Include="page.htm" />
     <Content Include="newspaper.htm" />
     <Content Include="closure\example\InterDepGroups.sql" />
@@ -616,9 +617,15 @@
     <Compile Include="ajax\json.ashx.cs">
       <DependentUpon>json.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ajax\serializeRequest.ashx.cs">
+      <DependentUpon>serializeRequest.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ajax\test.ashx.cs">
       <DependentUpon>test.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Code\HelperArgs.cs" />
+    <Compile Include="Code\HelperReflection.cs" />
+    <Compile Include="Code\IntrospectionExtensions.cs" />
     <Compile Include="Code\JsonPrettyPrinter.cs" />
     <Compile Include="Code\BlackList.cs" />
     <Compile Include="Code\Helpers\caCert.cs" />
@@ -805,6 +812,7 @@
     <Content Include="ace\demo\kitchen-sink\docs\xquery.xq" />
     <Content Include="ace\demo\kitchen-sink\docs\yaml.yaml" />
     <Content Include="ajax\test.ashx" />
+    <Content Include="ajax\serializeRequest.ashx" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -813,11 +821,12 @@
     <Content Include="table.ashx" />
     <EmbeddedResource Include="UAParser.regexes.yaml" />
     <Content Include="Scripts\buttons.scss" />
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

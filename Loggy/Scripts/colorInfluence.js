@@ -1,4 +1,4 @@
-var color = (function () {
+var color = /** @class */ (function () {
     function color() {
     }
     return color;

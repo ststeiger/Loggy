@@ -1,4 +1,4 @@
-var cScriptLoader = (function () {
+var cScriptLoader = /** @class */ (function () {
     function cScriptLoader(files) {
         var _this = this;
         this.log = function (t) {

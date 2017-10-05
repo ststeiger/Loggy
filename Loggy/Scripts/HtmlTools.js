@@ -55,7 +55,9 @@ var REQ = {
             ++i;
         }
         return str;
-    },
+    }
+    // REQ.webMethod("AJAX.aspx", "popDrop", cbSuccess, cbError, postData);
+    ,
     "webMethod": function (url, method, onSuccess, onError, onDone, postData, addParams) {
         var url = url + "/" + method;
         this.sendRequest(url, function (r) {
@@ -68,6 +70,7 @@ var REQ = {
                     ex = JSON.parse(r.responseText);
                 }
                 catch (e) {
+                    // logMyErrors(e);
                 }
                 onError(r, ex);
             }
@@ -143,6 +146,7 @@ var REQ = {
                     onError(req);
                 else {
                     alert('HTTP error ' + req.status);
+                    // return;
                 }
             }
             if (onDone)
@@ -172,14 +176,18 @@ var FormatTools = {
         abbreviatedMonthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         amDesignator: "AM",
         pmDesignator: "PM"
-    },
+    }
+    // Pad number with 0
+    ,
     p: function (val, len) {
         val = String(val);
         len = len || 2;
         while (val.length < len)
             val = "0" + val;
         return val;
-    },
+    }
+    // Pad with n "0"-chars
+    ,
     mp: function (d, n) {
         var i = 3, res = this.p(d.getMilliseconds(), 3).substr(0, n);
         for (; i < n; ++i)
@@ -303,7 +311,9 @@ var FormatTools = {
                     return m;
             } // End Switch
         } // End Fn
-            .bind(this));
+            .bind(this)
+        //.apply(this, arguments)
+        );
     }
 };
 // var x = new Date();
@@ -334,7 +344,9 @@ var HtmlTools = {
                 a(); // initApplication();
             }
         };
-    },
+    }
+    // dispatch event cross browser
+    ,
     "dispatchEvent": function (el, e) {
         // console.log("dispatching");
         if ("createEvent" in document) {
@@ -372,7 +384,10 @@ var HtmlTools = {
         };
         uai.hasWindowResizeBug = uai.anyMobile();
         return uai;
-    },
+    }
+    // add event cross browser
+    // HtmlTools(elem, "click", function(evt){});
+    ,
     "addEvent": function (elem, event, fn) {
         if (elem.addEventListener)
             elem.addEventListener(event, fn, false);
@@ -382,7 +397,9 @@ var HtmlTools = {
                 return (fn.call(elem, window.event));
             });
         }
-    },
+    }
+    // Populate dropdown with data
+    ,
     "popDrop": function (sel, data) {
         // console.log(data);
         if (typeof sel === 'string' || sel instanceof String)
@@ -405,6 +422,7 @@ var HtmlTools = {
             var opt = new Option(d.t, d.v, null, d.s);
             // if(d.s) opt.selected = true;
             docfrag.appendChild(opt);
+            // sel.appendChild(opt);
         } // Next i 
         sel.appendChild(docfrag);
         this.dispatchEvent(sel, "change");

@@ -1,4 +1,4 @@
-var MessageBoxButton = (function () {
+var MessageBoxButton = /** @class */ (function () {
     function MessageBoxButton(id, text, callback) {
         this.m_id = id;
         this.m_text = text;
@@ -68,7 +68,7 @@ var MessageBoxButton = (function () {
     });
     return MessageBoxButton;
 }());
-var List = (function () {
+var List = /** @class */ (function () {
     function List() {
         this.m_items = [];
     }
@@ -97,7 +97,7 @@ var List = (function () {
     };
     return List;
 }());
-var MessageBox = (function () {
+var MessageBox = /** @class */ (function () {
     function MessageBox(title, message) {
         this.m_buttonCollection = new List();
         this.m_title = title;
