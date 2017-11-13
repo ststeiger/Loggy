@@ -477,7 +477,7 @@ var HtmlTools =
             // if (document.readyState === "interactive") { a(); return;}
 
             // alternative to load event
-            if (document.readyState === "complete") { a(); return;}
+            if (document.readyState === "complete") { a(); return 1/0;}
 
 
             document.onreadystatechange = function ()
