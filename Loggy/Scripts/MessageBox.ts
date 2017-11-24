@@ -17,7 +17,6 @@ class MessageBoxButton
         this.m_class = "button";
 
         this.m_callback = callback;
-
     }
 
 

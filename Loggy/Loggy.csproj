@@ -805,6 +805,12 @@
     <Compile Include="table.ashx.cs">
       <DependentUpon>table.ashx</DependentUpon>
     </Compile>
+    <Compile Include="table1.ashx.cs">
+      <DependentUpon>table1.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="tablereader.ashx.cs">
+      <DependentUpon>tablereader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="UAParser.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -969,6 +975,8 @@
     <Content Include="Scripts\contentTools\ui\modal.coffee" />
     <Content Include="Scripts\contentTools\ui\toolbox.coffee" />
     <Content Include="Scripts\contentTools\ui\ui.coffee" />
+    <Content Include="table1.ashx" />
+    <Content Include="tablereader.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

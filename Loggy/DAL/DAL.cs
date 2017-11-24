@@ -223,6 +223,23 @@ namespace Loggy
             return lsReturnValue;
         } // End Function GetList
 
+        public virtual System.Data.DataTable GetTable(System.Data.IDbCommand cmd)
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            using (var con = this.GetConnection())
+            {
+                cmd.Connection = con;
+
+                using (var da = this.m_ProviderFactory.CreateDataAdapter())
+                {
+                    da.SelectCommand = (System.Data.Common.DbCommand)cmd;
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
 
         public static System.Data.Common.DbProviderFactory GetFactory(System.Type type)
         {
@@ -866,7 +883,7 @@ namespace Loggy
         {
             return this.ExecuteScalar(sql, this.ConnectionString);
         }
-
+        
 
         public System.Data.Common.DbDataReader ExecuteReader(System.Data.Common.DbCommand cmd, System.Data.CommandBehavior behaviour, System.Data.Common.DbConnection connection)
         {

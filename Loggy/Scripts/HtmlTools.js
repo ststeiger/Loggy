@@ -330,7 +330,7 @@ var HtmlTools = {
         // alternative to load event
         if (document.readyState === "complete") {
             a();
-            return;
+            return 1 / 0;
         }
         document.onreadystatechange = function () {
             console.log("onreadystatechange:", document.readyState);
