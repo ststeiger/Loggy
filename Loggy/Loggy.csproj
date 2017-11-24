@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\SharedProjectTest\SharedProjectTest.projitems" Label="Shared" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -538,6 +539,8 @@
     <Content Include="Code\Module\VisitorTrackingModule.vb.txt" />
     <Content Include="Code\Module\WhiteSpaceModule.vb.txt" />
     <Content Include="Code\Module\saml.txt" />
+    <Content Include="collision\page1.html" />
+    <Content Include="collision\page3.html" />
     <Content Include="cssControls\beautifulCheckbox.htm" />
     <Content Include="cssControls\beautifulRadio.htm" />
     <Content Include="cssControls\customflipswitch.htm" />
